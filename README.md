@@ -15,3 +15,14 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+#### 3/11
+- 下载安装flutter, android studio,
+- 配置插件
+- 在 android studio 和 vscode 分别使用flutter创建一个空项目
+
+#### 3/12
+- 简单学习dart语言
+> 声明变量
+> 函数
+> 异步
