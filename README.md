@@ -26,3 +26,7 @@ samples, guidance on mobile development, and a full API reference.
 > 声明变量
 > 函数
 > 异步
+- 以上全部只是看了一遍
+
+#### 3/13
+- dart 官网 教程一个简单的dart程序
