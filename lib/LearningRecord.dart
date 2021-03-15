@@ -130,6 +130,41 @@ main() {
 
   // 判断语句
   if (true) {} // 必须是布尔类型
+
+  // 异步
+  // Future 类似于promise
+  Future.delayed(new Duration(seconds: 2), () {
+    return "hi world!";
+  }).then((data) {
+    print(data);
+  }, onError: (e) {
+    // then 的可选参数,可以代替catchError执行错误effect
+    print(e);
+  }).catchError((e) {
+    print(e);
+  }).whenComplete(() => null); // 无论成功失败都会执行
+
+  // Future.wait ( promise.all )
+  Future.wait([
+    Future.delayed(new Duration(seconds: 2), () {
+      return "hi world 2s";
+    }),
+    Future.delayed(new Duration(seconds: 3), () {
+      return "hi world 3s";
+    })
+  ]).then((results) {
+    print(results[0] + results[1]);
+  }).catchError((onError) {
+    print(onError);
+  });
+
+  // Stream
+  Stream.fromFutures([
+    Future.delayed(new Duration(seconds: 1), () => "hello1"),
+    Future.delayed(new Duration(seconds: 2), () => "hello2")
+  ]).listen((event) {
+    print(event);
+  });
 }
 
 // 网上class使用
