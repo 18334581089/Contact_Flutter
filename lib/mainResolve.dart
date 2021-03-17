@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
         title: 'Flutter Demo',
         theme: new ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.indigo,
         ),
         home: new MyHomePage(
           title: ('Flutter Demo Home Page'),
@@ -50,10 +50,49 @@ class MyHomePage extends StatefulWidget {
 
 // 5
 class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // setState: 重新执行build方法
+      _counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    Scaffold(
+      //Scaffold: Material 页面脚手架(1 提供默认的导航栏,标题,主屏幕组件的body属性.2 创建路由.)
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          // column组件: 它的子组件会竖直排列
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('You have clicked the button this many time:'),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        // 按钮组件
+        onPressed: _incrementCounter, // 点击事件
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }
+// 注意 1
 // _MyHomePageState类是MyHomePage类对应的状态类
 // myhomepage的build方法挪到了_MyHomePageState中
+// 将build()方法放在State中的话，构建过程不仅可以直接访问状态，而且也无需公开私有状态，这会非常方便
+// 注意 2
+// @override 表示 下一行的方法是从父类/接口 继承过来的，需要重写一次，方便阅读，不怕忘记
+// 注意 3 
+// BuildContext 是一个抽象类 用来传递数据,build方法必须传(和构建 页面的element tree有关)
