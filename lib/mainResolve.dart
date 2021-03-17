@@ -1,6 +1,7 @@
 // 1
 import 'package:flutter/material.dart';
 import 'package:flutter_app_vscode/main.dart';
+import 'package:flutter_app_vscode/route.dart';
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
 // Material UI 是flutter默认提供的一套Material ui组件
@@ -61,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Scaffold(
+    return Scaffold(
       //Scaffold: Material 页面脚手架(1 提供默认的导航栏,标题,主屏幕组件的body属性.2 创建路由.)
       appBar: AppBar(
         title: Text(widget.title),
@@ -76,6 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return NewRoute();
+                }));
+              },
+              child: Text("open new route"),
+            )
           ],
         ),
       ),
