@@ -50,3 +50,7 @@ samples, guidance on mobile development, and a full API reference.
 - 计数器(看懂代码)
 > 简单理解
 - 路由
+
+#### 3/18
+- 实现路由传参
+> 目前还没完全看懂

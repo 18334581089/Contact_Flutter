@@ -47,5 +47,9 @@ class NewRoute extends StatelessWidget {
 // 注意1
 // navigator 时一个路由管理的组件,可以打开(push)和退出(pop)路由,
 // navigator管理一个栈,当前路由就是栈顶部
-// push
-// 方法接受俩参数(content, route),
+// push(content, route)
+// 返回future对象用来接收路由出栈(关闭路由时)的返回数据
+// pop(content, [result])
+// 关闭当前页,返回上一页,result是返回上一个页面的数据
+// 注意2
+// Navigator类 第一个参数context的静态方法对应一个实例

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_vscode/main.dart';
 import 'package:flutter_app_vscode/route.dart';
+import 'routerTestRoute.dart';
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
 // Material UI 是flutter默认提供的一套Material ui组件
@@ -77,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            // 体验路由push
             TextButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -84,7 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 }));
               },
               child: Text("open new route"),
-            )
+            ),
+            // 体验路由传参
+            RouterTestRoute()
           ],
         ),
       ),
