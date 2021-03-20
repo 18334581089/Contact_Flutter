@@ -54,3 +54,46 @@ samples, guidance on mobile development, and a full API reference.
 #### 3/18
 - 实现路由传参
 > 目前还没完全看懂
+
+#### 3/19
+- yaml (的简单了解)
+
+#### 3/20
+- route完善
+- 路由传值
+> mainResolve 引入routerTestRoute widget,
+> push 到 tipRoute (携带test参数)
+> tip返回routerTestRoute 携带 参数 (如果点击tip的左上角返回按钮返回,则会返回null)
+> 上面是非命名路由,
+- 命名路由
+> 路由表:注册路由(起名字)
+> `Map<String, WidgetBuilder> routes`
+> map数据
+> key是string类型, 表示路由名称
+> widgetBuilder是路由的回调函数
+> 注册路由表
+> MyApp类中添加routes属性
+``` 
+routes: {
+  "new_page": (content) => NewRoute()
+}
+```
+> 表示首页home 的路由
+`"/": (context) => MyHomePage(title: 'flutter Demo Home Page')`
+> 通过命名路由打开新页面
+> 方法 Navigator.pushName
+`Future pushNamed(BuildContext context, String routeName,{Object arguments})`
+> 命名路由传参
+> 通过settings对象注册参数
+```
+(context) {
+  return TipRoute(text: ModalRoute.of(context).settings.arguments);
+}
+```
+> 也可以通过settings对象获取参数(原本是)
+`var args=ModalRoute.of(context).settings.arguments;`
+> 路由钩子
+> onGenerateRoute : 
+> MaterailApp的属性 ,和routes同级
+> 在routes中没有注册,但被navigator.pushNamed调用时会触发
+> 

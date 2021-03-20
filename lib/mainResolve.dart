@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_vscode/main.dart';
 import 'package:flutter_app_vscode/route.dart';
+import 'package:flutter_app_vscode/tipRoute.dart';
 import 'routerTestRoute.dart';
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -24,7 +25,21 @@ class MyApp extends StatelessWidget {
         ),
         home: new MyHomePage(
           title: ('Flutter Demo Home Page'),
-        ));
+        ),
+        routes: {
+          "new_page1": (context) => NewRoute(), // 普通路由注册
+          "new_page2": (context) {
+            return TipRoute(text: ModalRoute.of(context).settings.arguments);
+          },
+          "": (context) => MyHomePage(title: 'flutter Demo Home Page')
+        },
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute(builder: (context) {
+            String routeName = settings.name;
+            print("出发了钩子函数, $routeName");
+            return MyHomePage(title: 'flutter Demo Home Page');
+          });
+        });
   }
 }
 // MyApp 代表了flutter应用

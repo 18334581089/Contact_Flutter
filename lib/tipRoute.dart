@@ -12,6 +12,9 @@ class TipRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context).settings.arguments;
+    print("尝试 命名路由传参, 原本super方式获取的text: $text");
+    print("尝试 命名路由传参, settings获取参数: $args");
     return Scaffold(
         appBar: AppBar(
           title: Text("提示"),
@@ -24,7 +27,7 @@ class TipRoute extends StatelessWidget {
                 Text(text),
                 RaisedButton(
                     onPressed: () {
-                      return Navigator.pop(context, "我是返回值");
+                      return Navigator.pop(context, "我是从tipRoute返回的数据");
                     },
                     child: Text("返回")),
               ],
