@@ -43,4 +43,14 @@ samples, guidance on mobile development, and a full API reference.
 - dart 和java 和 js
 > JavaScript无疑是动态化支持最好的脚本语言
 > Dart既能进行服务端脚本、APP开发、web开发
-- 开始flutter计数器
+- 开始flutter计数器(创建flutter项目时默认的一个组件)
+> 看动代码
+
+#### 3/17
+- 计数器(看懂代码)
+> 简单理解
+- 路由
+
+#### 3/18
+- 实现路由传参
+> 目前还没完全看懂
