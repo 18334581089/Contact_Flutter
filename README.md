@@ -97,3 +97,26 @@ routes: {
 > MaterailApp的属性 ,和routes同级
 > 在routes中没有注册,但被navigator.pushNamed调用时会触发
 > 
+
+#### 3/22
+- 接着包管理资料
+> pub仓库实例  添加 english_words 包
+> 把english_words  添加到依赖包管理列表
+1. 修改yaml
+```
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.0
+  # 新添加的依赖
+  english_words: ^3.1.3
+```
+2. 控制台: flutter packages get
+> 如果在 android studio 编辑器,可以单继yaml右上角的package get,获取最新依赖
+> 如果在 vs,yaml修改后自动更新
+3. 页面引入
+> `import 'package:english_words/english_words.dart';`
+4. 页面中创建组件并使用
+> ` new WordPair.random().toString()` 
+> 返回一个随机字符串

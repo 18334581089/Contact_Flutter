@@ -22,5 +22,5 @@ flutter:
 # flutter：flutter相关的配置选项。
 
 # 添加下载使用第三方
-# pub google的dart package仓库（类似node的npm）
+# pub: google的dart package仓库（类似node的npm）
 # 可向pub发布我们的包
