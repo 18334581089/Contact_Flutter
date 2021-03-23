@@ -120,3 +120,18 @@ dependencies:
 4. 页面中创建组件并使用
 > ` new WordPair.random().toString()` 
 > 返回一个随机字符串
+
+#### 3/23
+- 依赖本地包
+```
+dependencies:
+	pkg1:
+        path: ../../code/pkg1
+```
+- 依赖git(包位于Git存储库的根目录中)
+```
+dependencies:
+  pkg1:
+    git:
+      url: git://github.com/xxx/pkg1.git
+```
