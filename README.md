@@ -135,3 +135,18 @@ dependencies:
     git:
       url: git://github.com/xxx/pkg1.git
 ```
+#### 3/24
+- assets
+> flutte 分为 code 和 assets 两部分
+- 通过yaml配置flutter assets
+```
+flutter: 
+  assets:
+    - assets/my_icon.png
+    - assets/background.png
+```
+- variant
+> asset 变体
+> flutter 的 assets 在构建过程中
+> 会在相邻子目录中查找具有相同名称的任何文件
+> 例入: 配置`assets/background.png`,构建时也会包含`assets/dark/background.png`
