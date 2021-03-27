@@ -150,3 +150,76 @@ flutter:
 > flutter 的 assets 在构建过程中
 > 会在相邻子目录中查找具有相同名称的任何文件
 > 例入: 配置`assets/background.png`,构建时也会包含`assets/dark/background.png`
+
+#### 3/27
+- 目前看variant 貌似没什么用(将来有用)
+- 加载 assets
+> 主流两种方法加载assets(文字和图片)
+> > 1 rootBundle 对象, 每一个flutter 都有一个rootBundle对象,可以获取主资源包.
+`package:flutter/services.dart`
+> > 当前方法会暴露一个rootBundle对象
+> > 2 DefaultAssetsBundle 对象, 通过它获取AssetsBundle
+> > 推荐第二种(好像是有响应关系的)
+> 常见用法
+> > 在组件运行上下文中使用 `DefaultAssetBundle.of()`间接加载assets
+> > 在组件上下文之外使用rootBundle
+> 加载图片
+> > AssetImage 
+> > 可以根据设备像素比例引入对应的图片尺寸
+> > (满足上述条件: 目录配置倍数分辨率图片)
+> > 1 
+```
+ new DecorationImage(
+    image: new AssetImage('xxx.png'),
+  ),
+```
+返回一个ImageProvider不是widget,所以用DecorationImage
+> > 2 `Image.asset('xxx.png')`,返回的是一个图片widget
+> 其他
+> >　依赖包的资源　（给AssetImage配置package参数)
+> > > 注意：包在使用本身的资源时也应该加上package参数来获取。
+> 加载非flutter应用资源(上面的都是flutter启动后才能用)
+> >　举例：　app图标,app启动图
+> > 设置APP图标
+> > > [Android开发人员指南](https://developer.android.com/guide/practices/ui_guidelines/icon_design_launcher.html#size)
+- 调试(总算该看点能看懂的了)
+> dart 分析器
+> > `flutter analyze`, 一个静态代码检查工具, 测试你的代码, (intellij 会自动启用)
+> > 不知道vs 现在这个插件有没有analyze检测
+> dart Observatory 单步调试和分析器
+> > 需要配置
+> debugger() 声明
+> > 使用上面的调试工具,代码里面写这个就可以插入断点,
+> > 需要先引入`import 'dart: developer';`
+> > 设置条件断点 `debugger(when: offset > 30.0);`
+> 还有:  print, debugPrint, flutter logs, 调试动画,调试性能, 
+> > debugPrint: 把当前组件状态转存dump(debugDumpApp: 转存widget树的状态)
+
+> 异常捕捉
+> > 捕捉之前先看dart的运行机制
+![dart运行]](https://book.flutterchina.club/assets/img/2-12.eb7484c9.png)
+> > > app执行 先执行microtask(微任务),在执行event (事件队列)
+> > > (flutter 可以通过Future.microtask(…)向微任务中添加事件)
+> > > 在事件循环中，当某个任务发生异常并没有被捕获时，程序并不会退出，而直接导致的结果是当前任务的后续代码就不会被执行了，也就是说一个任务中的异常是不会影响其它任务执行的。
+> > flutter 框架捕捉错误方法
+> > > try catch finally
+> > > flutter 默认
+```
+catch (e, stack) {
+  // 有异常时则弹出错误提示  
+  built = ErrorWidget.builder(_debugReportException('building $this', e, stack));
+}
+```
+> > > 自定义捕捉错误
+```
+FlutterError.onError = (FlutterErrorDetails details) {
+  reportError(details);
+};
+```
+> > flutter 框架不捕捉的错误处理(空对象异常,flutter执行异常)
+> > > 同步
+> > > 通过try
+> > > 异步
+> > > runZoned
+> > > 理解: 类似沙箱, 影响降低
+> > 下面是组件
