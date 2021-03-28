@@ -223,3 +223,6 @@ FlutterError.onError = (FlutterErrorDetails details) {
 > > > runZoned
 > > > 理解: 类似沙箱, 影响降低
 > > 下面是组件
+
+#### 3/28
+周日了，加了一个学flutter的新手，已经关注 名字叫 toknowmore
