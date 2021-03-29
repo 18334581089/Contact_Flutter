@@ -223,3 +223,26 @@ FlutterError.onError = (FlutterErrorDetails details) {
 > > > runZoned
 > > > 理解: 类似沙箱, 影响降低
 > > 下面是组件
+
+#### 3/29
+- 组件
+- widget
+> 不是页面展示的组件, 是一个配置数据
+> > 1 屏幕显示的是 类 `element`. widget树生成element树(广义:widget树 是 ui树)
+> > 2 一个widget可以对应  个element
+> widget 抽象类
+> > 继承`DiagnosticableTree` 用来 提供调试信息
+> > key,性能优化(是否复用组件,canUpdate方法用来判断)
+> > createElement()
+> statelessWidget 继承widget
+> > widget的构造函数参数应使用命名参数，命名参数中的必要参数要添加@required标注，这样有利于静态代码分析器进行检查
+> > context : build方法有一个context参数，它是BuildContext类的一个实例,表示当前widget在widget树中的上下文
+> StatefulWidget 继承 widget
+> > 重写了父类的createElement()方法
+> > 添加新的方法,createState()
+> statefullWidget对应一个state类
+> > widget构建时可以同步获取
+> > 在widget生命周期中可以改变,并调用setState() 通知框架重新执行build
+> > 属性1widget:表示与该state绑定的widget,属性2context:同statelessWidget的context
+> 写一个组件,研究state声明周期
+> > `CounterWidget`

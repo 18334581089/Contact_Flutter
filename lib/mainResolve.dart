@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_vscode/main.dart';
 import 'package:flutter_app_vscode/route.dart';
 import 'package:flutter_app_vscode/tipRoute.dart';
+import 'counterWidget.dart';
 import 'routerTestRoute.dart';
 
 // 引入包Material UI
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
-          "new_page1": (context) => NewRoute(), // 普通路由注册
+          "counter_widget": (context) => CounterWidget(), // 普通路由注册
           "new_page2": (context) {
             return TipRoute(text: ModalRoute.of(context).settings.arguments);
           },
@@ -104,7 +105,17 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("open new route"),
             ),
             // 体验路由传参
-            RouterTestRoute()
+            RouterTestRoute(),
+            // state 组件
+            TextButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CounterWidget();
+                }));
+                // Navigator.pushNamed(context, "counter_widget");
+              },
+              child: Text("open counter_widget"),
+            ),
           ],
         ),
       ),
