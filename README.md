@@ -248,3 +248,28 @@ FlutterError.onError = (FlutterErrorDetails details) {
 > > 属性1widget:表示与该state绑定的widget,属性2context:同statelessWidget的context
 > 写一个组件,研究state声明周期
 > > `CounterWidget`
+
+#### 3/31
+- 复习state声明周期
+- widget获取state对象
+> 通过context获取
+```
+  // 查找父级最近的Scaffold对应的ScaffoldState对象
+  ScaffoldState _state = context.findAncestorStateOfType<ScaffoldState>();
+  //调用ScaffoldState的showSnackBar来弹出SnackBar
+  _state.showSnackBar(
+    SnackBar(
+      content: Text("我是SnackBar"),
+    ),
+  );
+```
+> 通过of直接获取
+```
+// 直接通过of静态方法来获取ScaffoldState 
+ScaffoldState _state=Scaffold.of(context); 
+```
+> 通过GlobalKey
+```
+//定义一个globalKey, 由于GlobalKey要保持全局唯一性，我们使用静态变量存储
+static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
+```
