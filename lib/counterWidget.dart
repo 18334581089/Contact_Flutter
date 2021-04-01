@@ -24,17 +24,42 @@ class _CounterWidgetState extends State<CounterWidget> {
   @override
   Widget build(BuildContext context) {
     print("build");
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('state 声明周期'),
+    //   ),
+    //   body: Center(
+    //       child: Column(
+    //     children: <Widget>[
+    //       TextButton(
+    //         child: Text('$_counter'),
+    //         onPressed: () => setState(() => ++_counter),
+    //       ),
+    //     ],
+    //   )),
+    // );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('state 声明周期'),
-      ),
-      body: Center(
-        child: TextButton(
-          child: Text('$_counter'),
-          onPressed: () => setState(() => ++_counter),
-        ),
-      ),
-    );
+        appBar: AppBar(title: Text('获取state')),
+        body: Center(
+          child: Builder(
+            builder: (context) {
+              return TextButton(
+                onPressed: () {
+                  // 方法1
+
+                  // ScaffoldState _state =
+                  //     context.findAncestorStateOfType<ScaffoldState>();
+                  // 方法2
+
+                  ScaffoldState _state = Scaffold.of(context);
+
+                  _state.showSnackBar(SnackBar(content: Text('SnackBar')));
+                }, // 获取state1 findAncestorStateOfType
+                child: Text('显示的文字'),
+              );
+            },
+          ),
+        ));
 
     // 构建函数
   }

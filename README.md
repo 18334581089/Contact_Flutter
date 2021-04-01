@@ -273,3 +273,21 @@ ScaffoldState _state=Scaffold.of(context);
 //定义一个globalKey, 由于GlobalKey要保持全局唯一性，我们使用静态变量存储
 static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 ```
+
+#### 3/32
+- 操作: 在widget中获取state
+> 看不懂Builder
+> 点击时,showSnackBar会弹出一个窗口显示文字
+> 通过of
+> > 提供of方法表示表示可以通过of获取(scaffold组件默认提供了of)
+> > 没有提供of方法表示没有不可以返回父级state
+
+- flutter 内置组件库
+> Text, 带样式的文本 
+> Row, Coulmn, 类似web中的flexbox布局
+> Stack, 取代线性布局: 类似与web中的绝对定位盒子(配合Positioned)
+> Container, 矩形视觉元素: 可以装饰一个BoxDecoration(如背景,边框,阴影),也可以设置margin,padding 
+
+- widget组件库(Material和Cupertino)
+> 1 内部都引入flutter/widgets.dart,所以使用这俩组件时,不需在引入
+> 2 不同域web开发,不需要担心引入两个组件库,导致安装包变大,dart只会编译你使用了哪些代码
