@@ -5,6 +5,8 @@ import 'package:flutter_app_vscode/route.dart';
 import 'package:flutter_app_vscode/tipRoute.dart';
 import 'counterWidget.dart';
 import 'routerTestRoute.dart';
+import 'TapboxAState.dart';
+import 'ParentWidget.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "TapboxA": (context) => TapboxA(), // 普通路由注册
           "counter_widget": (context) => CounterWidget(), // 普通路由注册
           "new_page2": (context) {
             return TipRoute(text: ModalRoute.of(context).settings.arguments);
@@ -116,6 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("open counter_widget"),
             ),
+            // 状态管理组件
+            TapboxA(),
+            ParentWidget()
           ],
         ),
       ),

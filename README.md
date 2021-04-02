@@ -291,3 +291,13 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 - widget组件库(Material和Cupertino)
 > 1 内部都引入flutter/widgets.dart,所以使用这俩组件时,不需在引入
 > 2 不同域web开发,不需要担心引入两个组件库,导致安装包变大,dart只会编译你使用了哪些代码
+
+#### 4/2
+- 同react和vue 的状态管理
+> 1 如果是用户数据,由父组件管理 (选中状态,滑块位置)
+> 2 如果是外观数据,由当前组件管理 (颜色,动画)
+> 3 如果出现不同组件使用同一数据, 由他俩的父元素管理
+- 简单组件 `TapboxAState`
+> 自己管理自己状态的组件
+- 父子组件 `ParentWidget`
+> 组件名字都得是驼峰,首字母都得大写
