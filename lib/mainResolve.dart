@@ -1,12 +1,12 @@
 // 1
 import 'package:flutter/material.dart';
-import 'package:flutter_app_vscode/main.dart';
 import 'package:flutter_app_vscode/route.dart';
 import 'package:flutter_app_vscode/tipRoute.dart';
-import 'counterWidget.dart';
-import 'routerTestRoute.dart';
-import 'TapboxAState.dart';
-import 'ParentWidget.dart';
+import 'package:flutter_app_vscode/counterWidget.dart';
+import 'package:flutter_app_vscode/routerTestRoute.dart';
+import 'package:flutter_app_vscode/TapboxAState.dart';
+import 'package:flutter_app_vscode/ParentWidget.dart';
+import 'package:flutter_app_vscode/statusManagement/StatusMain.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "StatusMain": (context) => StatusMain(), // 普通路由注册
           "TapboxA": (context) => TapboxA(), // 普通路由注册
           "counter_widget": (context) => CounterWidget(), // 普通路由注册
           "new_page2": (context) {
@@ -121,7 +122,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             // 状态管理组件
             TapboxA(),
-            ParentWidget()
+            ParentWidget(),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "StatusMain");
+              },
+              child: Text("open StatusMain"),
+            ),
           ],
         ),
       ),
