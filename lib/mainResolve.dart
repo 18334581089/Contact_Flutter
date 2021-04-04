@@ -4,8 +4,6 @@ import 'package:flutter_app_vscode/route.dart';
 import 'package:flutter_app_vscode/tipRoute.dart';
 import 'package:flutter_app_vscode/counterWidget.dart';
 import 'package:flutter_app_vscode/routerTestRoute.dart';
-import 'package:flutter_app_vscode/TapboxAState.dart';
-import 'package:flutter_app_vscode/ParentWidget.dart';
 import 'package:flutter_app_vscode/statusManagement/StatusMain.dart';
 
 // 引入包Material UI
@@ -32,7 +30,6 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           "StatusMain": (context) => StatusMain(), // 普通路由注册
-          "TapboxA": (context) => TapboxA(), // 普通路由注册
           "counter_widget": (context) => CounterWidget(), // 普通路由注册
           "new_page2": (context) {
             return TipRoute(text: ModalRoute.of(context).settings.arguments);
@@ -120,9 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("open counter_widget"),
             ),
-            // 状态管理组件
-            TapboxA(),
-            ParentWidget(),
             TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, "StatusMain");

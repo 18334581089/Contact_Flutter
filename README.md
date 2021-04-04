@@ -299,6 +299,8 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 > 3 如果出现不同组件使用同一数据, 由他俩的父元素管理
 - 简单组件 `TapboxAState`
 > 自己管理自己状态的组件
+
+#### 4/3
 - 父管子组件 `ParentWidget`
 > 组件名字都得是驼峰,首字母都得大写
 - 父子分别管组件 `ParentWidgetC`
@@ -309,3 +311,6 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 > 发现了:　dart语言中的`()`,可以写属性
 > > `Container( child: new Text('...tip...'),)`
 > > decoration,用来写样式的 , 赋值 用 new BoxDecoration
+
+#### 4/4
+- 先把状态组件放在一块
