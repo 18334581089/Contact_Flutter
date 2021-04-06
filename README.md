@@ -314,3 +314,10 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 
 #### 4/4
 - 先把状态组件放在一块
+
+#### 4/5
+> > 需要安装Android 4.1（API level 16）或更高版本的Android设备
+> > 在您的设备上启用 开发人员选项 和 USB调试 。详细说明可在Android文档中找到。
+> > 使用USB将手机插入电脑。如果您的设备出现提示，请授权您的计算机访问您的设备。
+> > 在终端中，运行 flutter devices 命令以验证Flutter识别您连接的Android设备。
+> > 运行启动您的应用程序 flutter run。
