@@ -321,3 +321,8 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 > > 使用USB将手机插入电脑。如果您的设备出现提示，请授权您的计算机访问您的设备。
 > > 在终端中，运行 flutter devices 命令以验证Flutter识别您连接的Android设备。
 > > 运行启动您的应用程序 flutter run。
+
+#### 4/9 看文档
+通过全局状态管理器, 处理相距较远的组件通信
+1 全局事件总线, app组件的initState方法中订阅语言改变的事件
+2 使用状态管理包, Provider,Redux
