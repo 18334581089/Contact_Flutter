@@ -316,3 +316,13 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 > > 使用USB将手机插入电脑。如果您的设备出现提示，请授权您的计算机访问您的设备。
 > > 在终端中，运行 flutter devices 命令以验证Flutter识别您连接的Android设备。
 > > 运行启动您的应用程序 flutter run。
+
+#### 4/6
+- 看了一篇文，
+- 原生的还是原生的，但是学起来是有难度的，
+- flutter 相当于js的vue， 扩展，
+- ---
+- 我本来对它很有期待，
+- 现在有一点怀疑了。
+- ---
+- 会用对我来说应该更加重要
