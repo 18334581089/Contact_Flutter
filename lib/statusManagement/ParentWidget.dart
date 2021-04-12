@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'TapboxB.dart';
+import './TapboxB.dart';
 
 class ParentWidget extends StatefulWidget {
   @override
