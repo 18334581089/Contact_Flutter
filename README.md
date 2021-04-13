@@ -326,3 +326,6 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 - 现在有一点怀疑了。
 - ---
 - 会用对我来说应该更加重要
+
+#### 4/7
+- 我为了准备面试，学了目前能学到的所有东西
