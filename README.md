@@ -299,6 +299,8 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 > 3 如果出现不同组件使用同一数据, 由他俩的父元素管理
 - 简单组件 `TapboxAState`
 > 自己管理自己状态的组件
+
+#### 4/3
 - 父管子组件 `ParentWidget`
 > 组件名字都得是驼峰,首字母都得大写
 - 父子分别管组件 `ParentWidgetC`
@@ -309,6 +311,9 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 > 发现了:　dart语言中的`()`,可以写属性
 > > `Container( child: new Text('...tip...'),)`
 > > decoration,用来写样式的 , 赋值 用 new BoxDecoration
+
+#### 4/4
+- 先把状态组件放在一块
 
 #### 4/5
 > > 需要安装Android 4.1（API level 16）或更高版本的Android设备
@@ -329,3 +334,7 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 
 #### 4/7
 - 我为了准备面试，学了目前能学到的所有东西
+#### 4/9 看文档
+通过全局状态管理器, 处理相距较远的组件通信
+1 全局事件总线, app组件的initState方法中订阅语言改变的事件
+2 使用状态管理包, Provider,Redux
