@@ -334,7 +334,12 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 
 #### 4/7
 - 我为了准备面试，学了目前能学到的所有东西
+
 #### 4/9 看文档
 通过全局状态管理器, 处理相距较远的组件通信
 1 全局事件总线, app组件的initState方法中订阅语言改变的事件
 2 使用状态管理包, Provider,Redux
+
+#### 4/14 
+由于基础的git操作失误,错失了这几天的commit日志,虽然,没改啥.
+基础还是有点差劲
