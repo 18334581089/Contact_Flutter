@@ -344,6 +344,10 @@ static GlobalKey<ScaffoldState> _globalKey= GlobalKey();
 由于基础的git操作失误,错失了这几天的commit日志,虽然,没改啥.
 基础还是有点差劲
 
-### 4/16
+#### 4/16
 ssi: 服务器端渲染,
 可以选择reactssi框架,搭建项目
+
+#### 4/18
+一个作业帮的小哥，93年，4年前端，20k以上，年轻，帅气，又是一个比我厉害的人
+理论：每天早上一小时，写flutter或者react 
