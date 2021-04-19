@@ -5,6 +5,7 @@ import 'package:flutter_app_vscode/tipRoute.dart';
 import 'package:flutter_app_vscode/counterWidget.dart';
 import 'package:flutter_app_vscode/routerTestRoute.dart';
 import 'package:flutter_app_vscode/statusManagement/StatusMain.dart';
+import 'package:flutter_app_vscode/baseWidget/baseWidget.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "BaseWidget": (context) => BaseWidget(), // 普通路由注册
           "StatusMain": (context) => StatusMain(), // 普通路由注册
           "counter_widget": (context) => CounterWidget(), // 普通路由注册
           "new_page2": (context) {
@@ -122,6 +124,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "StatusMain");
               },
               child: Text("open StatusMain"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseWidget");
+              },
+              child: Text("open BaseWidget"),
             ),
           ],
         ),
