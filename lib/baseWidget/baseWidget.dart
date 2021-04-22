@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 var tip = 'this is "Text Widget", text 显示简单样式文本,包括 1 文字内容, 2 文字样式属性';
 
-const TextSpan({
-  TextStyle style,
-  Sting text,
-  List
-})
+const textStyle = const TextStyle(fontFamily: 'Raleway');
+// const textStyle = const TextStyle(fontFamily: 'Raleway', package: '这个参数写包名,可以引入包里的字体');
+
+var buttonText =
+    const Text("/use the font for this text,当前文字字体使用引入字体/", style: textStyle);
 
 class BaseWidget extends StatelessWidget {
   @override
@@ -44,6 +44,29 @@ class BaseWidget extends StatelessWidget {
                     decoration: TextDecoration.underline,
                     decorationStyle: TextDecorationStyle.dashed),
               ),
+              Text.rich(TextSpan(children: [
+                TextSpan(text: 'TextSpan, 可以使部分文字有部分样式'),
+                TextSpan(
+                    text: "http://www.baidu.com",
+                    style: TextStyle(color: Colors.blue)),
+              ])),
+              DefaultTextStyle(
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20.0,
+                  ),
+                  textAlign: TextAlign.start,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("defaulttextstyle,部件"),
+                      Text(
+                        "可以让部分子元素样式不同",
+                        style: TextStyle(inherit: false, color: Colors.grey),
+                      )
+                    ],
+                  )),
+              buttonText
             ],
           ),
         ));
