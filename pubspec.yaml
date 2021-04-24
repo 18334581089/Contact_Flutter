@@ -82,14 +82,14 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   # 实践书上写的
-  fonts:
-    - family: Raleway
-      fonts:
-        - asset: assets/fonts/Raleway-Regular.ttf
-        - asset: assets/fonts/Raleway-Italic.ttf
-          weight: 500
-        - asset: assets/fonts/Raleway-SemiBold.ttf
-          weight: 600
-    - family: AbrilFatface
-      fonts:
-        - asset: assets/fonts/abrilfatface/AbrilFatface-Regular.ttf
+  # fonts:
+  #   - family: Raleway
+  #     fonts:
+  #       - asset: assets/fonts/Raleway-Regular.ttf
+  #       - asset: assets/fonts/Raleway-Italic.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/Raleway-SemiBold.ttf
+  #         weight: 600
+  #   - family: AbrilFatface
+  #     fonts:
+  #       - asset: assets/fonts/abrilfatface/AbrilFatface-Regular.ttf
