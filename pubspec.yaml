@@ -45,7 +45,7 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-  uses-material-design: true
+  uses-material-design: true # 使用icon
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -54,6 +54,7 @@ flutter:
   assets:
     - web/icons/icon-192.png
     - web/icons/icon-512.png
+    - images/avatar.png # 4/25,学习基础图片组件
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -364,3 +364,22 @@ ssi: 服务器端渲染,
 - 基础组件 按钮
 - 昨天的字体引入有问题: 导致无法运行程序
 > 字体先不管,提交了一个issue继续写按钮的
+
+#### 4/25
+- 图片和icon
+> ImageProvider 是一个抽象类,
+> 就是定义了图片获取接口(load)
+> image
+> >　包括
+> > AssetsImage: 定义从assets加载图片
+> > NetworkImage: 定义从network加载图片
+> > 使用image的属性
+> > `SingleChildScrollView`,这玩意可以实现滚动
+> > `EdgeInsets`,`SizedBox`,`BoxFit`, 这些widget相当于见过了
+> 对 child 使用 .map 和 toList 也是见过了(就是把数组里面的每一个部件进行过滤和加工处理)
+> > 类型判断`A is B`
+> > 注意:
+> > flutter 缓存图片数量最大1000,图片内存最大100m
+> icon
+> >　[查看所有的icons](https://material.io/tools/icons/)
+> > 使用map的时候的问题(baseWidgetImg的49行注释)
