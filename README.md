@@ -383,3 +383,10 @@ ssi: 服务器端渲染,
 > icon
 > >　[查看所有的icons](https://material.io/tools/icons/)
 > > 使用map的时候的问题(baseWidgetImg的49行注释)
+
+#### 4/26
+> icon
+> > 使用meaterialIcons
+> > `MainAxisAlignment`
+> > 使用引入字体(ttf格式)
+> > 无法引入字体文件并使用(原因是因为,修改了pubspec文件需要重新启动项目,而且控制台已经报错了)

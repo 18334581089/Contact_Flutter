@@ -8,6 +8,7 @@ import 'package:flutter_app_vscode/statusManagement/StatusMain.dart';
 import 'package:flutter_app_vscode/baseWidget/baseWidget.dart';
 import 'package:flutter_app_vscode/baseWidget/baseWidgetButton.dart';
 import 'package:flutter_app_vscode/baseWidget/baseWidgetImg.dart';
+import 'package:flutter_app_vscode/baseWidget/baseWidgetIcon.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "baseWidgetIcon": (context) => baseWidgetIcon(),
           "baseWidgetImg": (context) => baseWidgetImg(),
           "BaseWidgetButton": (context) => BaseWidgetButton(),
           "BaseWidget": (context) => BaseWidget(),
@@ -146,6 +148,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "baseWidgetImg");
               },
               child: Text("open baseWidgetImg"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "baseWidgetIcon");
+              },
+              child: Text("open baseWidgetIcon"),
             ),
           ],
         ),
