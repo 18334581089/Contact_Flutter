@@ -390,3 +390,10 @@ ssi: 服务器端渲染,
 > > `MainAxisAlignment`
 > > 使用引入字体(ttf格式)
 > > 无法引入字体文件并使用(原因是因为,修改了pubspec文件需要重新启动项目,而且控制台已经报错了)
+
+#### 4/27
+> 表单
+> > Switch 和 Checkbox 都继承StatefulWidget,但是他们本身不会保存状态,父级来管理
+> > `No Material widget found Switch widgets require a Material widget ancestor`
+> > 使用switch需要再material的scaffold组件下使用
+> 下一个,表单的控制焦点
