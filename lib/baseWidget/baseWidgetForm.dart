@@ -24,15 +24,21 @@ class TestRoute extends StatefulWidget {
   _TestRouteState createState() => new _TestRouteState();
 }
 
+FocusNode fn1 = new FocusNode();
+FocusNode fn2 = new FocusNode();
+
 class _TestRouteState extends State<TestRoute> {
   bool _seleted1 = true;
   bool _seleted2 = true;
 
   var inputVal = '';
 
+  FocusScopeNode focusScopeNode;
+
   @override
   Widget build(BuildContext context) {
     initState();
+
     return Scaffold(
         appBar: AppBar(
           title: Text('基础表单'),
@@ -81,6 +87,69 @@ class _TestRouteState extends State<TestRoute> {
               },
               controller: _unameController,
             ),
+            Text('控制焦点'),
+            TextField(
+              autofocus: true,
+              focusNode: fn1,
+              decoration: InputDecoration(labelText: 'input1'),
+            ),
+            TextField(
+                focusNode: fn2,
+                decoration: InputDecoration(labelText: 'input2')),
+            ElevatedButton(
+              onPressed: () {
+                if (null == focusScopeNode) {
+                  focusScopeNode = FocusScope.of(context);
+                }
+                focusScopeNode.requestFocus(fn2);
+              },
+              child: Text('移动焦点'),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  fn1.unfocus();
+                  fn2.unfocus();
+                },
+                child: Text('隐藏键盘(就是除去当前所有焦点)')),
+            Text('decoration 修饰样式'),
+            TextField(
+              decoration: InputDecoration(
+                  labelText: "请输入用户名",
+                  prefixIcon: Icon(Icons.launch),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.cyan)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red))),
+            ),
+            Text('通过主题修改输入框样式'),
+            Theme(
+                data: Theme.of(context).copyWith(
+                    hintColor: Colors.brown[900], //定义下划线颜色
+                    inputDecorationTheme: InputDecorationTheme(
+                        labelStyle:
+                            TextStyle(color: Colors.brown), //定义label字体样式
+                        hintStyle: TextStyle(
+                            color: Colors.brown[800], fontSize: 14.0) //定义提示文本样式
+                        )),
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: "用户名(注意我的颜色brown)",
+                          hintText: "用户名或邮箱(注意我的颜色是默认的brown)",
+                          prefixIcon: Icon(Icons.person)),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock),
+                          labelText: "密码(注意我的颜色brown)",
+                          hintText: "您的登录密码(注意我的颜色被修改为blueGrey)",
+                          hintStyle: TextStyle(
+                              color: Colors.blueGrey[900], fontSize: 13.0)),
+                      obscureText: true,
+                    )
+                  ],
+                ))
           ],
         )));
   }
@@ -91,5 +160,9 @@ TextEditingController _unameController = TextEditingController();
 void initState() {
   _unameController.addListener(() {
     print('controller addListener' + _unameController.text);
+  });
+
+  fn1.addListener(() {
+    print(fn1.hasFocus);
   });
 }

@@ -392,8 +392,16 @@ ssi: 服务器端渲染,
 > > 无法引入字体文件并使用(原因是因为,修改了pubspec文件需要重新启动项目,而且控制台已经报错了)
 
 #### 4/27
-> 表单
+> 表单中switch和checkbox
 > > Switch 和 Checkbox 都继承StatefulWidget,但是他们本身不会保存状态,父级来管理
-> > `No Material widget found Switch widgets require a Material widget ancestor`
-> > 使用switch需要再material的scaffold组件下使用
+> > `No Material widget found Switch widgets require a Material widget ancestor`使用switch需要再material的scaffold组件下使用
 > 下一个,表单的控制焦点
+
+#### 4/29
+> 表单: 空值焦点
+> > FocusNode 和 FocusScopeNode来控制焦点
+> > `autofocus: true`, 一个页面中同时两个默认获取焦点,第一个获取到
+> > `FocusNode.unfocus`: 失去焦点
+> > `FocusScope.of(context)` 来获取Widget树中默认的FocusScopeNode
+> 主题色: 按钮和输入框的默认颜色就是主题色中的hintColor
+>
