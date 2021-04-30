@@ -404,4 +404,14 @@ ssi: 服务器端渲染,
 > > `FocusNode.unfocus`: 失去焦点
 > > `FocusScope.of(context)` 来获取Widget树中默认的FocusScopeNode
 > 主题色: 按钮和输入框的默认颜色就是主题色中的hintColor
->
+
+#### 4/30
+> 继续按钮
+> > 昨天　的　Theme　是个组件．．．理解上还有点问题
+> > theme 将主题应用于字类
+> >　1 描述排版, 颜色
+> >　2 全局theme,MaterialApp 创建(可以局部使用)
+> > 问题:　如何实现表单域的滚动效果
+> > 没有解决这个问题
+> 往下 form
+> > 

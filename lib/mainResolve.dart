@@ -10,6 +10,7 @@ import 'package:flutter_app_vscode/baseWidget/baseWidgetButton.dart';
 import 'package:flutter_app_vscode/baseWidget/baseWidgetImg.dart';
 import 'package:flutter_app_vscode/baseWidget/baseWidgetIcon.dart';
 import 'package:flutter_app_vscode/baseWidget/baseWidgetForm.dart';
+import 'package:flutter_app_vscode/baseWidget/BaseForm.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "BaseForm": (context) => BaseForm(),
           "baseWidgetForm": (context) => TestRoute(),
           "baseWidgetIcon": (context) => baseWidgetIcon(),
           "baseWidgetImg": (context) => baseWidgetImg(),
@@ -162,6 +164,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "baseWidgetForm");
               },
               child: Text("open baseWidgetForm"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseForm");
+              },
+              child: Text("open BaseForm"),
             ),
           ],
         ),
