@@ -71,24 +71,26 @@ Widget _form = Form(
             child: Row(children: <Widget>[
               Expanded(
                   child: ElevatedButton(
-                      child: Text('click'),
+                      child: Text('click(当前无法通过Form.of(context)获取form)'),
                       onPressed: () {
                         if ((_formKey.currentState as FormState).validate()) {
                           print('ok');
                         }
                       }))
             ])),
-        Expanded(child: Builder(
-          builder: (context) {
-            return ElevatedButton(
-              onPressed: () {
-                if (Form.of(context).validate()) {
-                  print('ok');
-                }
-              },
-              child: Text('使用 Builder 就可以用Form.of方法获取form'),
-            );
-          },
-        ))
+        Expanded(
+          child: Builder(
+            builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  if (Form.of(context).validate()) {
+                    print('ok');
+                  }
+                },
+                child: Text('使用 Builder 就可以用Form.of方法获取form'),
+              );
+            },
+          ),
+        )
       ],
     ));
