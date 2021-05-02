@@ -12,6 +12,7 @@ import 'package:flutter_app_vscode/baseWidget/baseWidgetIcon.dart';
 import 'package:flutter_app_vscode/baseWidget/baseWidgetForm.dart';
 import 'package:flutter_app_vscode/baseWidget/BaseForm.dart';
 import 'package:flutter_app_vscode/baseWidget/BaseProgressBar.dart';
+import 'package:flutter_app_vscode/baseLayout/BaseLayout1.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "BaseLayout1": (context) => BaseLayout1(),
           "BaseProgressBar": (context) => BaseProgressBar(),
           "BaseForm": (context) => BaseForm(),
           "baseWidgetForm": (context) => TestRoute(),
@@ -178,6 +180,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "BaseProgressBar");
               },
               child: Text("open BaseProgressBar"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout1");
+              },
+              child: Text("open BaseLayout1"),
             ),
           ],
         ),

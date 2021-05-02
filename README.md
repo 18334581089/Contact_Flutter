@@ -421,4 +421,13 @@ ssi: 服务器端渲染,
 > > 问题: 不知道为什么按钮沾满了个剩余高度.
 > > 理解`使用 Builder`: 使用builder的目的是改变当前context.(初步理解)
 > 进度指示器
-> 
+
+#### 5/2
+> 布局
+> > flutter布局简介
+> >　根据是否包含字节点把widget分成了三类(布局类组件都是有子组件的)
+> >　LeafRenderObjectWidget,SingleChildRenderObjectWidget,MultiChildRenderObjectWidget
+> > 1 布局类组件就是直接或间接包含MultiChildRenderObjectWidget的widget
+> > 2 一般都有children用域接受widget
+> > 3 继承关系: widget > RenderObjectWidget > (上面三类)
+> > RenderObjectWidget 定义了创建更新 RenderObject的方法
