@@ -411,14 +411,14 @@ ssi: 服务器端渲染,
 > > theme 将主题应用于字类
 > >　1 描述排版, 颜色
 > >　2 全局theme,MaterialApp 创建(可以局部使用)
-> > 问题:　如何实现表单域的滚动效果
+> > ***问题:　如何实现表单域的滚动效果***
 > > 没有解决这个问题
 > 往下 form
 
 #### 5/1 (劳动节)
 > form
 > > `expanded`, 类似于column,row,flex 用来展示多个组件集合的组件
-> > 问题: 不知道为什么按钮沾满了个剩余高度.
+> > ***问题: 不知道为什么按钮沾满了个剩余高度.***
 > > 理解`使用 Builder`: 使用builder的目的是改变当前context.(初步理解)
 > 进度指示器
 
@@ -431,3 +431,15 @@ ssi: 服务器端渲染,
 > > 2 一般都有children用域接受widget
 > > 3 继承关系: widget > RenderObjectWidget > (上面三类)
 > > RenderObjectWidget 定义了创建更新 RenderObject的方法
+> 线性布局: row 和 column
+
+#### 5/3
+> 接着说线性布局
+> > row , column
+> > ***问题: 使用column嵌套子级 时会默认沾满高度,但是我的没有,***
+> > 如果column嵌套column ,并且想让子级column高度占满column使用Expanded组件
+> 下面时弹性布局
+> > flex , expanded
+> > `因为Row和Column都继承自Flex`
+> > `Spacer创建一个可调整的空间隔，可用于调整Flex容器（如行或列）中窗口小部件之间的间距。(包装好的expanded)`
+> > 和示例有点差别
