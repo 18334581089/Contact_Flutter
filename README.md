@@ -452,3 +452,29 @@ ssi: 服务器端渲染,
 > > `Flow`
 > > 自定义布局和性能要求高的情况(性能好,灵活)
 > > 比wrap复杂,必须指定父组件大小.
+
+#### 5/5
+- 层叠布局
+> > `stack positioned`
+> > 相当于position: relative和position: absolute
+- 对齐,align
+> > `FlutterLogo`
+> > `Alingnment`
+> > 1 布局时: Alingnment 会以矩形的中心点作为坐标原点,
+> > 理解: 数值 和 静态常量得写法
+> > > `Alignment(-1.0, -1.0)` = `Alignment.topLeft` 表示左顶点,
+> > > `Alignment(1.0, -1.0)` = `Alignment.topRight` 表示右顶点
+> > 2 坐标转换公式 布局
+> > `(Alignment.x*childWidth/2+childWidth/2, Alignment.y*childHeight/2+childHeight/2)`
+> > >　上面得 `childWidth　childHeight` 表示子元素宽高
+> > > 上面两个式子算出来的时子元素实际偏移量(相对于左上角)
+> > `FractionalOffset`
+> > 这个和alignment一样都是用来定位的,区别在于: 他是用左上角来定位(和web一样)
+> > 坐标转换公式: `(FractionalOffse.x * childWidth, FractionalOffse.y * childHeight)`
+- 对比(align和stack)
+1. 定位参考体系不同
+2. Stack可以有多个子元素
+3. (相当于web里面的 text-align和position 的区别)
+- `Center`组件
+> > 继承了`Align` 对齐方式确定（Alignment.center）
+> > `DecoratedBox`: 可以在其子组件绘制前(或后)绘制一些装饰（Decoration），如背景、边框、渐变等
