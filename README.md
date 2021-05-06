@@ -478,3 +478,9 @@ ssi: 服务器端渲染,
 - `Center`组件
 > > 继承了`Align` 对齐方式确定（Alignment.center）
 > > `DecoratedBox`: 可以在其子组件绘制前(或后)绘制一些装饰（Decoration），如背景、边框、渐变等
+
+#### 5/6
+- 容器类组件(竟然还挺快的)
+> > `padding`
+> > 尺寸限制类组件
+> > > `ConstrainedBox、SizedBox、UnconstrainedBox、AspectRatio`

@@ -17,6 +17,7 @@ import 'package:flutter_app_vscode/baseLayout/BaseLayout2.dart';
 import 'package:flutter_app_vscode/baseLayout/BaseLayout3.dart';
 import 'package:flutter_app_vscode/baseLayout/BaseLayout4.dart';
 import 'package:flutter_app_vscode/baseLayout/BaseLayout5.dart';
+import 'package:flutter_app_vscode/baseContainer/basePadding.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "BasePadding": (context) => BasePadding(),
           "BaseLayout5": (context) => BaseLayout5(),
           "BaseLayout4": (context) => BaseLayout4(),
           "BaseLayout3": (context) => BaseLayout3(),
@@ -218,6 +220,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "BaseLayout5");
               },
               child: Text("open BaseLayout5"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BasePadding");
+              },
+              child: Text("open BasePadding"),
             ),
           ],
         ),
