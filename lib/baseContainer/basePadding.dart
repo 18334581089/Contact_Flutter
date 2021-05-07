@@ -40,22 +40,6 @@ class BasePadding extends StatelessWidget {
               ],
             ),
           ),
-          Text('ConstrainedBox.constraints 对子组件额外约束'),
-          Text('constraints: BoxConstraints类用来设置限制(另外它还可以通过便捷函数设置限制'),
-          Text('父元素: ConstrainedBox(minHeight: 50)'),
-          Text('子元素: Container(height: 5)'),
-          Text('父元素生效了'),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-                minWidth: double.infinity, // 宽度尽可能大
-                minHeight: 50.0 // 最小高度为50像素
-                ),
-            child: Container(
-                height: 5.0,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(color: Colors.red),
-                )),
-          )
         ],
       ),
     );
