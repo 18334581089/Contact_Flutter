@@ -1,4 +1,4 @@
-#### 这是我的第一个flutter项目,我想通过项目实战来学习这一门技术,项目实战的地址(https://book.flutterchina.club/);
+#### 这是我的第一个flutter项目,我想通过项目实战来学习这一门技术,资料的地址(https://book.flutterchina.club/);
 # flutter_app_vscode
 
 A new Flutter project.
@@ -490,3 +490,23 @@ ssi: 服务器端渲染,
 > > `SizeBox`
 > > 多个父元素尺寸限制
 > > `UnconstrainedBox`
+
+
+#### 5/8
+- 装饰组件
+> > `DecoratedBox`
+```
+decoration: BoxDecoration(
+  Color color, //颜色
+  DecorationImage image,//图片
+  BoxBorder border, //边框
+  BorderRadiusGeometry borderRadius, //圆角
+  List<BoxShadow> boxShadow, //阴影,可以指定多个
+  Gradient gradient, //渐变
+  BlendMode backgroundBlendMode, //背景混合模式
+  BoxShape shape = BoxShape.rectangle, //形状
+)
+```
+> > `LinearGradient` 用域定义线性渐变的类(还有其他定义渐变的类)
+- 变换组件
+> > `transForm`
