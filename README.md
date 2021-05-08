@@ -510,3 +510,13 @@ decoration: BoxDecoration(
 > > `LinearGradient` 用域定义线性渐变的类(还有其他定义渐变的类)
 - 变换组件
 > > `transForm`
+
+#### 5/9
+- `RotatendBox`
+- `Container`
+> > 本身不具备RendeObject,
+> > 可以装饰变化限制
+> > 因为: 他集合了很多其他组件功能: decoratedBox,constrainedBox,trnasform,padding,align
+> > 设置宽高: constraints 或者 width/height, 后者优先
+> > 设置背景: color 和 decoration,(只能设置一个)
+***Flutter Gallery是Flutter官方提供的Flutter Demo，源码位于flutter源码中的examples目录下，笔者强烈建议用户将Flutter Gallery示例跑起来，它是一个很全面的Flutter示例应用，是非常好的参考Demo，也是笔者学习Flutter的第一手资料。***

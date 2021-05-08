@@ -61,7 +61,7 @@ class BaseLayout5 extends StatelessWidget {
                 heightFactor: 1,
                 child: Text("xxx"),
               ),
-            )
+            ),
           ],
         )));
   }
