@@ -519,4 +519,21 @@ decoration: BoxDecoration(
 > > 因为: 他集合了很多其他组件功能: decoratedBox,constrainedBox,trnasform,padding,align
 > > 设置宽高: constraints 或者 width/height, 后者优先
 > > 设置背景: color 和 decoration,(只能设置一个)
-***Flutter Gallery是Flutter官方提供的Flutter Demo，源码位于flutter源码中的examples目录下，笔者强烈建议用户将Flutter Gallery示例跑起来，它是一个很全面的Flutter示例应用，是非常好的参考Demo，也是笔者学习Flutter的第一手资料。***
+- ***Flutter Gallery是Flutter官方提供的Flutter Demo，源码位于flutter源码中的examples目录下，笔者强烈建议用户将Flutter Gallery示例跑起来，它是一个很全面的Flutter示例应用，是非常好的参考Demo，也是笔者学习Flutter的第一手资料。***
+> > `Could not find a command named "channer".
+> > flutter多写一个t
+> > > Setting "enable-windows-desktop" value to "true".
+> > > 
+> > > You may need to restart any open editors for them to read new settings.
+***控制台报错: Unexpected child "deferred-components" found under "flutter".***
+
+#### 5/10
+- github user 1: Jun Shi Yan
+- github user 1: 李泽鹏
+
+```
+@DhavalRKansara Your Flutter is on the stable channel. As mentioned previously, the gallery runs off the master channel, to which you can switch with
+
+flutter channel master
+flutter upgrade
+```
