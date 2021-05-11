@@ -537,3 +537,20 @@ decoration: BoxDecoration(
 flutter channel master
 flutter upgrade
 ```
+
+#### 5/11
+- gallery
+> > 无法执行
+> > 命令: `flutter channel`	列表或开关Flutter通道。
+> > 命令: `flutter create .`	创建一个新的Flutter项目。
+> > 命令: `flutter upgrade`	升级你的Flutter副本。
+> 重新执行master 和 upgrade, **Please install the "Desktop development with C++" workload, including all of its default components**
+> 答案: `https://www.cnblogs.com/hbolin/p/12727186.html`
+> > `可以看出来，需要下载Visual Studio：里面有提示下载的地址：https://visualstudio.microsoft.com/downloads/`
+1. 打开网站下载
+2. 打开安装包,点确认
+3. 点击添加负荷
+4. 选中:` "Desktop development with C++"`
+5. 选中: `Windows 10 SDK (10.0.17763.0)`(Windows 10 SDK (10.0.17763.0) ，需要下载的是10.0.17763.0这个版本的)
+6. 选择下载路径,点击安装
+> > 这个问题和昨天的问题有关联,具体(https://zhuanlan.zhihu.com/p/91686888)
