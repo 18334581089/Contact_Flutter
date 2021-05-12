@@ -569,3 +569,13 @@ flutter upgrade
 > 报错: 还是`Unexpected child "deferred-components" found under "flutter"`(也就是说,我通过下载安装上面c++那个软件并没有用 或者 我使用错误)
 > 没有解决, 忽略直接run(还是报错)
 > 晚上看
+> 答案就放在那,我解决不了问题(问)
+> 问群里
+```
+如果你的电脑没有在开发者模式，使用插件会出错。 你可以在设置-->更新和安全-->开发者选项里设置
+
+Building with plugins requires symlink support. Please enable Developer Mode in your system settings
+```
+- 重新 clone
+- 失败
+- 决定随缘,不写了
