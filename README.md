@@ -544,13 +544,28 @@ flutter upgrade
 > > 命令: `flutter channel`	列表或开关Flutter通道。
 > > 命令: `flutter create .`	创建一个新的Flutter项目。
 > > 命令: `flutter upgrade`	升级你的Flutter副本。
-> 重新执行master 和 upgrade, **Please install the "Desktop development with C++" workload, including all of its default components**
-> 答案: `https://www.cnblogs.com/hbolin/p/12727186.html`
-> > `可以看出来，需要下载Visual Studio：里面有提示下载的地址：https://visualstudio.microsoft.com/downloads/`
+> 重新执行master 和 upgrade,执行`flutter upgrade` 自动执行一次`flutter doctor`,出现错误:  **Please install the "Desktop development with C++" workload, including all of its default components**
+> 下面是根据博客上的文章执行的: 安装`visual studio` (它和vscode的区分查看: https://www.zhihu.com/question/384334551)
 1. 打开网站下载
 2. 打开安装包,点确认
 3. 点击添加负荷
 4. 选中:` "Desktop development with C++"`
 5. 选中: `Windows 10 SDK (10.0.17763.0)`(Windows 10 SDK (10.0.17763.0) ，需要下载的是10.0.17763.0这个版本的)
 6. 选择下载路径,点击安装
-> > 这个问题和昨天的问题有关联,具体(https://zhuanlan.zhihu.com/p/91686888)
+7. 执行flutter doctor
+> > ***这个问题和昨天的问题有关联,具体内容查看(https://zhuanlan.zhihu.com/p/91686888)***
+
+
+#### 5/12
+- gallery
+- 首先重新执行 `flutter doctor`
+> 其他: 如何查看flutter 版本并切换1 `查看flutter --version` 2 `flutter versioin` 3 `flutter versioin vxxx`(版本号)
+- 然后执行 `flutter channel stable`
+- 然后执行 `flutter upgrade `
+> 报错 ***unable to access 'https://github.com/flutter/flutter.git/'***
+> 应该是网络问题导致的,重新来一次(如果不行就配置代理,这个回头在学)
+- 然后`to run the app on Windows:`,执行: `flutter config --enable-windows-desktop`
+- 然后执行`flutter create .`
+> 报错: 还是`Unexpected child "deferred-components" found under "flutter"`(也就是说,我通过下载安装上面c++那个软件并没有用 或者 我使用错误)
+> 没有解决, 忽略直接run(还是报错)
+> 晚上看
