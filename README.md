@@ -579,3 +579,11 @@ Building with plugins requires symlink support. Please enable Developer Mode in 
 - 重新 clone
 - 失败
 - 决定随缘,不写了
+
+#### 5/13
+- marterial 
+> > 组件名称:	解释
+> > AppBar:	一个导航栏骨架
+> > MyDrawer:	抽屉菜单
+> > BottomNavigationBar:	底部导航栏
+> > FloatingActionButton:	漂浮按钮

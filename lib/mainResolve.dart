@@ -20,6 +20,7 @@ import 'package:flutter_app_vscode/baseLayout/BaseLayout5.dart';
 import 'package:flutter_app_vscode/baseContainer/basePadding.dart';
 import 'package:flutter_app_vscode/baseContainer/BaseConstrained.dart';
 import 'package:flutter_app_vscode/baseContainer/baseTransform.dart';
+import 'package:flutter_app_vscode/baseMaterial/baseMaterial1.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "baseMaterial1": (context) => BaseMaterial1(),
           "BaseTransform": (context) => BaseTransform(),
           "BaseConstrained": (context) => BaseConstrained(),
           "BasePadding": (context) => BasePadding(),
@@ -59,9 +61,12 @@ class MyApp extends StatelessWidget {
           "baseWidgetImg": (context) => baseWidgetImg(),
           "BaseWidgetButton": (context) => BaseWidgetButton(),
           "BaseWidget": (context) => BaseWidget(),
-          "StatusMain": (context) => StatusMain(), // 普通路由注册
+          "StatusMain": (context) => StatusMain(),
           "counter_widget": (context) => CounterWidget(), // 普通路由注册
           "new_page2": (context) {
+            return TipRoute(text: ModalRoute.of(context).settings.arguments);
+          },
+          "BaseMaterial1": (context) {
             return TipRoute(text: ModalRoute.of(context).settings.arguments);
           },
           "": (context) => MyHomePage(title: 'flutter Demo Home Page')
@@ -207,41 +212,49 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("open BaseLayout2"),
             ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, "BaseLayout3");
+            //   },
+            //   child: Text("open BaseLayout3"),
+            // ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, "BaseLayout4");
+            //   },
+            //   child: Text("open BaseLayout4"),
+            // ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, "BaseLayout5");
+            //   },
+            //   child: Text("open BaseLayout5"),
+            // ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, "BasePadding");
+            //   },
+            //   child: Text("open BasePadding"),
+            // ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, "BaseConstrained");
+            //   },
+            //   child: Text("open BaseConstrained"),
+            // ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, "BaseTransform");
+            //   },
+            //   child: Text("open BaseTransform"),
+            // ),
             TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "BaseLayout3");
+              onPressed: () async {
+                var result = await Navigator.pushNamed(context, "baseMaterial1",
+                    arguments: "命名路由传参数");
+                print(result); // 还是可以异步传参的
               },
-              child: Text("open BaseLayout3"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "BaseLayout4");
-              },
-              child: Text("open BaseLayout4"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "BaseLayout5");
-              },
-              child: Text("open BaseLayout5"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "BasePadding");
-              },
-              child: Text("open BasePadding"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "BaseConstrained");
-              },
-              child: Text("open BaseConstrained"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "BaseTransform");
-              },
-              child: Text("open BaseTransform"),
+              child: Text("open baseMaterial1"),
             ),
           ],
         ),
