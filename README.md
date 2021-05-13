@@ -587,3 +587,10 @@ Building with plugins requires symlink support. Please enable Developer Mode in 
 > > MyDrawer:	抽屉菜单
 > > BottomNavigationBar:	底部导航栏
 > > FloatingActionButton:	漂浮按钮
+
+(看react native 官网)
+(
+  1. 文档的交互示例,组件类型(函数和class),提示
+  2. 核心组件和原生组件(该看这个了)
+  3. 
+)
