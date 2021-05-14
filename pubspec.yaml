@@ -55,6 +55,7 @@ flutter:
     - web/icons/icon-192.png
     - web/icons/icon-512.png
     - images/avatar.png # 4/25,学习基础图片组件
+    - images/avatar.jpg # 4/25,学习基础图片组件
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

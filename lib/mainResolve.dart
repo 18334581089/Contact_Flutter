@@ -212,42 +212,42 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("open BaseLayout2"),
             ),
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, "BaseLayout3");
-            //   },
-            //   child: Text("open BaseLayout3"),
-            // ),
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, "BaseLayout4");
-            //   },
-            //   child: Text("open BaseLayout4"),
-            // ),
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, "BaseLayout5");
-            //   },
-            //   child: Text("open BaseLayout5"),
-            // ),
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, "BasePadding");
-            //   },
-            //   child: Text("open BasePadding"),
-            // ),
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, "BaseConstrained");
-            //   },
-            //   child: Text("open BaseConstrained"),
-            // ),
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, "BaseTransform");
-            //   },
-            //   child: Text("open BaseTransform"),
-            // ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout3");
+              },
+              child: Text("open BaseLayout3"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout4");
+              },
+              child: Text("open BaseLayout4"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout5");
+              },
+              child: Text("open BaseLayout5"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BasePadding");
+              },
+              child: Text("open BasePadding"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseConstrained");
+              },
+              child: Text("open BaseConstrained"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseTransform");
+              },
+              child: Text("open BaseTransform"),
+            ),
             TextButton(
               onPressed: () async {
                 var result = await Navigator.pushNamed(context, "baseMaterial1",

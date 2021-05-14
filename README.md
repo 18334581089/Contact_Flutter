@@ -594,3 +594,15 @@ Building with plugins requires symlink support. Please enable Developer Mode in 
   2. 核心组件和原生组件(该看这个了)
   3. 
 )
+
+#### 5/14
+- `Tab`
+```
+Tab({
+  Key key,
+  this.text, // 菜单文本
+  this.icon, // 菜单图标
+  this.child, // 自定义组件样式
+})
+```
+> > 使用任何图片都需要在yaml文件先引入
