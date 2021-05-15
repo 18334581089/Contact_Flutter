@@ -1,96 +1,131 @@
+// 1
 import 'package:flutter/material.dart';
+import 'package:flutter_app_vscode/route.dart';
+import 'package:flutter_app_vscode/tipRoute.dart';
+import 'package:flutter_app_vscode/counterWidget.dart';
+import 'package:flutter_app_vscode/routerTestRoute.dart';
+import 'package:flutter_app_vscode/statusManagement/StatusMain.dart';
+import 'package:flutter_app_vscode/baseWidget/baseWidget.dart';
+import 'package:flutter_app_vscode/baseWidget/baseWidgetButton.dart';
+import 'package:flutter_app_vscode/baseWidget/baseWidgetImg.dart';
+import 'package:flutter_app_vscode/baseWidget/baseWidgetIcon.dart';
+import 'package:flutter_app_vscode/baseWidget/baseWidgetForm.dart';
+import 'package:flutter_app_vscode/baseWidget/BaseForm.dart';
+import 'package:flutter_app_vscode/baseWidget/BaseProgressBar.dart';
+import 'package:flutter_app_vscode/baseLayout/BaseLayout1.dart';
+import 'package:flutter_app_vscode/baseLayout/BaseLayout2.dart';
+import 'package:flutter_app_vscode/baseLayout/BaseLayout3.dart';
+import 'package:flutter_app_vscode/baseLayout/BaseLayout4.dart';
+import 'package:flutter_app_vscode/baseLayout/BaseLayout5.dart';
+import 'package:flutter_app_vscode/baseContainer/basePadding.dart';
+import 'package:flutter_app_vscode/baseContainer/BaseConstrained.dart';
+import 'package:flutter_app_vscode/baseContainer/baseTransform.dart';
+import 'package:flutter_app_vscode/baseMaterial/baseMaterial1.dart';
+import 'package:flutter_app_vscode/baseClip/baseClip.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// 引入包Material UI
+// Material是标准的移动端和web端的视觉设计语言
+// Material UI 是flutter默认提供的一套Material ui组件
 
+// 2
+void main() => runApp(MyApp());
+// main函数是应用程序入口(用来启动flutter应用), 和java类似
+// runApp 函数 接受一个Widget参数(Widget 树: 可以暂时理解位dom树)(Widget: 部件)
+// MyApp 函数 是flutter应用的根组件
+
+// 3
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return new MaterialApp(
+        title: 'Flutter Demo',
+        theme: new ThemeData(
+          primarySwatch: Colors.indigo,
+        ),
+        home: new MyHomePage(
+          title: ('Flutter Demo Home Page'),
+        ),
+        routes: {
+          "BaseClip": (context) => BaseClip(),
+          "baseMaterial1": (context) => BaseMaterial1(),
+          "BaseTransform": (context) => BaseTransform(),
+          "BaseConstrained": (context) => BaseConstrained(),
+          "BasePadding": (context) => BasePadding(),
+          "BaseLayout5": (context) => BaseLayout5(),
+          "BaseLayout4": (context) => BaseLayout4(),
+          "BaseLayout3": (context) => BaseLayout3(),
+          "BaseLayout1": (context) => BaseLayout1(),
+          "BaseLayout2": (context) => BaseLayout2(),
+          "BaseProgressBar": (context) => BaseProgressBar(),
+          "BaseForm": (context) => BaseForm(),
+          "baseWidgetForm": (context) => TestRoute(),
+          "baseWidgetIcon": (context) => baseWidgetIcon(),
+          "baseWidgetImg": (context) => baseWidgetImg(),
+          "BaseWidgetButton": (context) => BaseWidgetButton(),
+          "BaseWidget": (context) => BaseWidget(),
+          "StatusMain": (context) => StatusMain(),
+          "counter_widget": (context) => CounterWidget(), // 普通路由注册
+          "new_page2": (context) {
+            return TipRoute(text: ModalRoute.of(context).settings.arguments);
+          },
+          "BaseMaterial1": (context) {
+            return TipRoute(text: ModalRoute.of(context).settings.arguments);
+          },
+          "": (context) => MyHomePage(title: 'flutter Demo Home Page')
+        },
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute(builder: (context) {
+            String routeName = settings.name;
+            print("出发了钩子函数, $routeName");
+            return MyHomePage(title: 'flutter Demo Home Page');
+          });
+        });
   }
 }
+// MyApp 代表了flutter应用
+// statelessWidget 类 flutter中的无状态空间,没有自己的私有数据,纯展示控件
+// 理解widget
+// 1 flutter 大多东西都是widget,相当于组件/部件,包括对其,填充,布局都是以widget的形式展示
+// 2 flutter 构建页面会调用build方法,widget的主要工作就是提供一个build方法描述如何构建ui
+// 理解 MaterialApp
+// 1 是Material库中提供的flutter app框架
+// 2 通过它可以设置应用的名称,主题,语言,首页,路由
+// 3 他自己本事也是一个widget
+// home 是flutter的首页(本身也是widget)
 
+// 4
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
-
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => new _MyHomePageState();
 }
+// StatefulWidget 类 有状态的组件
+// 状态组件区别
+// 1 stateful可以拥有状态,这些状态在widget声明周期中是可以改变的,而stateless是不可以改变的
+// 2 stateful至少由两个类组成,一个 StatefulWidget,另一个State
 
+// 5
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+      // setState: 重新执行build方法
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
+      //Scaffold: Material 页面脚手架(1 提供默认的导航栏,标题,主屏幕组件的body属性.2 创建路由.)
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
+          // column组件: 它的子组件会竖直排列
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('You have clicked the button this many time:'),
@@ -98,14 +133,156 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            // 体验路由push
+            TextButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return NewRoute();
+                }));
+              },
+              child: Text("open new route"),
+            ),
+            // 体验路由传参
+            RouterTestRoute(),
+            // state 组件
+            TextButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CounterWidget();
+                }));
+                // Navigator.pushNamed(context, "counter_widget");
+              },
+              child: Text("open counter_widget"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "StatusMain");
+              },
+              child: Text("open StatusMain"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseWidget");
+              },
+              child: Text("open BaseWidget"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseWidgetButton");
+              },
+              child: Text("open BaseWidgetButton"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "baseWidgetImg");
+              },
+              child: Text("open baseWidgetImg"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "baseWidgetIcon");
+              },
+              child: Text("open baseWidgetIcon"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "baseWidgetForm");
+              },
+              child: Text("open baseWidgetForm"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseForm");
+              },
+              child: Text("open BaseForm"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseProgressBar");
+              },
+              child: Text("open BaseProgressBar"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout1");
+              },
+              child: Text("open BaseLayout1"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout2");
+              },
+              child: Text("open BaseLayout2"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout3");
+              },
+              child: Text("open BaseLayout3"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout4");
+              },
+              child: Text("open BaseLayout4"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseLayout5");
+              },
+              child: Text("open BaseLayout5"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BasePadding");
+              },
+              child: Text("open BasePadding"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseConstrained");
+              },
+              child: Text("open BaseConstrained"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseTransform");
+              },
+              child: Text("open BaseTransform"),
+            ),
+            TextButton(
+              onPressed: () async {
+                var result = await Navigator.pushNamed(context, "baseMaterial1",
+                    arguments: "命名路由传参数");
+                print(result); // 还是可以异步传参的
+              },
+              child: Text("open baseMaterial1"),
+            ),
+            TextButton(
+              onPressed: () async {
+                var result = await Navigator.pushNamed(context, "BaseClip",
+                    arguments: "命名路由传参数");
+                print(result); // 还是可以异步传参的
+              },
+              child: Text("open BaseClip"),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        // 按钮组件
+        onPressed: _incrementCounter, // 点击事件
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
+// 注意 1
+// _MyHomePageState类是MyHomePage类对应的状态类
+// myhomepage的build方法挪到了_MyHomePageState中
+// 将build()方法放在State中的话，构建过程不仅可以直接访问状态，而且也无需公开私有状态，这会非常方便
+// 注意 2
+// @override 表示 下一行的方法是从父类/接口 继承过来的，需要重写一次，方便阅读，不怕忘记
+// 注意 3 
+// BuildContext 是一个抽象类 用来传递数据,build方法必须传(和构建 页面的element tree有关)

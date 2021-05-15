@@ -107,6 +107,8 @@ class _Material extends State<BaseMaterial1>
           mainAxisAlignment: MainAxisAlignment.spaceAround, //均分底部导航栏横向空间
         ),
       ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: _onAdd,
