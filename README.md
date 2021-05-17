@@ -617,3 +617,22 @@ Tab({
   ClipRect  剪裁子组件到实际占用的矩形大小（溢出部分剪裁）
 ```
 > 'CustomClipper' 'clip'
+
+#### 5/15
+1. react 能干什么：
+  用js访问移动平台的api
+  实现外观和行为，通过react ui 组件
+2. 基本概念
+  a. 视图： react ui的最小组成部分， 相当于flutter的widget，或者html的标签
+  b. 原生组件：react native 编写的应用和原生的一样，实质是对系统原生组件的封装（react native会把组件自动转换为系统的原生组件）（系统的原生组件：android的Kotlin或java编写视图，ios的swift或objective-c编写视图）。
+  c. 核心组件：基础/常用的原生组件。
+3. 和react一样的api
+  react components > react native components > core/native/community(第三方组件)
+  所以，接下来就是react的基础（组件，jsx，自定义组件，prop，state）
+  另外：jsx中传递一个 JS 对象值的时候，就必须用到两层括号：{{width: 200, height: 200}}。
+  另外：React.Fragment是抽象类，相当于小程序的block，写法`<> </>``<React.Fragment key={item.id}></React.Fragment>`
+***暂停，使用检视阅读先读一次***
+-检视阅读开始
+1：跳过不过的 2：重点看主要的
+a. 环境 ：译注：请注意！！！国内用户必须必须必须有稳定的代理软件，否则在下载、安装、配置过程中会不断遭遇链接超时或断开，无法进行开发工作。某些代理软件可能只提供浏览器的代理功能，或只针对特定网站代理等等，请自行研究配置或更换其他软件。总之如果报错中出现有网址，那么 99% 就是无法正常连接网络。
+全部看标题看了一遍，感觉，把这个看完，了解了react native 开发之前的所有理论知识，除了配置环境的时候可以实际操作一下，大部分都是需要自己理解的。不过，看完知道了这是一个大的领域，蛋蛋android和ios就是两个完全不同的世界。目前看来，会比flutter更好开发一些，但是我看的官网，所以理解起来可能不像实战书那么熟。决定还是先看文档。
