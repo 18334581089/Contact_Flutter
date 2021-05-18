@@ -653,3 +653,59 @@ a. 环境 ：译注：请注意！！！国内用户必须必须必须有稳定�
 > > > 只构建出现在当前视口的子组件一种性能优化(视口: ViewProt,当前widget的实际显示区域)
 > > > `SingleChildScrollView`不支持sliver
 - `singleChildScrollView`
+
+- react native: 入门组件
+> `TextInput`
+> > 注意 react 中的 onChange 对应的是 rn 中的 onChangeText
+> > 具有“动态状态”的最简单的组件
+> `ScrollView`
+> > 所有组件都会被渲染,不进行sliver,不适合长列表
+> > 再android和ios都有个子的区别
+> `flatList`
+> > 长列表: 立即渲染所有元素，而是优先渲染屏幕上可见的元素
+> `secionList`
+> > 长列表: 需要分组的数据
+- react native: 针对不同平台的处理
+> 方法一: `Platform`模块
+**适用于平常代码中解决不同平台的少量代码冲突**
+> > `Platform.OS`返回ios或这android
+```
+import { Platform, StyleSheet } from 'react-native';
+const styles = StyleSheet.create({
+  height: Platform.OS === 'ios' ? 200 : 100
+});
+```
+> > `Platform.Select()`直接返回设定的value值
+```
+import { Platform, StyleSheet } from 'react-native'
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    ...Platform.select({
+      ios: {
+        backgroundColor: 'red'
+      },
+      android: {
+        backgroundColor: 'blue
+      }
+    })
+  }
+})
+```
+*接受任何合法类型的参数,包括组件*
+> > `Platform.Version`, 返回android和ios的当前版本
+> > > 在 Android 上，Version属性是一个数字
+> > > 在 iOS 上,返回当前系统版本的字符串,比如可能是"10.3"。
+
+> 方法二: 特定平台扩展名
+**适用于:不同平台代码放在不同的文件里时**
+> > 目录下有俩文件
+```
+BigButton.ios.js
+BigButton.andorid.js
+```
+> > 引入时会根据不同平台引入对应的后缀
+```
+import BigButton from './BigButton';
+```
+***明天就是环境搭建***
