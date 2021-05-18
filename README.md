@@ -636,3 +636,20 @@ Tab({
 1：跳过不过的 2：重点看主要的
 a. 环境 ：译注：请注意！！！国内用户必须必须必须有稳定的代理软件，否则在下载、安装、配置过程中会不断遭遇链接超时或断开，无法进行开发工作。某些代理软件可能只提供浏览器的代理功能，或只针对特定网站代理等等，请自行研究配置或更换其他软件。总之如果报错中出现有网址，那么 99% 就是无法正常连接网络。
 全部看标题看了一遍，感觉，把这个看完，了解了react native 开发之前的所有理论知识，除了配置环境的时候可以实际操作一下，大部分都是需要自己理解的。不过，看完知道了这是一个大的领域，蛋蛋android和ios就是两个完全不同的世界。目前看来，会比flutter更好开发一些，但是我看的官网，所以理解起来可能不像实战书那么熟。决定还是先看文档。
+
+
+#### 5/18
+- 可滚动组件
+> > 默认超出会报错
+> > 可滚动组件直接或间接包含一个scrollable组件
+> > `scrollable`
+> > > axisDirection属性:滚动方向
+> > > physics属性:决定响应用户操作方式，接受scrollPhysics类型对象(包括ClampingScrollPhysics,和,bouncingScrollPhysics)
+> > > controller: 控制位置和监听事件,接受ScrollController类型对象
+> > `scrollbar`
+> > > 给可滚动组件加滚动条
+> > > 会在ios平台自动切换成`CupertinoScrollbar`(ios滚动条风格)
+> > `sliver`
+> > > 只构建出现在当前视口的子组件一种性能优化(视口: ViewProt,当前widget的实际显示区域)
+> > > `SingleChildScrollView`不支持sliver
+- `singleChildScrollView`

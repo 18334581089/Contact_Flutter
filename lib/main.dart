@@ -22,6 +22,7 @@ import 'package:flutter_app_vscode/baseContainer/BaseConstrained.dart';
 import 'package:flutter_app_vscode/baseContainer/baseTransform.dart';
 import 'package:flutter_app_vscode/baseMaterial/baseMaterial1.dart';
 import 'package:flutter_app_vscode/baseClip/baseClip.dart';
+import 'package:flutter_app_vscode/baseScroll/baseScroll1.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "BaseScroll1": (context) => BaseScroll1(),
           "BaseClip": (context) => BaseClip(),
           "baseMaterial1": (context) => BaseMaterial1(),
           "BaseTransform": (context) => BaseTransform(),
@@ -123,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           // column组件: 它的子组件会竖直排列
           mainAxisAlignment: MainAxisAlignment.center,
@@ -265,6 +267,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 print(result); // 还是可以异步传参的
               },
               child: Text("open BaseClip"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BaseScroll1");
+              },
+              child: Text("open BaseScroll1"),
             ),
           ],
         ),
