@@ -709,3 +709,23 @@ BigButton.andorid.js
 import BigButton from './BigButton';
 ```
 ***明天就是环境搭建***
+
+#### 5/19
+***23:00***
+在家没法运行flutter，
+先把native看一遍（环境配置）
+- 明确环境
+1. 区分开发平台
+2. 区分目标平台（在哪个平台使用）
+**想从一个平台转移另一个平台，查看官方进行对应的环境搭建就好（部分区别）**
+
+- 明确依赖
+1. node，JDK，android studio
+(android studio 是一个编译器，开发android应用的。开发时需要使用他提供的工具和环境)
+（node版本大于12）
+（JDK 是对java基础环境和相应开发平台标准和工具包的封装，安装版本必须是1.8,也称8版本）
+
+***不能使用淘宝镜像（cnpm）***
+
+（yarn是脸书替代npm的工具，可以加速node的下载，官方推荐使用yarn代替npm）
+
