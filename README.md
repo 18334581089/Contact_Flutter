@@ -17,9 +17,16 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 #### 3/11
+(https://flutterchina.club/setup-windows/)
 - 下载安装flutter, android studio,
 - 配置插件
 - 在 android studio 和 vscode 分别使用flutter创建一个空项目
+1. 
+使用镜像:(添加用户环境变量,flutter官方为中国开启的临时镜像,写在电脑的:系统属性>高级>用户环境变量里面)
+```
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+```
 
 #### 3/12
 - 简单学习dart语言
@@ -729,3 +736,16 @@ import BigButton from './BigButton';
 
 （yarn是脸书替代npm的工具，可以加速node的下载，官方推荐使用yarn代替npm）
 
+#### 5/20
+- (工作上使用taro  又熟练了一波)
+- 开始搭建rn环境
+- 本机已经安装android studio,(然后跟着官网走)
+- 以下是`Android 开发环境`
+1. 安装 Android Studio(注意 安装 Android sdk, Android sdk platform, Android virtual device)
+2. 安装 Android SDK (找官网,再配置中找到并且安装指定版本)
+3. 配置 ANDROID_HOME 环境变量
+4. 把一些工具目录添加到环境变量 Path
+- 以下开始创建项目
+1. `npx react-native init AwesomeTSProject --template react-native-template-typescript`使用ts模板创建rn项目
+(如果没有安装 react-native 会先安装这个)
+2. 接下来就是在 `react native` 的项目里面操作
