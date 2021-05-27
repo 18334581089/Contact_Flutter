@@ -762,3 +762,22 @@ import BigButton from './BigButton';
 - ListView 的 `separated`
 > separated和builder的区别就是,多了个`separatorBuilder`,根据条件控制列表的每一项
 ***问题: 无法使用word_pair构造出组件,baseScroll4无法渲染***
+
+#### 5/27
+- 上次报错原因: `listTile`必须包在`material`组件下
+> 学习上拉组件
+1. `initState`
+> > 使用主题颜色借鉴: `Theme.of(context).primaryColor`
+> > 为什么叫做状态: 针对于组件,组件的当前的状态就是组件的state
+> > 不使用箭头函数的stateFulWidget的createState方法
+```
+@override
+State<StatefulWidget> createState() {
+  return ScrollHomePageState();
+}
+```
+> > 找到了
+> > > initState() 方法是在创建 State 对象后要调用的第一个方法，常常用做于初始化一些数据
+> > 有点像钩子函数,类似的方法还有:didChangeDependencies() (initState() 方法执行完毕后执行的第二个方法)
+> > Widget: 部件, context: 当前Widget创建的element对象, state: element的状态
+2. 下次接着看吧(先看懂再说)
