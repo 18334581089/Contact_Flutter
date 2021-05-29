@@ -781,3 +781,34 @@ State<StatefulWidget> createState() {
 > > 有点像钩子函数,类似的方法还有:didChangeDependencies() (initState() 方法执行完毕后执行的第二个方法)
 > > Widget: 部件, context: 当前Widget创建的element对象, state: element的状态
 2. 下次接着看吧(先看懂再说)
+
+#### 5/29
+- 只想更新应用依赖的包(`pubspec.yaml` 中的依赖)
+> `flutter packages get` 或者 `flutter pub get`
+- 如果想看命令行命令, 输入 xxx -h 自己就可以看到
+> 实验 `flutter run`
+> > 执行后会有选择执行环境,然后会自动拉起设备
+> > 好处: 1 看到了命令
+> > > 应该和vscode启动的顶部菜单是一致的功能
+> > 坏处: 好像vs code 并没有打开 app运行的状态(底部的黄条,以及 顶部的功能菜单)
+> > 坏处: 无法自动更新
+- `f1` 
+> 看到常用的flutter命令
+> 输入`launch emulator`比较设备
+- 继续学习无限滚动组件
+> `Divider`
+> > 分割线组件
+> `Future.delayed(Duration(seconds: 2))`
+> > 相当于web里面的`setTimeout`
+> `generateWordPairs` 
+> >　english_words中的一个方法
+> >　用来模拟数据
+> `CircularProgressIndicator`
+> > 之前写过,是一个圆形进度条.可以用来做加载中的 icon
+- 滚动组件 添加固定表头
+> **使用文档中的内容,控制台会报错,原因不详(并且会打开一个文件)**
+> > 可能原因: 外层嵌套了`Column`所以会报错,直接放在`scaffold`的body没有报错
+> > 应该是因为我复制错了代码,文档中也说会出错,需要设置
+> 复制文档中的实例实现了顶部固定,底部滚动的效果
+> > 实现原理是,`Expanded`和`Column`(解决了适配不同屏幕的效果)
+> > 也可以公国material中的`sizeBox`来对高度进行计算,保证高度适配(没有第一个方法好)
