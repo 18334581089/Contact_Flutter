@@ -424,7 +424,31 @@ ssi: 服务器端渲染,
 
 #### 5/1 (劳动节)
 - form
-> > `expanded`, 类似于column,row,flex 用来展示多个组件集合的组件
+> > `Expanded`, 类似于column,row,flex 用来展示多个组件集合的组件
+> > > 封装Spacer组件(根据指定比例占位)
+```
+  Spacer(
+    flex: 1,
+  ),
+```
+```
+class Spacer extends StatelessWidget {
+  const Spacer({Key key, this.flex = 1})
+    : assert(flex != null),
+      assert(flex > 0),
+      super(key: key);
+  
+  final int flex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: flex,
+      child: const SizedBox.shrink(),
+    );
+  }
+}
+```
 > > ***问题: 不知道为什么按钮沾满了个剩余高度.***
 > > 理解`使用 Builder`: 使用builder的目的是改变当前context.(初步理解)
 - 进度指示器
@@ -446,9 +470,9 @@ ssi: 服务器端渲染,
 > > ***问题: 使用column嵌套子级 时会默认沾满高度,但是我的没有,***
 > > 如果column嵌套column ,并且想让子级column高度占满column使用Expanded组件
 - 下面时弹性布局
-> > flex , expanded
+> > flex , Expanded
 > > `因为Row和Column都继承自Flex`
-> > `Spacer创建一个可调整的空间隔，可用于调整Flex容器（如行或列）中窗口小部件之间的间距。(包装好的expanded)`
+> > `Spacer创建一个可调整的空间隔，可用于调整Flex容器（如行或列）中窗口小部件之间的间距。(包装好的Expanded)`
 > > 和示例有点差别
 
 #### 5/4
@@ -812,3 +836,13 @@ State<StatefulWidget> createState() {
 > 复制文档中的实例实现了顶部固定,底部滚动的效果
 > > 实现原理是,`Expanded`和`Column`(解决了适配不同屏幕的效果)
 > > 也可以公国material中的`sizeBox`来对高度进行计算,保证高度适配(没有第一个方法好)
+
+#### 5/30
+- `GridView`
+> 和listview大部分参数一样
+> 唯一需要关注的参数gridDelegate(设置子组件如何排列)
+> > 值为: `SliverGridDelegate`类,flutter提供了两个子类,
+> > `SliverGridDelegateWithFixedCrossAxisCount`和`SliverGridDelegateWithMaxCrossAxisExtent`
+> `GridView.count`可以用来替换GridView+SliverGridDelegateWithFixedCrossAxisCount的情况
+> `GridView.extent`可以用来替换GridView+SliverGridDelegateWithMaxCrossAxisExtent的情况
+> `GridView.builder`用来显示异步的子项情况,或子项较多的时候
