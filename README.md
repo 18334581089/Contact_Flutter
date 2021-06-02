@@ -846,3 +846,21 @@ State<StatefulWidget> createState() {
 > `GridView.count`可以用来替换GridView+SliverGridDelegateWithFixedCrossAxisCount的情况
 > `GridView.extent`可以用来替换GridView+SliverGridDelegateWithMaxCrossAxisExtent的情况
 > `GridView.builder`用来显示异步的子项情况,或子项较多的时候
+
+#### 6/2
+- 证实,无法再Column中使用gridview
+- `GridView.Builder`的示例
+1.  接受两个参数 
+> > `gridDelegate` 和 `itemBuilder`
+- `CustomScrollView`自定义滚动组件
+1. 滚动模型
+> > Sliver版的可滚动组件,不包含滚动模型
+> > 非Sliver版的可滚动组件,包含滚动模型
+2. `Material`也是一个widget,可以作为根组件返回
+> > 属性 `child`
+3. `CustomScrollView`
+> `slivers`属性,设置一个数组
+**CustomScrollView的子组件必须都是Sliver。**
+> > `SliverAppBar`相当于`AppBar`,前者可以集成到`CustomScrollView`(实现头部伸缩的效果)
+> > `SliverGrid`组件网格
+> > `SliverFixedExtentList` 组件列表
