@@ -862,5 +862,31 @@ State<StatefulWidget> createState() {
 > `slivers`属性,设置一个数组
 **CustomScrollView的子组件必须都是Sliver。**
 > > `SliverAppBar`相当于`AppBar`,前者可以集成到`CustomScrollView`(实现头部伸缩的效果)
+> > `SliverPadding`sliver 增加padding
 > > `SliverGrid`组件网格
 > > `SliverFixedExtentList` 组件列表
+
+#### 6/3
+- 学习`CustomScrollView`组件
+1. `Image.asset`的 fit属性,指定图片在容器的分配方式,值为`BoxFit`
+> > `BoxFit` 常见的有: scaleDown,contain,cover
+2. `SliverGrid` 构建一个网格组列表
+> > 属性`gridDelegate` 和`GridDelegate`一样
+> > 属性`delegate` 设置每一个子项的widget,参数(值为`SliverChildBuilderDelegate`)
+3. `SliverFixedExtentList` 构建一个列表(值为`SliverChildBuilderDelegate`)
+- scroll 监听
+1. `ScrollController`
+> `offset`可滚动组件当前位置
+> `jumpTo``animateTo`两个方法跳转指定位置
+2. `ScrollController`间接继承自`Listenable`
+> 也就是说可以使用`assListener`方法
+> 示例
+> > 为了避免内存泄露，需要调用_controller.dispose
+> > `super.dispose` 放在最后调用
+```
+@override
+void dispose() {
+  _controller.dispose();
+  super.dispose();
+}
+```

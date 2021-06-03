@@ -28,6 +28,8 @@ import 'package:flutter_app_vscode/baseScroll/baseScroll3.dart';
 import 'package:flutter_app_vscode/baseScroll/baseScroll4.dart';
 import 'package:flutter_app_vscode/baseScroll/baseScroll5.dart';
 import 'package:flutter_app_vscode/baseScroll/baseScroll6.dart';
+import 'package:flutter_app_vscode/baseScroll/baseScroll7.dart';
+import 'package:flutter_app_vscode/baseScroll/baseScroll8.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -52,6 +54,8 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "ScrollControllerTestRoute": (context) => ScrollControllerTestRoute(),
+          "CustomScrollViewTestRoute": (context) => CustomScrollViewTestRoute(),
           "BaseScroll6": (context) => BaseScroll6(),
           "BaseScroll5": (context) => BaseScroll5(),
           "BaseScroll4": (context) => BaseScroll4(),
@@ -313,6 +317,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "BaseScroll6");
               },
               child: Text("open BaseScroll6"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "CustomScrollViewTestRoute");
+              },
+              child: Text("open CustomScrollViewTestRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ScrollControllerTestRoute");
+              },
+              child: Text("open ScrollControllerTestRoute"),
             ),
           ],
         ),
