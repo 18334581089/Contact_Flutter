@@ -900,4 +900,19 @@ void dispose() {
 > > > 重新创建时恢复`offset`
 > > > 判断`keepScrollOffset`的值,有救使用,没有就用`initialScrollOffset`
 2. `ScrollPosition`
-> > 
+> 用来保存可滚动组件的滚动位置
+> animateTo() 和 jumpTo() 用来控制跳转位置的方法
+> 执行过程
+> > 先会调用ScrollController
+> > (“注册位置”)可滚动组件会调用attach()方法
+> 组件销毁时
+> > 会调用ScrollController的detach()方法
+> > 将其ScrollPosition对象从ScrollController的positions属性中移除
+3. `NotificationListener`
+> 可以用来监听（类似冒泡）
+> > 和`scrollController`的区别
+> > controller 只能监听关联的组件,notification 可以让所有父级醉驾案监听
+> >　controller 只能获取当前滚动位置信息, notification 可以额外获取viewPort的一些信息
+> 示例
+> 学习示例内容
+> 太困了,学了一半
