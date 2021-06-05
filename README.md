@@ -890,3 +890,14 @@ void dispose() {
   super.dispose();
 }
 ```
+
+#### 6/5
+- 滚动页面位置恢复
+1. `PageStorage`
+> > 用来保存页面相关数据的组件
+> > 里面的widget  可以通过指定不同的`pageStorageKey`来存储各自的数据和状态
+> > > 每次滚动结束,都会把`offset`存储在`PageStorage`中
+> > > 重新创建时恢复`offset`
+> > > 判断`keepScrollOffset`的值,有救使用,没有就用`initialScrollOffset`
+2. `ScrollPosition`
+> > 
