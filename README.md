@@ -916,3 +916,23 @@ void dispose() {
 > 示例
 > 学习示例内容
 > 太困了,学了一半
+
+#### 6/6
+- `ScrollNotification` 类
+1. `metrics` 属性, 值为 `SrollMetrics`(包含当前ViewPort的滚动位置等信息)
+> >　理解 ViewPort的含义,当前设备可视窗口信息
+> > 包括
+> > > `pixels`: 当前滚动位置,
+> > > `maxScrollExtent`: 最大可滚动长度,
+> > > `extentBefore`: 划出ViewPort的顶部的长度(划出屏幕上方的列表长度),
+> > > `extentInside`: ViewPort内部长度(屏幕中显示的列表长度),
+> > > `extentAfter`: 没有滑入ViewPort部分的长度(列表底部没显示区域的长度),
+> > > `atEdge`: 是否滚动到了边界(顶部或者底部)
+***目前问题很多,一个滚动没有想到会有那么多不懂得地方,感觉有点复杂,现在调整一下心态.现在得主要目的是了解,识别.所以示例明白怎么写的就好,不看和官方文档以外得部分***
+- 功能性组件
+- 导航返回拦截
+1. `WillPopScope`
+> 使用场景: 防误触判断,eg:用户在某一个时间段内点击两次时，才会认为用户是要退出
+> 属性
+> > onWillPop: 回调函数,返回一个Futrue对象,如果futrue最终值是false,则不出栈(不返回)
+> 示例
