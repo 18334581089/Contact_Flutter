@@ -936,3 +936,13 @@ void dispose() {
 > 属性
 > > onWillPop: 回调函数,返回一个Futrue对象,如果futrue最终值是false,则不出栈(不返回)
 > 示例
+> 返回时有打印,但是没有返回上个页面,原因不详
+
+#### 6/7
+***开始早上来了,先学习,在游戏得习惯***
+- 数据共享(类似stare,redux)
+1. 能实现组件跨级传递数据
+2. `InheritedWidget` 父组件传递子组件, `Notification` 子组件传递父组件
+3. `didChangeDependencies` 子组件的回调, 当父组件的属性发生变化,会调用这个函数
+4. 示例:
+> 报错未处理(代码没有复制完)
