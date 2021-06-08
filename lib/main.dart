@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
-          "TestWidget": (context) => TestWidget(),
+          "InheritedWidgetTestRoute": (context) => InheritedWidgetTestRoute(),
           "ScrollNotificationTestRoute": (context) =>
               ScrollNotificationTestRoute(),
           "WillPopScopeTestRoute": (context) => WillPopScopeTestRoute(),
@@ -351,9 +351,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, "TestWidget");
+                Navigator.pushNamed(context, "InheritedWidgetTestRoute");
               },
-              child: Text("open TestWidget"),
+              child: Text("open InheritedWidgetTestRoute"),
             ),
           ],
         ),
