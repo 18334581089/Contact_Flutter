@@ -938,7 +938,7 @@ void dispose() {
 > 示例
 > 返回时有打印,但是没有返回上个页面,原因不详
 
-#### 6/7
+#### 6/7  
 ***开始早上来了,先学习,在游戏得习惯***
 - 数据共享(类似stare,redux)
 1. 能实现组件跨级传递数据
@@ -950,3 +950,20 @@ void dispose() {
 #### 6/8
 接着把示例搞定
 > 搞定
+
+#### 6/10
+- 看懂,跨级传递数据(类似props)
+1. ***单独拿出来会报错?***
+> 自己没有写`import`
+2. **RaisedButton按钮被废弃,使用`ElevatedButton`来代替**
+3. `ShareDataWidget extends InheritedWidget` 
+> 父组件继承`InheritedWidget`
+> 父组件必须定义`updateShouldNotify`决定是否更新状态
+> 子组件要定义`didChangeDependencies`
+> 子组件要定义 必须使用 父组件 中的共享数据 访问:`ShareDataWidget.of(context)`
+- 场景2: 父组件数据改变,触发子组件build, 不触发 `didChangeDependencies`
+1. 父组件 `getElementForInheritedWidgetOfExactType`
+> > `dependOnInheritedWidgetOfExactType`注册了依赖关系,`getElementForInheritedWidgetOfExactType`不会
+- 重点预告
+> > 现在只要调用_InheritedWidgetTestRouteState的setState()方法，所有子节点都会被重新build，这很没必要
+> > 下一节我们将通过实现一个Provider Widget 来演示如何缓存，以及如何利用InheritedWidget 来实现Flutter全局状态共享。

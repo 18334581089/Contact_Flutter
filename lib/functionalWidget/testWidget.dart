@@ -9,8 +9,7 @@ class TestWidget extends StatefulWidget {
 class __TestWidgetState extends State<TestWidget> {
   @override
   Widget build(BuildContext context) {
-    //使用InheritedWidget中的共享数据
-    return Text(ShareDataWidget.of(context).data.toString());
+    return Text(ShareDataWidget.of(context).count.toString());
   }
 
   @override
