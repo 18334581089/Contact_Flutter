@@ -1,3 +1,4 @@
+
 #### 这是我的第一个flutter项目,我想通过项目实战来学习这一门技术,资料的地址(https://book.flutterchina.club/);
 # flutter_app_vscode
 
@@ -967,3 +968,68 @@ void dispose() {
 - 重点预告
 > > 现在只要调用_InheritedWidgetTestRouteState的setState()方法，所有子节点都会被重新build，这很没必要
 > > 下一节我们将通过实现一个Provider Widget 来演示如何缓存，以及如何利用InheritedWidget 来实现Flutter全局状态共享。
+
+#### 6/11
+- 跨组件共享(Provider)
+1. 一般的原则是：如果状态是组件私有的，则应该由组件自己管理；如果状态要跨组件共享，则该状态应该由各个组件共同的父元素来管理
+2. 使用全局事件总线EventBus(观察者模式)(类似 vue Bus)
+```
+enum Event{
+  login,
+  ... //省略其它事件
+}
+```
+```
+bus.emit(Event.login);
+```
+```
+void onLoginChanged(e){
+  //登录状态变化处理逻辑
+}
+
+@override
+void initState() {
+  //订阅登录状态改变事件
+  bus.on(Event.login,onLogin);
+  super.initState();
+}
+
+@override
+void dispose() {
+  //取消订阅
+  bus.off(Event.login,onLogin);
+  super.dispose();
+}
+```
+> > (观察者模式)缺点：
+> > 必须显式定义各种事件，不好管理
+> > 订阅者必须需显式注册状态改变回调，也必须在组件销毁时手动去解绑回调以避免内存泄露。
+3. 利用`InheritedWidget`自动更新子组件特性，我们可以将需要跨组件共享的状态保存在`InheritedWidget`中，然后在子组件中引用`InheritedWidget`即可，Flutter社区著名的`Provider`包正是基于这个思想实现的一套跨组件状态共享解决方案
+- 示例
+1. 定义一个通用的`InheritedProvider`类，它继承自`InheritedWidget`
+> 问题一:通知数据变化,通过 eventBus方式,来进行事件通知
+> 通过flutter 的 `ChangeNotifier`,继承`Listenable`,也可以实现(发布订阅)
+```
+class ChangeNotifier implements Listenable {
+  List listeners=[];
+  @override
+  void addListener(VoidCallback listener) {
+     //添加监听器
+     listeners.add(listener);
+  }
+  @override
+  void removeListener(VoidCallback listener) {
+    //移除监听器
+    listeners.remove(listener);
+  }
+  
+  void notifyListeners() {
+    //通知所有监听器，触发监听器回调 
+    listeners.forEach((item)=>item());
+  }
+}
+```
+> 通过调用`addListener()`和`removeListener()`来添加、移除监听器（订阅者）；
+> 通过调用`notifyListeners()` 可以触发所有监听器回调。
+2. `ChangeNotifierProvider`
+***编译报错***
