@@ -33,6 +33,8 @@ import 'package:flutter_app_vscode/baseScroll/baseScroll8.dart';
 import 'package:flutter_app_vscode/baseScroll/baseScroll9.dart';
 import 'package:flutter_app_vscode/functionalWidget/willPopScope.dart';
 import 'package:flutter_app_vscode/functionalWidget/inheritedWidgetTestRoute.dart';
+import 'package:flutter_app_vscode/functionalWidget/Builder.dart';
+import 'package:flutter_app_vscode/functionalWidget/ProviderRoute.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -57,6 +59,8 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "ProviderRoute": (context) => ProviderRoute(),
+          "HomePage": (context) => HomePage(),
           "InheritedWidgetTestRoute": (context) => InheritedWidgetTestRoute(),
           "ScrollNotificationTestRoute": (context) =>
               ScrollNotificationTestRoute(),
@@ -354,6 +358,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "InheritedWidgetTestRoute");
               },
               child: Text("open InheritedWidgetTestRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "HomePage");
+              },
+              child: Text("open HomePage"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ProviderRoute");
+              },
+              child: Text("open ProviderRoute"),
             ),
           ],
         ),

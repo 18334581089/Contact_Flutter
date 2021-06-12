@@ -1033,3 +1033,36 @@ class ChangeNotifier implements Listenable {
 > 通过调用`notifyListeners()` 可以触发所有监听器回调。
 2. `ChangeNotifierProvider`
 ***编译报错***
+
+#### 6/12
+2. `_typeOf` 报错,原因不明,
+> 重新看一次文档
+> 除了 `_typeOf`其他的报错已经解决,还是因为没有理解他们之间的关系,直接自己写的有问题
+3. 使用上面的方法,实现 跨组件传递
+> 示例
+> 目的: 显示购物车中所有商品总价
+> > 1 组件 `UnmodifiableListView`
+> > 一种禁止修改的ListView，比如电商app购物车里面的物品是禁止修改的。
+> > 不能变更List的话，尽量使用unmodifiableListView有助提高编程习惯。
+> > 2 `CartModel extends ChangeNotifier`
+> > 3 `Builder` (第一次记录在 454行,这次通过老孟flutter进行理解)
+```
+Builder(
+  builder: (BuildContext context){
+    return Container();
+  },
+)
+```
+> > builder 可以更加解决scaffold的body获取不到 context的问题(扩展了context)
+4. 如果我们将ChangeNotifierProvider放在整个应用的Widget树的根上，
+> > 那么整个APP就可以共享购物车的数据了，这时ChangeNotifierProvider的优势将会非常明显
+5. 优化1
+> > 封装`Consumer`组件
+> > 解决1: 依赖CartModel很多时，这样的代码将很冗余
+> > 解决2: 语义将会很明确
+> > > 使用`Consumer`会报错
+***报错原因没有找到***
+优化2
+> > `listen`
+> > 可以实现
+> > 数据便哈按钮本身没有变化，不重新build的

@@ -1,39 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
-class InheritedProvider<L> extends InheritedWidget {
-  final L data;
-
+// 一个通用的InheritedWidget，保存任需要跨组件共享的状态
+class InheritedProvider<T> extends InheritedWidget {
   InheritedProvider({@required this.data, Widget child}) : super(child: child);
 
-  @override
-  bool updateShouldNotify(InheritedProvider<L> old) {
-    return true;
-  }
-}
-
-class _Provider<T extends ChangeNotifier> extends StatefulWidget {
-  final Widget child;
+  //共享状态使用泛型
   final T data;
-  
-  static T of<T>(BuildContext context) {
-    final type = _typeOf<InheritedProvider<T>>();
-    final provider =  context.dependOnInheritedWidgetOfExactType<InheritedProvider<T>>();
-    return provider.data;
-  }
-  
-  _Provider({
-    Key key,
-    this.data,
-    this.child,
-  })
 
   @override
-  _state<T> createState() => _state<T>();
-}
-
-class _state<T extends ChangeNotifier> extends State<_Provider<T>> {
-  @override
-  Widget build(BuildContext context) {
-    return InheritedProvider<T>(data: widget.data, child: widget.child,);
+  bool updateShouldNotify(InheritedProvider<T> old) {
+    //在此简单返回true，则每次更新都会调用依赖其的子孙节点的`didChangeDependencies`。
+    return true;
   }
 }
