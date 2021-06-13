@@ -36,13 +36,14 @@ class BaseWidget extends StatelessWidget {
               Text(
                 'hello world! ',
                 style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 18.0, // 和textScaleFactor的区别:后者是缩放,并且随着系统改变
-                    height: 1.2, // 行高
-                    fontFamily: 'Courier',
-                    background: new Paint()..color = Colors.yellow,
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.dashed),
+                  color: Colors.blue,
+                  fontSize: 18.0, // 和textScaleFactor的区别:后者是缩放,并且随着系统改变
+                  height: 1.2, // 行高
+                  fontFamily: 'Courier',
+                  background: new Paint()..color = Colors.yellow,
+                  decoration: TextDecoration.underline,
+                  decorationStyle: TextDecorationStyle.dashed,
+                ),
               ),
               Text.rich(TextSpan(children: [
                 TextSpan(text: 'TextSpan, 可以使部分文字有部分样式'),
