@@ -1075,3 +1075,45 @@ Builder(
 2. 示例,导航变色
 > 知识一,
 > > 创建一个类,构造函数中的对象可以添加组件调用时的参数(这个类似 react)
+
+#### 6/15
+- 回顾昨天
+1. `Color` 构造函数,传入8位十六进制直接使用
+2. `Color` 如果传入6位十六进制,透明度位00
+3. `int.parse(_color2, radix: 16)` 可以将颜色(字符串类型)转换为数字类型
+4. `0x` 开头的数字表示16进制
+5. 修改透明度方法
+> > `0x00FFFFFF | 0xFF000000` 把前两位替换成`FF`(透明度)
+> > `Color.withAlpha` 方法,传入十进制alpha数值(相当于修改透明度) 
+6. `color.computeLuminance()` 方法返回当前颜色一个亮度值(0-1之间)
+- `MaterialColor`
+1. 实现颜色的类: 包含一种颜色的10个级别的渐变色
+2. 通过"[]"运算符的索引值来代表颜色的深度
+3. MaterialColor的默认值为索引等于500的颜色(Colors.blue 相当于 设置Colors.blue[500])
+- `Theme`
+1. 定义主题数据
+2. `ThemeData` 用于保存是Material 组件库的主题数据
+> > 子组件通过Theme.of方法来获取当前的ThemeData
+> > 有些是不能自定义的，如导航栏高度，ThemeData只包含了可自定义部分。
+```
+ThemeData({
+  Brightness brightness, //深色还是浅色
+  MaterialColor primarySwatch, //主题颜色样本，见下面介绍
+  Color primaryColor, //主色，决定导航栏颜色
+  Color accentColor, //次级色，决定大多数Widget的颜色，如进度条、开关等。
+  Color cardColor, //卡片颜色
+  Color dividerColor, //分割线颜色
+  ButtonThemeData buttonTheme, //按钮主题
+  Color cursorColor, //输入框光标颜色
+  Color dialogBackgroundColor,//对话框背景颜色
+  String fontFamily, //文字字体
+  TextTheme textTheme,// 字体主题，包括标题、body等文字样式
+  IconThemeData iconTheme, // Icon的默认样式
+  TargetPlatform platform, //指定平台，应用特定平台控件风格
+  ...
+})
+```
+3. 路由换肤示例
+> > 示例完成
+> > 悬浮按钮没有实现变色
+4. 实例中实现了 不使用父组件的样式(第二行的黑色)

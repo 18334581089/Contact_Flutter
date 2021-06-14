@@ -36,6 +36,7 @@ import 'package:flutter_app_vscode/functionalWidget/inheritedWidgetTestRoute.dar
 import 'package:flutter_app_vscode/functionalWidget/Builder.dart';
 import 'package:flutter_app_vscode/functionalWidget/ProviderRoute.dart';
 import 'package:flutter_app_vscode/functionalWidget/Color.dart';
+import 'package:flutter_app_vscode/functionalWidget/ThemeTestRoute.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "Theme": (context) => ThemeTestRoute(),
           "MyColor": (context) => MyColor(),
           "ProviderRoute": (context) => ProviderRoute(),
           "HomePage": (context) => HomePage(),
@@ -378,6 +380,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "MyColor");
               },
               child: Text("open MyColor"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "Theme");
+              },
+              child: Text("open Theme"),
             ),
           ],
         ),
