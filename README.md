@@ -1117,3 +1117,26 @@ ThemeData({
 > > 示例完成
 > > 悬浮按钮没有实现变色
 4. 实例中实现了 不使用父组件的样式(第二行的黑色)
+
+- async
+1. `FutureBuilder`
+```
+FutureBuilder({
+  this.future,
+  this.initialData,
+  @required this.builder,
+})
+```
+> `future` 以来的Future,通产是一个异步操作
+> `initialData` 初始数据,用户设置默认数据
+> `builder` Widget构建器
+> 实例, 进入页面2秒后返回一个字符串显示
+> `ConnectionState`
+> > 一个枚举类,四个状态
+> > > none,// 当前没有异步任务，比如[FutureBuilder]的[future]为null时
+> > > waiting,// 异步任务处于等待状态。
+> > > active,// Stream处于激活状态（流上已经有数据传递了），对于FutureBuilder没有该状态(active只在StreamBuilder中才会出现。)
+> > > done,// 异步任务已经终止.
+2. `StreamBuilder`
+> 接受多个异步操作结果
+> 常用于会多次读取数据的异步任务场景，如网络内容下载、文件读写等

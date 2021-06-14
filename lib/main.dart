@@ -37,6 +37,8 @@ import 'package:flutter_app_vscode/functionalWidget/Builder.dart';
 import 'package:flutter_app_vscode/functionalWidget/ProviderRoute.dart';
 import 'package:flutter_app_vscode/functionalWidget/Color.dart';
 import 'package:flutter_app_vscode/functionalWidget/ThemeTestRoute.dart';
+import 'package:flutter_app_vscode/functionalWidget2/Future.dart';
+import 'package:flutter_app_vscode/functionalWidget2/Stream.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -61,6 +63,8 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "MyStream": (context) => MyStream(),
+          "MyFuture": (context) => MyFuture(),
           "Theme": (context) => ThemeTestRoute(),
           "MyColor": (context) => MyColor(),
           "ProviderRoute": (context) => ProviderRoute(),
@@ -386,6 +390,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "Theme");
               },
               child: Text("open Theme"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "MyFuture");
+              },
+              child: Text("open MyFuture"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "MyStream");
+              },
+              child: Text("open MyStream"),
             ),
           ],
         ),
