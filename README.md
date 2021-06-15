@@ -1140,3 +1140,26 @@ FutureBuilder({
 2. `StreamBuilder`
 > 接受多个异步操作结果
 > 常用于会多次读取数据的异步任务场景，如网络内容下载、文件读写等
+
+
+#### 6/15
+- 对话框
+1. `AlertDialog`
+```
+const AlertDialog({
+  this.title, //对话框标题组件
+  this.content, // 对话框内容组件
+  this.actions, // 对话框操作按钮组
+})
+```
+2. `showDialog()`
+> 返回一个Future值,(点击弹窗的按钮可以设置返回值)
+```
+Future<T> showDialog<T>({
+  @required BuildContext context,
+  bool barrierDismissible = true, //点击遮罩时是否关闭它
+  WidgetBuilder builder, // 对话框UI的builder(AlertDialog)
+})
+```
+3. `SimpleDialog`
+> 展示一个列表,用户选择
