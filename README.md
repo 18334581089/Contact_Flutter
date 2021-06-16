@@ -1163,3 +1163,13 @@ Future<T> showDialog<T>({
 ```
 3. `SimpleDialog`
 > 展示一个列表,用户选择
+
+4. `Dialog`
+> `showDialog` 和 `SimpleDialog` 的父级
+> `showDialog` 和 `SimpleDialog` 都使用了 `IntrinsicWidth` 来通过子组件的实际高度调整自身尺寸,所以无法延迟加载模型
+> `Dialog`可以实现延迟加载模型
+> > 不是特别理解,但是可以明白他俩的区别,`dialog` 更偏向于动态的多条弹窗数据
+> MySimple2
+5. showDialog 方法中的builder用来返回一个弹窗,上面已经说了三种
+> 可以不返回上面三个,可以返回别的.
+> 实例dialog2>UnconstrainedBox

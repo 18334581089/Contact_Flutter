@@ -41,6 +41,7 @@ import 'package:flutter_app_vscode/functionalWidget2/Future.dart';
 import 'package:flutter_app_vscode/functionalWidget2/Stream.dart';
 import 'package:flutter_app_vscode/functionalWidget2/Dialog.dart';
 import 'package:flutter_app_vscode/functionalWidget2/SimPleDialog.dart';
+import 'package:flutter_app_vscode/functionalWidget2/Dialog2.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "Dialog2": (context) => MySimple2(),
           "SimPle": (context) => MySimple(),
           "MyDialog": (context) => MyDialog(),
           "MyStream": (context) => MyStream(),
@@ -418,6 +420,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "SimPle");
               },
               child: Text("open SimPle"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "Dialog2");
+              },
+              child: Text("open Dialog2"),
             ),
           ],
         ),
