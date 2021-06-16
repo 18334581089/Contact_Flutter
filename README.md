@@ -1173,3 +1173,29 @@ Future<T> showDialog<T>({
 5. showDialog 方法中的builder用来返回一个弹窗,上面已经说了三种
 > 可以不返回上面三个,可以返回别的.
 > 实例dialog2>UnconstrainedBox
+
+#### 6/16
+- 对话框打开动画和遮罩
+1. 前面说的都是material 的方法, flutter自己也有dialog方法
+> `showGeneralDialog`
+> `showDialog`正是基于`showGeneralDialog`的封装
+> `showDialog`默认打开对话框是一个Fade的动画,我们可以自己定义`showGeneralDialog`的`showCustomDialog`方法,来设置动画
+2. 实例`showCustomDialog`
+> `transitionBuilder` 设置打开的动画
+- 弹窗管理状态
+1. 弹窗中需要通过状态动态显示数据,并且传给页面组件
+```
+setState(() {
+  //更新复选框状态
+  withTree = !withTree;
+});
+```
+> 问题: context 不一样,
+> 产生原因:
+> > 1 setState方法只会针对当前context的子树重新build,对话框不是再父组件中构建的是通过showDialog单独构建的
+> > 2 showDialog是通过路由创建的,修改父级的状态不会影响下一个路由
+> 解决方法
+> > 1 单独抽离出StatefulWidget
+> > > 单独封装一个checkbox 并且继承 StatefulWidget 组件,自己修改状态
+> > 2 使用StatefulBuilder方法
+> > 3 精妙的解法
