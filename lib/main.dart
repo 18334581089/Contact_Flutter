@@ -43,6 +43,10 @@ import 'package:flutter_app_vscode/functionalWidget2/Dialog.dart';
 import 'package:flutter_app_vscode/functionalWidget2/SimPleDialog.dart';
 import 'package:flutter_app_vscode/functionalWidget2/Dialog2.dart';
 import 'package:flutter_app_vscode/functionalWidget2/ShowCustomDialog.dart';
+import 'package:flutter_app_vscode/functionalWidget2/DialogState.dart';
+import 'package:flutter_app_vscode/functionalWidget2/DialogState2.dart';
+import 'package:flutter_app_vscode/functionalWidget2/DialogState3.dart';
+import 'package:flutter_app_vscode/functionalWidget2/DialogState4.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -67,6 +71,10 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "DialogRoute4": (context) => DialogRoute4(),
+          "DialogRoute3": (context) => DialogRoute3(),
+          "DialogRoute2": (context) => DialogRoute2(),
+          "DialogRoute": (context) => DialogRoute1(),
           "ShowCustomDialog": (context) => ShowCustomDialog(),
           "Dialog2": (context) => MySimple2(),
           "SimPle": (context) => MySimple(),
@@ -434,6 +442,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "ShowCustomDialog");
               },
               child: Text("open ShowCustomDialog"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "DialogRoute");
+              },
+              child: Text("open DialogRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "DialogRoute2");
+              },
+              child: Text("open DialogRoute2"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "DialogRoute3");
+              },
+              child: Text("open DialogRoute3"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "DialogRoute4");
+              },
+              child: Text("open DialogRoute4"),
             ),
           ],
         ),

@@ -1199,3 +1199,16 @@ setState(() {
 > > > 单独封装一个checkbox 并且继承 StatefulWidget 组件,自己修改状态
 > > 2 使用StatefulBuilder方法
 > > 3 精妙的解法
+
+- 弹窗中管理状态
+1. 实例1, 错误写法
+> 打开弹窗,点击选中,没有效果
+2. 实例2, 单独抽离checkbox
+> 重新封装一层checkbox,context作为参数传进去
+3. 实例3, 使用StateBuilder方法
+> 使用builder 方法简化了一下2方法
+4. 实例4, 最好的方法
+> setData调用时,调用_element.markNeedsBuild(),页面才会重构
+> > markNeedsBuild 方法标记当前element为 dirty,由此实现重构
+> > 如果我们能标记为dirty,自然就能实现重构
+> > context实际上就是Element对象的引用, 所以接下来
