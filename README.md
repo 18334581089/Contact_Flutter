@@ -1212,3 +1212,26 @@ setState(() {
 > > markNeedsBuild 方法标记当前element为 dirty,由此实现重构
 > > 如果我们能标记为dirty,自然就能实现重构
 > > context实际上就是Element对象的引用, 所以接下来
+
+#### 6/17
+- 其他对话框
+1. `showModalBottomSheet`
+> 底部对话框
+> 实例 5
+2. `showBottomSheet`
+> 底部弹出整个页面的弹窗
+> 实例 5
+> ***PersistentBottomSheetController***
+> 报错: 不知道怎么使用这个弹窗无法弹出内容,调用方法时控制台会报错
+3. `Loading`
+> 通过showDialog+AlertDialog来自定义
+> 实例 6
+> showDialog中已经给对话框设置了宽度限制,所以不能直接修改宽度
+> > 先 UnconstrainedBox 抵消宽度限制
+> > 再使用 SizedBox
+4. 日历弹窗
+> 实例6
+- Pointer Event: 原始指针事件处理(触摸事件)
+1. 一次完整的事件分为三个阶段
+> 手指按下、手指移动、和手指抬起(高级别的手势（如点击、双击、拖动等）都是基于这些原始事件的)
+2. 过程: 事件会在组件树中向上冒泡
