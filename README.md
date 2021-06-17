@@ -1235,3 +1235,20 @@ setState(() {
 1. 一次完整的事件分为三个阶段
 > 手指按下、手指移动、和手指抬起(高级别的手势（如点击、双击、拖动等）都是基于这些原始事件的)
 2. 过程: 事件会在组件树中向上冒泡
+3. Flutter中没有机制取消或停止“冒泡”过程
+- `Listener`
+1. 监听原始触摸事件
+> 使用示例
+> `PointerDownEvent` `PointerMoveEvent` `PointerUpEvent` 都是 PointerEvent 的子类
+> 常用的属性有:
+> > position：它是鼠标相对于当对于全局坐标的偏移。
+> > delta：两次指针移动事件（PointerMoveEvent）的距离。
+> > pressure：按压力度，如果手机屏幕支持压力传感器(如iPhone的3D Touch)，此属性会更有意义，如果手机不支持，则始终为1。
+> > orientation：指针移动方向，是一个角度值。
+2.  Listener.behavior = HitTestBehavior.deferToChild,在命中测试期间如何表现
+> behavior , 值为HitTestBehavior,枚举 分别是
+> > deferToChild 子组件会一个接一个的进行命中测试
+> > opaque 将当前组件当成不透明处理
+> > translucent 当点击组件透明区域时，可以对自身边界内及底部可视区域都进行命中测试
+3. 不想让某个子树响应PointerEvent
+> IgnorePointer和AbsorbPointer

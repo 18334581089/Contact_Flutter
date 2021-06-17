@@ -49,6 +49,7 @@ import 'package:flutter_app_vscode/functionalWidget2/DialogState3.dart';
 import 'package:flutter_app_vscode/functionalWidget2/DialogState4.dart';
 import 'package:flutter_app_vscode/functionalWidget2/DialogState5.dart';
 import 'package:flutter_app_vscode/functionalWidget2/DialogState6.dart';
+import 'package:flutter_app_vscode/evenHandle/Listener.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "Listener": (context) => Listener1(),
           "DialogState6": (context) => DialogRoute6(),
           "DialogState5": (context) => DialogRoute5(),
           "DialogRoute4": (context) => DialogRoute4(),
@@ -482,6 +484,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "DialogState6");
               },
               child: Text("open DialogState6"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "Listener");
+              },
+              child: Text("open Listener"),
             ),
           ],
         ),
