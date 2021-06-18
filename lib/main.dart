@@ -50,6 +50,9 @@ import 'package:flutter_app_vscode/functionalWidget2/DialogState4.dart';
 import 'package:flutter_app_vscode/functionalWidget2/DialogState5.dart';
 import 'package:flutter_app_vscode/functionalWidget2/DialogState6.dart';
 import 'package:flutter_app_vscode/evenHandle/Listener.dart';
+import 'package:flutter_app_vscode/evenHandle/GestureDetector.dart';
+import 'package:flutter_app_vscode/evenHandle/GestureDetector2.dart';
+import 'package:flutter_app_vscode/evenHandle/ScaleTestRoute.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -74,6 +77,9 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "ScaleTestRoute": (context) => ScaleTestRoute(),
+          "_Drag": (context) => Drag1(),
+          "GestureDetector": (context) => GestureDetectorTestRoute(),
           "Listener": (context) => Listener1(),
           "DialogState6": (context) => DialogRoute6(),
           "DialogState5": (context) => DialogRoute5(),
@@ -490,6 +496,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "Listener");
               },
               child: Text("open Listener"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "GestureDetector");
+              },
+              child: Text("open GestureDetector"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "_Drag");
+              },
+              child: Text("open _Drag"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ScaleTestRoute");
+              },
+              child: Text("open ScaleTestRoute"),
             ),
           ],
         ),

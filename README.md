@@ -1252,3 +1252,28 @@ setState(() {
 > > translucent 当点击组件透明区域时，可以对自身边界内及底部可视区域都进行命中测试
 3. 不想让某个子树响应PointerEvent
 > IgnorePointer和AbsorbPointer
+```
+Listener(
+  child: AbsorbPointer(
+    child: Listener(
+      child: Container(
+        color: Colors.red,
+        width: 200.0,
+        height: 100.0,
+      ),
+      onPointerDown: (event)=>print("in"),
+    ),
+  ),
+  onPointerDown: (event)=>print("up"),
+)
+```
+> 如果将AbsorbPointer换成IgnorePointer，那么两个都不会输出。
+
+#### 6/18
+- `behavior`
+> 这个属性不是特别理解
+- 手势
+1. `GestureDetector`
+> 实例1 点击,双击,长按
+> > onTop 延迟200毫秒,如果用户只监听了onTap（没有监听onDoubleTap）事件时，则没有延时。
+> 实例2 拖动,滑动
