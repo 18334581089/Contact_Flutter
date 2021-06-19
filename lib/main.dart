@@ -53,6 +53,8 @@ import 'package:flutter_app_vscode/evenHandle/Listener.dart';
 import 'package:flutter_app_vscode/evenHandle/GestureDetector.dart';
 import 'package:flutter_app_vscode/evenHandle/GestureDetector2.dart';
 import 'package:flutter_app_vscode/evenHandle/ScaleTestRoute.dart';
+import 'package:flutter_app_vscode/evenHandle/GestureRecognizer.dart';
+import 'package:flutter_app_vscode/evenHandle/BothDirectionTestRoute.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -77,6 +79,9 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "BothDirectionTestRoute": (context) => BothDirectionTestRoute(),
+          "GestureRecognizerTestRoute": (context) =>
+              GestureRecognizerTestRoute(),
           "ScaleTestRoute": (context) => ScaleTestRoute(),
           "_Drag": (context) => Drag1(),
           "GestureDetector": (context) => GestureDetectorTestRoute(),
@@ -514,6 +519,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "ScaleTestRoute");
               },
               child: Text("open ScaleTestRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "GestureRecognizerTestRoute");
+              },
+              child: Text("open GestureRecognizerTestRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "BothDirectionTestRoute");
+              },
+              child: Text("open BothDirectionTestRoute"),
             ),
           ],
         ),

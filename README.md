@@ -1277,3 +1277,25 @@ Listener(
 > 实例1 点击,双击,长按
 > > onTop 延迟200毫秒,如果用户只监听了onTap（没有监听onDoubleTap）事件时，则没有延时。
 > 实例2 拖动,滑动
+
+#### 6/19
+2. `GestureRecognizer`
+> 是一个抽象类,一个手势的识别器对应一个GestureRecognizer的字类
+> gestureDetector 内部是使用一个或多个GestureRecognizer来识别各种手势的
+> 实例
+3. `GestureDetector` 的 child 属性是一个widget组件,所以,如果不是widget组件,就无法使用`GestureDetector`来绑定手势事件,
+> `GestureDetector`内部是使用一个或多个`GestureRecognizer`来识别各种手势的,所以,可以用`GestureRecognizer`来尝试不是widget的情况
+>　实例中使用了TextSpan的 recognizer属性,可以是一个 `TapGestureRecognizer()`
+> > 使用GestureRecognizer后一定要调用其dispose()方法来释放资源（主要是取消内部的计时器）。
+- 手势竞争与冲突
+1. 场景: 同时监听水平和垂直方向,斜着拖动
+> 取决于第一次移动时两个轴上的位移分量
+> 实例 `BothDirectionTestRoute`
+> > 组件 `CircleAvatar`, `Positioned`
+> > 属性 `onVerticalDragUpdate`, `onHorizontalDragUpdate`
+2. 解决冲突
+> 当 有一个widget 可以左右拖动，现在我们也想检测在它上面手指按下和抬起的事件
+> 不能写在`GestureDetector`里面(会发现 并没有答应 down和up)
+> 通过 `Listener`来见同(打印了down1和up1)
+> > 手势冲突只是手势级别的，而手势是对原始指针的语义化的识别，
+> > 所以在遇到复杂的冲突场景时，都可以通过Listener直接识别原始指针事件来解决冲突。
