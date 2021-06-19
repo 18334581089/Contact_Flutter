@@ -55,6 +55,9 @@ import 'package:flutter_app_vscode/evenHandle/GestureDetector2.dart';
 import 'package:flutter_app_vscode/evenHandle/ScaleTestRoute.dart';
 import 'package:flutter_app_vscode/evenHandle/GestureRecognizer.dart';
 import 'package:flutter_app_vscode/evenHandle/BothDirectionTestRoute.dart';
+import 'package:flutter_app_vscode/evenHandle/loginb.dart';
+import 'package:flutter_app_vscode/evenHandle/login.dart';
+import 'package:flutter_app_vscode/evenHandle/scroll1.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -79,6 +82,9 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "ScrollTest": (context) => ScrollTest(),
+          "LoginWidget2": (context) => LoginWidget2(),
+          "LoginWidget": (context) => LoginWidget(),
           "BothDirectionTestRoute": (context) => BothDirectionTestRoute(),
           "GestureRecognizerTestRoute": (context) =>
               GestureRecognizerTestRoute(),
@@ -531,6 +537,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "BothDirectionTestRoute");
               },
               child: Text("open BothDirectionTestRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "LoginWidget");
+              },
+              child: Text("open LoginWidget"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ScrollTest");
+              },
+              child: Text("open ScrollTest"),
             ),
           ],
         ),
