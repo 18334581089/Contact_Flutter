@@ -58,6 +58,7 @@ import 'package:flutter_app_vscode/evenHandle/BothDirectionTestRoute.dart';
 import 'package:flutter_app_vscode/evenHandle/loginb.dart';
 import 'package:flutter_app_vscode/evenHandle/login.dart';
 import 'package:flutter_app_vscode/evenHandle/scroll1.dart';
+import 'package:flutter_app_vscode/evenHandle/MyNotification.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "NotificationRoute": (context) => NotificationRoute(),
           "ScrollTest": (context) => ScrollTest(),
           "LoginWidget2": (context) => LoginWidget2(),
           "LoginWidget": (context) => LoginWidget(),
@@ -549,6 +551,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "ScrollTest");
               },
               child: Text("open ScrollTest"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "NotificationRoute");
+              },
+              child: Text("open NotificationRoute"),
             ),
           ],
         ),

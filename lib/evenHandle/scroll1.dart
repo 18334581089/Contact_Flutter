@@ -11,7 +11,9 @@ class ScrollTest1 extends State<ScrollTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('滚动冒泡')),
-      body: NotificationListener(
+      // 增加泛型,限制notification的通知(ScrollEndNotification: 表示只接受滚动结束通知)
+      body: NotificationListener<ScrollEndNotification>(
+        // body: NotificationListener(
         onNotification: (notification) {
           switch (notification.runtimeType) {
             case ScrollStartNotification:
@@ -27,14 +29,16 @@ class ScrollTest1 extends State<ScrollTest> {
               print("滚动到边界");
               break;
           }
+          return true;
         },
         child: ListView.builder(
-            itemCount: 100,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text("$index"),
-              );
-            }),
+          itemCount: 100,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text("$index"),
+            );
+          },
+        ),
       ),
     );
   }

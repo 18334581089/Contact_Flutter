@@ -1372,3 +1372,43 @@ b: 如果使用nvue页面(native vue的缩写)，则使用原生渲染
 > 所有父节点都可以通过NotificationListener来监听通知
 > 通知冒泡和触摸事件冒泡相似，但终止通知冒泡后，通知将不会再向上传递。
 > 示例1: 滚动组件使用滚动通知
+
+#### 6/21
+> > NotificationListener的泛型引入可以限制监听的事件范围
+> > onNotification函数返回布尔值,返回true阻断冒泡,返回false继续向上冒泡
+2. 自定义通知
+> dispatch原理刨析: Notification.dispatch 可以发起冒泡通知
+> dispatch(context)中调用了当前context的visitAncestorElements方法，该方法会从当前Element开始向上遍历父级元素
+> visitAncestorElements方法有一个遍历回调参数visitAncestor,会判断每一个遍历到的父级Widget是否是NotificationListener,如果是则调用NotificationListener的_dispatch方法
+> 执行onNotification方法
+
+- 动画
+1. 动画实现的原理
+> 在一段时间内，快速地多次改变UI外观
+> 超过16FPS，就比较流畅了，超过32FPS就会非常的细腻平滑
+> 超过32FPS，人眼基本上就感受不到差别了
+> 理想情况下是可以实现60FPS的，这和原生应用能达到的帧率是基本是持平的
+> 为了方便开发者创建动画，不同的UI系统对动画都进行了一些抽象
+2. Animation
+> addListener(), 监听每一帧变化
+> addStatusListener(), 状态改变的监听器(开始、结束、正向或反向)
+3. CurvedAnimation可以通过包装AnimationController和Curve生成一个新的动画对象
+> 常见的Curves
+
+|  Curves   | 描述  |
+|  ----  | ----  |
+|linear |	匀速的|
+|decelerate |	匀减速|
+|ease |	开始加速，后面减速|
+|easeIn |	开始慢，后面快|
+|easeOut |	开始快，后面慢|
+|easeInOut | 开始慢，然后加速，最后再减速|
+> 可以自定义 Curves
+```
+class ShakeCurve extends Curve {
+  @override
+  double transform(double t) {
+    return math.sin(t * math.PI * 2);
+  }
+}
+```
