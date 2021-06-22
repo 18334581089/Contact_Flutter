@@ -59,6 +59,9 @@ import 'package:flutter_app_vscode/evenHandle/loginb.dart';
 import 'package:flutter_app_vscode/evenHandle/login.dart';
 import 'package:flutter_app_vscode/evenHandle/scroll1.dart';
 import 'package:flutter_app_vscode/evenHandle/MyNotification.dart';
+import 'package:flutter_app_vscode/animation/animation.dart';
+import 'package:flutter_app_vscode/animation/animation2.dart';
+import 'package:flutter_app_vscode/animation/animation3.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -83,6 +86,9 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "ScaleAnimationRoute2": (context) => ScaleAnimationRoute2(),
+          "ScaleAnimationRoute1": (context) => ScaleAnimationRoute1(),
+          "ScaleAnimationRoute": (context) => ScaleAnimationRoute(),
           "NotificationRoute": (context) => NotificationRoute(),
           "ScrollTest": (context) => ScrollTest(),
           "LoginWidget2": (context) => LoginWidget2(),
@@ -557,6 +563,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "NotificationRoute");
               },
               child: Text("open NotificationRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ScaleAnimationRoute");
+              },
+              child: Text("open ScaleAnimationRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ScaleAnimationRoute1");
+              },
+              child: Text("open ScaleAnimationRoute1"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ScaleAnimationRoute2");
+              },
+              child: Text("open ScaleAnimationRoute2"),
             ),
           ],
         ),

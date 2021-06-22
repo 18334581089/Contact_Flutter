@@ -1412,3 +1412,31 @@ class ShakeCurve extends Curve {
   }
 }
 ```
+
+#### 6/22
+- AnimationController
+1. 控制动画
+> forward(), stop(), reverse() // 表示启动,停止和反向
+> 派生自Animation<double>，因此可以在需要Animation对象的任何地方使用
+> 创建一个controller对象
+```
+final AnimationController controller = new AnimationController( 
+ duration: const Duration(milliseconds: 2000), 
+ lowerBound: 10.0,
+ upperBound: 20.0,
+ vsync: this
+);
+```
+2. Ticker
+> 其中,vsync是一个TickerProvider对象,用来创建Ticker
+> Ticker就是通过SchedulerBinding来添加屏幕刷新回调
+> 锁屏时,SchedulerBinding(每次屏幕刷新的回调)不会执行,所以不会执行ticker
+3. Tween
+> 定义从输入范围到输出范围的映射
+- 动画实现
+1. 简单实现
+> 实例1 (线性放大)
+> 实例1 (增加 Curve)
+> 实例2 (AnimatedWidget简化)(AnimatedWidget类封装了调用setState()的细节，并允许我们将widget分离出来)
+> 实例2 AnimatedBuilder 正是将渲染逻辑分离出来,
+> 实例2 实现循环: 动画正向执行结束时反转动画
