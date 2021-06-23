@@ -62,6 +62,8 @@ import 'package:flutter_app_vscode/evenHandle/MyNotification.dart';
 import 'package:flutter_app_vscode/animation/animation.dart';
 import 'package:flutter_app_vscode/animation/animation2.dart';
 import 'package:flutter_app_vscode/animation/animation3.dart';
+import 'package:flutter_app_vscode/animation/heroRouteA.dart';
+import 'package:flutter_app_vscode/animation/heroRouteB.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -86,6 +88,8 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "heroRouteA": (context) => HeroAnimationRoute(),
+          "heroRouteB": (context) => HeroAnimationRouteB(),
           "ScaleAnimationRoute2": (context) => ScaleAnimationRoute2(),
           "ScaleAnimationRoute1": (context) => ScaleAnimationRoute1(),
           "ScaleAnimationRoute": (context) => ScaleAnimationRoute(),
@@ -581,6 +585,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "ScaleAnimationRoute2");
               },
               child: Text("open ScaleAnimationRoute2"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ScaleAnimationRoute2");
+              },
+              child: Text("open ScaleAnimationRoute2"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "heroRouteA");
+              },
+              child: Text("open heroRouteA"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "heroRouteB");
+              },
+              child: Text("open heroRouteB"),
             ),
           ],
         ),

@@ -1440,3 +1440,20 @@ final AnimationController controller = new AnimationController(
 > 实例2 (AnimatedWidget简化)(AnimatedWidget类封装了调用setState()的细节，并允许我们将widget分离出来)
 > 实例2 AnimatedBuilder 正是将渲染逻辑分离出来,
 > 实例2 实现循环: 动画正向执行结束时反转动画
+
+#### 6/23
+- 自定义 路由切换 时的动画
+1. `MaterialPageRoute`
+> 它可以使用和平台风格一致的路由切换动画,如在iOS上会左右滑动切换，而在Android上会上下滑动切换
+> `CupertinoPageRoute`是Cupertino组件库提供的iOS风格的路由切换组件，它实现的就是左右滑动切换。
+> `PageRouteBuilder`来实现切换动画
+2. 以渐隐渐入动画来实现路由过渡
+> 实例 PageRouteBuilder
+> `pageBuilder` 有一个属性animation,所以可以实现自定义动画过渡
+> `PageRouteBuilder`其实只是PageRoute的一个包装，我们可以直接继承PageRoute类来实现自定义路由
+> 实例 PageRouteBuilder > FadeRoute
+> 实现: 在打开新路由时应用动画，而在返回时不使用动画
+> 实例 PageRouteBuilder > FadeRoute > (修改部分)
+- Hero动画(英雄 动画)
+1. 指的是可以在两个页面(路由)之前都存在的动画
+> 实现: Hero组件将要共享的widget包装起来，并提供一个相同的tag
