@@ -1457,3 +1457,80 @@ final AnimationController controller = new AnimationController(
 - Hero动画(英雄 动画)
 1. 指的是可以在两个页面(路由)之前都存在的动画
 > 实现: Hero组件将要共享的widget包装起来，并提供一个相同的tag
+
+#### 6/24
+> `InkWell` 组件
+> 组件在用户点击时出现“水波纹”效果
+- 交织动画（Stagger Animation）
+1. 由一个动画序列或重叠的动画组成
+2. 注意以下几点：
+> 要创建交织动画，需要使用多个动画对象（Animation）。
+> 一个AnimationController控制所有的动画对象。
+> 给每一个动画对象指定时间间隔（Interval）
+3. 实例: 柱状图
+> dart中extends、 implements、with的用法与区别
+> 继承（关键字 extends）
+> 混入  mixins （关键字 with）
+> 接口实现（关键字 implements）
+> 有前后顺序： 
+> extens在前，mixins在中间，implements最后；
+> extends 规则
+子类会继承父类里面可见的属性和方法 但是不会继承构造函数
+子类能复写父类的方法 getter和setter
+子类重写超类的方法，要用@override
+子类调用超类的方法，要用super
+子类可以继承父类的非私有变量
+> mixins 规则
+作为mixins的类只能继承自Object，不能继承其他类
+作为mixins的类不能有构造函数
+一个类可以mixins多个mixins类
+mixins绝不是继承，也不是接口，而是一种全新的特性
+> implements 接口实现
+(没有interface的,但是Flutter中的每个类都是一个隐式的接口,Flutter中:class 就是 interface)
+- `AnimatedSwitcher`
+1. 通常在切换(Tab切换、路由切换)时都会指定一个动画，以使切换过程显得平滑
+> Flutter SDK组件库中已经提供了一些常用的切换组件，如PageView、TabView等，
+> 但是，这些组件并不能覆盖全部的需求场景
+2. AnimatedSwitcher 可以同时对其新、旧子元素添加显示、隐藏动画
+> 实例 计数器
+3. 实现原理
+```
+Widget _widget; //
+void didUpdateWidget(AnimatedSwitcher oldWidget) {
+  super.didUpdateWidget(oldWidget);
+  // 检查新旧child是否发生变化(key和类型同时相等则返回true，认为没变化)
+  if (Widget.canUpdate(widget.child, oldWidget.child)) {
+    // child没变化，...
+  } else {
+    //child发生了变化，构建一个Stack来分别给新旧child执行动画
+   _widget= Stack(
+      alignment: Alignment.center,
+      children:[
+        //旧child应用FadeTransition
+        FadeTransition(
+         opacity: _controllerOldAnimation,
+         child : oldWidget.child,
+        ),
+        //新child应用FadeTransition
+        FadeTransition(
+         opacity: _controllerNewAnimation,
+         child : widget.child,
+        ),
+      ]
+    );
+    // 给旧child执行反向退场动画
+    _controllerOldAnimation.reverse();
+    //给新child执行正向入场动画
+    _controllerNewAnimation.forward();
+  }
+}
+
+//build方法
+Widget build(BuildContext context){
+  return _widget;
+}
+```
+> 类似海有: AnimatedCrossFade
+4. 高级用法
+> 实例: MySlideTransition2
+***无法实现实例***
