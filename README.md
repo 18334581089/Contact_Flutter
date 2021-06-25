@@ -1534,3 +1534,15 @@ Widget build(BuildContext context){
 4. 高级用法
 > 实例: MySlideTransition2
 ***无法实现实例***
+
+#### 6/23
+> 实例完成,因为没有写child元素
+> > 记录错误: 
+```
+The relevant error-causing widget was
+AnimatedSwitcher
+lib\animation\MySlideTransition.dart:49
+```
+> > 应该是因为没有用child
+- 自己封装一个切换动画(任意方向)
+> 实例: SlideTransitionX
