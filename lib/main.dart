@@ -67,6 +67,8 @@ import 'package:flutter_app_vscode/animation/heroRouteB.dart';
 import 'package:flutter_app_vscode/animation/StaggerRoute.dart';
 import 'package:flutter_app_vscode/animation/AnimatedSwitcherCounterRoute.dart';
 import 'package:flutter_app_vscode/animation/MySlideTransition.dart';
+import 'package:flutter_app_vscode/animation/AnimatedDecoratedBox1.dart';
+import 'package:flutter_app_vscode/animation/AnimatedWidgetsTest.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -91,6 +93,8 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "AnimatedWidgetsTest": (context) => AnimatedWidgetsTest(),
+          "AnimatedDecoratedBox1": (context) => TestBox(),
           "AnimatedSwitcherCounterRoute": (context) =>
               AnimatedSwitcherCounterRoute(),
           "MySlideTransition2": (context) => MySlideTransition2(),
@@ -628,6 +632,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "MySlideTransition2");
               },
               child: Text("open MySlideTransition2"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "AnimatedDecoratedBox1");
+              },
+              child: Text("open AnimatedDecoratedBox1"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "AnimatedWidgetsTest");
+              },
+              child: Text("open AnimatedWidgetsTest"),
             ),
           ],
         ),

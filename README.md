@@ -1546,3 +1546,12 @@ lib\animation\MySlideTransition.dart:49
 > > 应该是因为没有用child
 - 自己封装一个切换动画(任意方向)
 > 实例: SlideTransitionX
+
+- 动画过渡组件
+1. Widget属性发生变化时会执行过渡动画的组件
+2. 特征: 就是它会在内部自管理AnimationController
+> 所以: 自己封装一个`AnimationController`可以大大提升 过渡动画的易用性
+> 实例: AnimatedDecoratedBox1: decoration属性发生变化时执行一个过渡动画
+> ImplicitlyAnimatedWidget类, 用来封装动画
+3. Flutter预置的动画过渡组件
+> 实例: `AnimatedWidgetsTest`
