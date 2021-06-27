@@ -69,6 +69,9 @@ import 'package:flutter_app_vscode/animation/AnimatedSwitcherCounterRoute.dart';
 import 'package:flutter_app_vscode/animation/MySlideTransition.dart';
 import 'package:flutter_app_vscode/animation/AnimatedDecoratedBox1.dart';
 import 'package:flutter_app_vscode/animation/AnimatedWidgetsTest.dart';
+import 'package:flutter_app_vscode/CustomWidget/GradientButton.dart';
+import 'package:flutter_app_vscode/CustomWidget/TurnBoxRoute.dart';
+import 'package:flutter_app_vscode/CustomWidget/MyRichText.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -93,6 +96,9 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "MyRichTextRoute": (context) => MyRichTextRoute(),
+          "TurnBoxRoute": (context) => TurnBoxRoute(),
+          "GradientButton": (context) => GradientButton(),
           "AnimatedWidgetsTest": (context) => AnimatedWidgetsTest(),
           "AnimatedDecoratedBox1": (context) => TestBox(),
           "AnimatedSwitcherCounterRoute": (context) =>
@@ -644,6 +650,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "AnimatedWidgetsTest");
               },
               child: Text("open AnimatedWidgetsTest"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "GradientButton");
+              },
+              child: Text("open GradientButton"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "TurnBoxRoute");
+              },
+              child: Text("open TurnBoxRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "MyRichTextRoute");
+              },
+              child: Text("open MyRichTextRoute"),
             ),
           ],
         ),

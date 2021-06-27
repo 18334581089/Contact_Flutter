@@ -1535,7 +1535,7 @@ Widget build(BuildContext context){
 > 实例: MySlideTransition2
 ***无法实现实例***
 
-#### 6/23
+#### 6/25
 > 实例完成,因为没有写child元素
 > > 记录错误: 
 ```
@@ -1555,3 +1555,54 @@ lib\animation\MySlideTransition.dart:49
 > ImplicitlyAnimatedWidget类, 用来封装动画
 3. Flutter预置的动画过渡组件
 > 实例: `AnimatedWidgetsTest`
+
+#### 6/27
+- 自定义组件
+1. 场景
+> flutter提供组件无法满足需求
+> 为了共享代码,封装一些公用组件
+2. 创建方式
+> 通过组合其他组件
+> 自绘
+> 实现 RenderObject
+3. 组合其他组件
+> 适用: 自定义组件最简单的方法,优先考虑
+> 例如: Container就是一个组合组件(由: DecoratedBox,ConstrainedBox,Transform,Padding,Align组成)
+> 思想: 开发就是组合提供的组件实现不同布局
+4. 自绘
+> 适用: 无法通过现有组件实现需要的ui
+> 例如: 实现一个圆形渐变的进度条
+> 局限: CircularProgressIndicator的valueColor只支持执行旋转动画时变化Indicator的颜色
+> 实现: 通过Flutter中提供的CustomPaint和Canvas来实现UI自绘。
+5. RenderObject
+> RenderObject是用来渲染文本和图片的,RenderObject.paint抽象方法
+> paint方法第一个参数表示上下文(PaintingContext),
+> PaintingContext.canvas 就是主要的绘制逻辑
+> 区别于自绘(CustomPaint和Canvas),自绘只是为了方便开发者封装的一个代理类
+
+|  组合   | 自绘/RenderObject(通过Canvas)  |
+|  ----  | ----  |
+| 简单 | 强大灵活，理论上可以实现任何外观的UI |
+| 容易 | 必须了解Canvas API细节，并且得自己去实现绘制逻辑 |
+- 自定义组件组合
+1. 自定义渐变按钮
+> 通过组合DecoratedBox和InkWell来实现
+> 实例: GradientButton
+> 理解代码
+
+2. 抽离出单独的组件注意: 代码规范
+> 如: 必要参数要用@required 标注
+> 如: 可选参数在特定场景需要判空或设置默认值
+> 如: 错误地使用组件时能够兼容或报错提示
+> 如: 使用assert断言函数
+> 如: 组件更新时是否需要同步状态
+
+3. 增强TurnBox组件
+> 功能: 1,任意角度来旋转其子节点;2,过渡动画;3,手动指定动画速度
+> 实例: TurnBox
+
+4. 富文本展示组件
+> 实例: MyRichText
+> 注意: 组件更新时是否需要同步状态
+> RichText
+> TextSpan: 需要设置属性，不设置无法显示文字
