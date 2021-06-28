@@ -1606,3 +1606,47 @@ lib\animation\MySlideTransition.dart:49
 > 注意: 组件更新时是否需要同步状态
 > RichText
 > TextSpan: 需要设置属性，不设置无法显示文字
+
+#### 6/28
+- 自定义组件-自绘
+1. 几乎所有的UI系统都会提供一个自绘UI的接口, Canvas,开发者可以根据api绘制各种图形
+> flutter 提供了CustomPaint 结合画笔 CustomPainer 绘制图片
+2. CustomPaint
+> 如果CustomPaint有子节点
+> 将子节点包裹在RepaintBoundary组件
+> RepaintBoundary 子组件的绘制将独立于父组件的绘制
+```
+CustomPaint(
+  size: Size(300, 300), //指定画布大小
+  painter: MyPainter(),
+  child: RepaintBoundary(child:...)), 
+)
+```
+3. CustomPainter
+`void paint(Canvas canvas, Size size);`
+> Canvas：一个画布，包括各种绘制方法
+
+| API名称 |	功能 |
+| drawLine |	画线 |
+| drawPoint |	画点 |
+| drawPath |	画路径 |
+| drawImage |	画图像 |
+| drawRect |	画矩形 |
+| drawCircle |	画圆 |
+| drawOval |	画椭圆 |
+| drawArc | 画圆弧 |
+
+> Size  绘制区域大小
+4. 画笔Paint
+```
+var paint = Paint() //创建一个画笔并配置其属性
+  ..isAntiAlias = true //是否抗锯齿
+  ..style = PaintingStyle.fill //画笔样式：填充
+  ..color=Color(0x77cdb175);//画笔颜色
+```
+5. 性能
+> 绘制是比较昂贵的操作
+> a: 利用好shouldRepaint返回值
+> > 如果绘制依赖外部状态,改变则应返回true来重绘,反之相反
+> 实例: CustomPaintRoute
+> 实例: 圆形背景渐变进度条
