@@ -1626,6 +1626,8 @@ CustomPaint(
 `void paint(Canvas canvas, Size size);`
 > Canvas：一个画布，包括各种绘制方法
 
+|  1   | 1 |
+|  ----  | ----  |
 | API名称 |	功能 |
 | drawLine |	画线 |
 | drawPoint |	画点 |
@@ -1652,3 +1654,30 @@ var paint = Paint() //创建一个画笔并配置其属性
 > 实例: 圆形背景渐变进度条
 
 #### 6/29
+- 文件操作
+1. 都是通过Dart IO库来操作文件的
+> IO库包含了文件读写的相关类，它属于Dart语法标准的一部分
+> Dart VM下的脚本还是Flutter,都是通过io库来进行操作的
+2. 访问app目录
+> PathProvider
+> 这个插件提供一种平台透明（不分平台）访问设备常用位置
+> 支持访问的位置有：
+
+|  缓存(临时目录)   | 
+|  ----  | 
+|  getTemporaryDirectory()获取临时目录  |
+| iOS上，这对应于NSTemporaryDirectory() 返回的值；
+| Android上，这是getCacheDir() 返回的值  |
+
+|  文档目录   | 
+|  ----  | 
+|  etApplicationDocumentsDirectory()来获取应用程序的文档目录 | 
+|  只有自己可以访问的文件  | 
+|  只有当应用程序被卸载时，系统才会清除该目录  | 
+|  在iOS上，这对应于NSDocumentDirectory  | 
+|  Android上，这是AppData目录。  | 
+
+|  外部存储目录   | 
+|  ----  | 
+| getExternalStorageDirectory()来获取外部存储目录  |
+| eg: sd卡，（ios不支持）  |
