@@ -1681,3 +1681,95 @@ var paint = Paint() //创建一个画笔并配置其属性
 |  ----  | 
 | getExternalStorageDirectory()来获取外部存储目录  |
 | eg: sd卡，（ios不支持）  |
+
+
+#### 6/30
+- 昨天文件操作的补充
+> dart io库的操作非常丰富，这里只是讲一些前端最基本的部分，具体自己了解
+- HttpClient
+1. HttpClient发起请求分为五步
+> **第一步：** HttpClient httpClient = new HttpClient();
+> **第二步：** HttpClientRequest request = await httpClient.getUrl(uri);
+包含Query参数:
+```
+Uri uri=Uri(scheme: "https", host: "flutterchina.club", queryParameters: {
+  "xx":"xx",
+  "yy":"dd"
+});
+```
+设置请求header:
+`request.headers.add("user-agent", "test");`
+携带请求体方法:
+```
+String payload="...";
+request.add(utf8.encode(payload)); 
+//request.addStream(_inputStream); //可以直接添加输入流
+```
+> **第三步：** HttpClientResponse response = await request.close();
+返回对象： 
+返回一个HttpClientResponse对象，它包含响应头（header）和响应流(响应体的Stream)
+> **第四步：** 读取内容 String responseBody = await response.transform(utf8.decoder).join();
+> **第五步：** httpClient.close();
+关闭client后，通过该client发起的所有请求都会中止。
+2. 实例： HttpTestRoute 
+> 没有看效果
+3. 常见配置参数
+
+| 属性 |	含义 |
+|  ----  |  ----  | 
+| idleTimeout |	对应请求头中的keep-alive字段值，为了避免频繁建立连接，httpClient在请求结束后会保持连接一段时间，超过这个阈值后才会关闭连接。 |
+| connectionTimeout |	和服务器建立连接的超时，如果超过这个值则会抛出SocketException异常。 |
+| maxConnectionsPerHost |	同一个host，同时允许建立连接的最大数量。 |
+| autoUncompress |	对应请求头中的Content-Encoding，如果设置为true，则请求头中Content-Encoding的值为当前HttpClient支持的压缩算法列表，目前只有"gzip" |
+| userAgent |	对应请求头中的User-Agent字段。 |
+> 通过HttpClient设置的对整个httpClient都生效，而通过HttpClientRequest设置的只对当前请求生效
+4. 其他
+> 证书校验其实就是提供一个badCertificateCallback回调
+```
+String PEM="XXXXX";//可以从文件读取
+httpClient.badCertificateCallback=(X509Certificate cert, String host, int port){
+  if(cert.pem==PEM){
+    return true; //证书一致，则允许发送数据
+  }
+  return false;
+};
+```
+> findProxy 代理
+```
+client.findProxy = (uri) {
+  // 如果需要过滤uri，可以手动判断
+  return "PROXY 192.168.1.2:8888";
+};
+ ```
+如果不需要代理，返回"DIRECT"即可。
+· APP开发中，很多时候我们需要抓包来调试
+· 抓包软件(如charles)就是一个代理
+· 可以将请求发送到我们的抓包软件，我们就可以在抓包软件中看到请求的数据了
+> HTTP请求认证
+· 用于保护非公开资源
+· 如果Http服务器开启了认证，那么用户在发起请求时就需要携带用户凭据
+· 如果你在浏览器中访问了启用Basic认证的资源时，浏览就会弹出一个登录框
+Basic认证的基本过程
+· 客户端发送http请求给服务器，服务器验证该用户是否已经登录验证过了
+· 客户端得到响应码后，将用户名和密码进行base64编码（格式为用户名:密码），设置请求头Authorization，继续访问服务器验证用户凭据，如果通过就返回资源内容
+· Flutter的HttpClient只支持Basic和Digest两种认证方式（前者只是简单的通过Base64编码（可逆），而后者会进行哈希运算相对来说安全一点点）
+· 之外还有：Digest认证、Client认证、Form Based认证等
+· 安全起见都应该在Https协议下
+> Http认证的方法和属性
+· addCredentials： 添加用户凭据
+
+`httpClient.addCredentials(_uri, "admin", new HttpClientBasicCredentials("username","password"), );`
+· authenticate： 当服务器需要用户凭据且该用户凭据未被添加时，httpClient会调用此回调,一般这个回调会调用addCredential()来动态添加用户凭证
+```
+httpClient.authenticate=(Uri url, String scheme, String realm) async{
+  if(url.host=="xx.com" && realm=="admin"){
+    httpClient.addCredentials(url,
+      "admin",
+      new HttpClientBasicCredentials("username","pwd"), 
+    );
+    return true;
+  }
+  return false;
+};
+```
+· addCredentials()来添加全局凭证

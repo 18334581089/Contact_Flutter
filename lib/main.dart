@@ -74,6 +74,7 @@ import 'package:flutter_app_vscode/CustomWidget/TurnBoxRoute.dart';
 import 'package:flutter_app_vscode/CustomWidget/MyRichText.dart';
 import 'package:flutter_app_vscode/CustomWidget/CustomPaintRoute.dart';
 import 'package:flutter_app_vscode/CustomWidget/GradientCircularProgressRoute.dart';
+import 'package:flutter_app_vscode/service/HttpTestRoute.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -100,6 +101,7 @@ class MyApp extends StatelessWidget {
         routes: {
           "GradientCircularProgressRoute": (context) =>
               GradientCircularProgressRoute(),
+          "HttpTestRoute": (context) => HttpTestRoute(),
           "CustomPaintRoute": (context) => CustomPaintRoute(),
           "MyRichTextRoute": (context) => MyRichTextRoute(),
           "TurnBoxRoute": (context) => TurnBoxRoute(),
@@ -685,6 +687,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "GradientCircularProgressRoute");
               },
               child: Text("open GradientCircularProgressRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "HttpTestRoute");
+              },
+              child: Text("open HttpTestRoute"),
             ),
           ],
         ),
