@@ -1773,3 +1773,17 @@ httpClient.authenticate=(Uri url, String scheme, String realm) async{
 };
 ```
 · addCredentials()来添加全局凭证
+
+#### 7/1
+- Dio http库
+1. Dart社区第三方http请求库
+> 直接使用HttpClient发起网络请求是比较麻烦
+> 涉及到文件上传/下载、Cookie管理等就会非常繁琐
+2. 功能
+> 支持Restful API、FormData、拦截器、请求取消、Cookie管理、文件上传/下载、超时等
+3. 配置
+```
+dependencies:
+  dio: ^x.x.x #请使用pub上的最新版本
+```
+> 引入dio 的代码要放在dependencies二级

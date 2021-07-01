@@ -75,6 +75,7 @@ import 'package:flutter_app_vscode/CustomWidget/MyRichText.dart';
 import 'package:flutter_app_vscode/CustomWidget/CustomPaintRoute.dart';
 import 'package:flutter_app_vscode/CustomWidget/GradientCircularProgressRoute.dart';
 import 'package:flutter_app_vscode/service/HttpTestRoute.dart';
+import 'package:flutter_app_vscode/service/Dio1.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -99,6 +100,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "DioRoute": (context) => DioRoute(),
           "GradientCircularProgressRoute": (context) =>
               GradientCircularProgressRoute(),
           "HttpTestRoute": (context) => HttpTestRoute(),
@@ -693,6 +695,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "HttpTestRoute");
               },
               child: Text("open HttpTestRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "DioRoute");
+              },
+              child: Text("open DioRoute"),
             ),
           ],
         ),
