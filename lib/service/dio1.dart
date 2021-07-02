@@ -20,7 +20,30 @@ class _DioRouteState extends State<DioRoute> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Text(content1),
+      child: Center(
+        child: Column(
+          children: [
+            Text(content1),
+            Text('get'),
+            Text(
+                'response=await dio.get("/test",queryParameters:{"id":12,"name":"wendu"})'),
+            Text('post'),
+            Text(
+                'response=await dio.post("/test",data:{"id":12,"name":"wendu"})'),
+            Text('多个'),
+            Text(
+                'response= await Future.wait([dio.post("/info"),dio.get("/token")]);'),
+            Text('下载'),
+            Text(
+                'response=await dio.download("https://www.google.com/",_savePath);'),
+            Text('FormData'),
+            Text(
+                'FormData formData = new FormData.from({ "name": "wendux", "age": 25, })'),
+            Text('response = await dio.post("/info", data: formData)'),
+            Text('onHttpClientCreate  设置代理,认证,证书'),
+          ],
+        ),
+      ),
     );
   }
 

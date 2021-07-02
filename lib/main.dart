@@ -76,6 +76,7 @@ import 'package:flutter_app_vscode/CustomWidget/CustomPaintRoute.dart';
 import 'package:flutter_app_vscode/CustomWidget/GradientCircularProgressRoute.dart';
 import 'package:flutter_app_vscode/service/HttpTestRoute.dart';
 import 'package:flutter_app_vscode/service/Dio1.dart';
+import 'package:flutter_app_vscode/service/FutureBuilderRoute.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -100,6 +101,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "FutureBuilderRoute": (context) => FutureBuilderRoute(),
           "DioRoute": (context) => DioRoute(),
           "GradientCircularProgressRoute": (context) =>
               GradientCircularProgressRoute(),
@@ -701,6 +703,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "DioRoute");
               },
               child: Text("open DioRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "FutureBuilderRoute");
+              },
+              child: Text("open FutureBuilderRoute"),
             ),
           ],
         ),
