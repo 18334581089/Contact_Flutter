@@ -1790,7 +1790,7 @@ dependencies:
 
 #### 7/2
 - Http分块下载
-1. 实例
+1. 实例 downloadWithChunks
 2. 概念
 > HTTP分块下载，也就是断点续传下载，
 > 根据HTTP1.1协议（RFC2616）中定义的HTTP头Range和Content-Range字段来控制的： 
@@ -1803,3 +1803,65 @@ dependencies:
 > 分块大小多少合适？
 > 下载到一半的块如何处理？
 > 要不要维护一个任务队列？
+
+#### 7/4
+- WebSockets
+1. 客户端与服务端实时通信而产生的技术
+2. 
+> [websocket.org提供的测试服务器](http://www.websocket.org/echo.html)
+> 1: 连接到WebSocket服务器
+> web_socket_channel 提供了 WebSocketChannel 
+> 可以监听来自服务器的消息，又可以将消息发送到服务器的方法
+> 2: 监听来自服务器的消息
+```
+new StreamBuilder(
+  stream: widget.channel.stream,
+  builder: (context, snapshot) {
+    return new Text(snapshot.hasData ? '${snapshot.data}' : '');
+  },
+);
+```
+> 3:将数据发送到服务器
+`channel.sink.add('Hello!');`
+> 4:关闭WebSocket连接
+`channel.sink.close();`
+报错1
+***Target of URI doesn't exist***
+***表示有包没有配置的pubspec.yaml中***
+
+报错2
+***Insecure HTTP is not allowed by platform***
+android端
+AndroidManifest.xml 文件中修改为
+```
+<uses-permission android:name="android.permission.INTERNET" />
+<application
+  android:label="flutter_app_vscode"
+  android:usesCleartextTraffic="true"
+  android:icon="@mipmap/ic_launcher">
+```
+3. 扩展
+> 1: 之前介绍的Http协议和WebSocket协议都属于应用层协议
+> 就是说: 上面说到的http和websocket都是直接使用框架封装好的
+> 2: 应用层协议的实现都是通过Socket API来实现的
+> 3: 类似的应用层协议还有很多如：SMTP、FTP等
+> 4: 高级编程语言中的Socket库其实都是对操作系统的socket API的一个封装
+> 5: 如果我们需要 情况一: 自定义协议或者想直接来控制管理网络链接
+> 情况二: 我们觉得自带的HttpClient不好用想重新实现一个
+> 就需要使用Socket
+4. 实例: 简单实现()
+```
+_request() async{
+  //建立连接
+  var socket=await Socket.connect("baidu.com", 80);
+  //根据http协议，发送请求头
+  socket.writeln("GET / HTTP/1.1");
+  socket.writeln("Host:baidu.com");
+  socket.writeln("Connection:close");
+  socket.writeln();
+  await socket.flush(); //发送
+  //读取返回内容
+  _response =await socket.transform(utf8.decoder).join();
+  await socket.close();
+}
+```

@@ -77,6 +77,8 @@ import 'package:flutter_app_vscode/CustomWidget/GradientCircularProgressRoute.da
 import 'package:flutter_app_vscode/service/HttpTestRoute.dart';
 import 'package:flutter_app_vscode/service/Dio1.dart';
 import 'package:flutter_app_vscode/service/FutureBuilderRoute.dart';
+import 'package:flutter_app_vscode/service/WebSocketRoute.dart';
+import 'package:flutter_app_vscode/service/HttpTestRoute2.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -101,6 +103,8 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "HttpTestRoute2": (context) => HttpTestRoute2(),
+          "WebSocketRoute": (context) => WebSocketRoute(),
           "FutureBuilderRoute": (context) => FutureBuilderRoute(),
           "DioRoute": (context) => DioRoute(),
           "GradientCircularProgressRoute": (context) =>
@@ -709,6 +713,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "FutureBuilderRoute");
               },
               child: Text("open FutureBuilderRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "WebSocketRoute");
+              },
+              child: Text("open WebSocketRoute"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "HttpTestRoute2");
+              },
+              child: Text("open HttpTestRoute2"),
             ),
           ],
         ),
