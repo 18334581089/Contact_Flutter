@@ -1,4 +1,5 @@
 // 1
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_vscode/route.dart';
 import 'package:flutter_app_vscode/tipRoute.dart';
@@ -79,6 +80,7 @@ import 'package:flutter_app_vscode/service/Dio1.dart';
 import 'package:flutter_app_vscode/service/FutureBuilderRoute.dart';
 import 'package:flutter_app_vscode/service/WebSocketRoute.dart';
 import 'package:flutter_app_vscode/service/HttpTestRoute2.dart';
+import 'package:flutter_app_vscode/service/DartModel.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
@@ -103,6 +105,7 @@ class MyApp extends StatelessWidget {
           title: ('Flutter Demo Home Page'),
         ),
         routes: {
+          "DartModel": (context) => DartModel(),
           "HttpTestRoute2": (context) => HttpTestRoute2(),
           "WebSocketRoute": (context) => WebSocketRoute(),
           "FutureBuilderRoute": (context) => FutureBuilderRoute(),
@@ -725,6 +728,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "HttpTestRoute2");
               },
               child: Text("open HttpTestRoute2"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "DartModel");
+              },
+              child: Text("open DartModel"),
             ),
           ],
         ),

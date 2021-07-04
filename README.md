@@ -1865,3 +1865,58 @@ _request() async{
   await socket.close();
 }
 ```
+
+- Json转Dart Model类
+1. dart:convert中内置的JSON解码器json.decode() 来实现
+```
+//一个JSON格式的用户列表字符串
+String jsonStr='[{"name":"Jack"},{"name":"Rose"}]';
+//将JSON字符串转为Dart对象(此处是List)
+List items=json.decode(jsonStr);
+//输出第一个用户的姓名
+print(items[0]["name"]);
+```
+2. 问题
+> 由于json.decode()仅返回一个Map<String, dynamic>，
+> 这意味着直到运行时我们才知道值的类型(类型安全、自动补全和最重要的编译时异常)
+> 实例 dartModel
+
+报错1
+***Unexpected character***
+原因可能是字符串格式有问题(这次是因为我多加了一个"")
+3. 解决
+> **“Json Model化”**
+> 通过预定义一些与Json结构对应的Model类
+> 在请求到数据后再动态根据数据创建出Model类的实例
+> 帖子上看,说就是一个虚拟类
+4. 实践
+> 通过引入一个简单的模型类(Model class)- User
+> 包括: User.fromJson构造函数,用来从一个map构造出一个 User实例 map structure
+> 包括: toJson 方法,将 User 实例转化为一个map.
+5. 官方的 **son_serializable package**
+> 自动化的源代码生成器, 为我们自动处理JSON序列化, 生成JSON序列化模板
+> 实例: dartModel2
+报错
+*** Target of URL hasn't been generated: 'user.g.dart'***
+> 这些错误是完全正常的，这是因为Model类的生成代码还不存在。
+> 为了解决这个问题，我们必须运行代码生成器来为我们生成序列化模板。
+> 有两种运行代码生成器的方法：
+> 1: 一次性生成
+`flutter packages pub run build_runner build`
+> 一个好的建议是将所有Model类放在一个单独的目录下，然后在该目录下执行命令。
+> 2: 持续生成
+> '_watcher_'
+`flutter packages pub run build_runner watch`
+> 在项目根目录下运行来启动_watcher_
+> 只需启动一次观察器，然后它就会在后台运行，这是安全的。
+6. 根据json生成模板
+> 1. template.dart 模板的模板
+> 2. mo.dart (脚本)它可以根据指定的JSON目录，遍历生成模板
+> 如果JSON文件名以下划线“_”开始，则忽略此JSON文件。
+> 复杂的JSON对象往往会出现嵌套，我们可以通过特殊标志来手动指定嵌套的对象
+> 3. mo.sh (shell)将生成模板和生成model串起来
+> 4. 至此，脚本写好了
+> 5. 使用:
+> 在根目录下新建一个json目录，然后把user.json移进去，
+> 然后在lib目录下创建一个models目录，用于保存最终生成的Model类。
+> 现在我们只需要一句命令即可生成Model类了:`./mo.sh`
