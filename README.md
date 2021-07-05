@@ -1993,3 +1993,54 @@ Pod::Spec.new do |s|
 `flutter packages pub publish`
 **代理**
 `export all_proxy=socks5://127.0.0.1:1080`
+
+####　7/5
+- 插件开发: 平台通道简介
+1. “平台特定”或“特定平台”
+> **平台**指的就是Flutter应用程序运行的平台
+> 完整的Flutter应用程序实际上包括原生代码和Flutter代码两部分
+2. platform channel
+> Flutter中提供了的一个平台通道
+> 1: Flutter APP和原生平台进行通信
+> 2: 调用平台能力,如: 蓝牙、相机、GPS等
+> 3: lutter本身只是一个UI系统，它本身是无法提供一些系统能力
+> 4: 是Flutter插件的底层基础设施
+> 5: 灵活的系统(无论在Android上的Java或Kotlin代码中，还是iOS上的ObjectiveC或Swift代码中均可用)
+3. 消息传递方式
+> 1: 通过platform channel将消息发送到其宿主应用(原生应用)
+> 2: 宿主监听平台通道，并接收该消息.
+> 3: 然后调用该平台的API，并将响应(如果有数据是异步的)发送回客户端(应用程序的Flutter部分)
+4. MethodChannel
+> MethodChannel API 可以发送与方法调用相对应的消息
+> 在宿主平台上(android 和 ios) 可以接收方法调用并返回结果
+> 属于自定义编解码器,类似的还有BasicMessageChannel
+5. 获取平台信息
+> defaultTargetPlatform 用来获取平台信息
+> 是一个枚举
+> 使用
+`if(defaultTargetPlatform==TargetPlatform.android){ // 是安卓系统，do something }`
+> 其他用法
+> 假如: 想让我们的APP在所有平台都表现一致
+> 比如: 比如希望在所有平台路由切换动画都按照ios平台一致的左右滑动切换风格
+> 可以通过显式指定debugDefaultTargetPlatformOverride全局变量的值来指定应用平台
+```
+debugDefaultTargetPlatformOverride=TargetPlatform.iOS;
+print(defaultTargetPlatform); 
+```
+> 上述代码会输出TargetPlatform.iOS
+> defaultTargetPlatform的值也会变为TargetPlatform.iOS
+
+- 开发Flutter插件
+1. 介绍
+> 获取电池电量的插件
+> 我们在Dart中通过getBatteryLevel 调用Android BatteryManager API和iOS device.batteryLevel API
+2. 
+> 1: 创建一个新的应用程序项目(之前讲的步骤)
+> 2: 首先，我们构建通道
+> 单个应用中使用的所有通道名称必须是唯一的; 我们建议在通道名称前加一个唯一的“域名前缀”
+> 例如samples.flutter.io/battery
+> main的state类中加入
+`static const platform = const MethodChannel('samples.flutter.io/battery');`
+> 接下来，我们调用通道上的方法，指定通过字符串标识符调用方法getBatteryLevel。 
+> 该调用可能失败(平台不支持平台API，例如在模拟器中运行时)，
+> 我们将invokeMethod调用包装在try-catch语句中。

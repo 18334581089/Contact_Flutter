@@ -1,6 +1,7 @@
 // 1
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app_vscode/route.dart';
 import 'package:flutter_app_vscode/tipRoute.dart';
 import 'package:flutter_app_vscode/counterWidget.dart';
@@ -228,6 +229,9 @@ class MyHomePage extends StatefulWidget {
 
 // 5
 class _MyHomePageState extends State<MyHomePage> {
+  //  7/5,尝试开发flutter插件
+  static const platform = const MethodChannel('samples.flutter.io/battery');
+
   int _counter = 0;
 
   void _incrementCounter() {
