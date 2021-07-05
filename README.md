@@ -1920,3 +1920,76 @@ print(items[0]["name"]);
 > 在根目录下新建一个json目录，然后把user.json移进去，
 > 然后在lib目录下创建一个models目录，用于保存最终生成的Model类。
 > 现在我们只需要一句命令即可生成Model类了:`./mo.sh`
+
+#### 7/5
+- 开发Package
+1. 通过package可以创建共享的模块化代码
+2. Package包括
+> 1: pubspec.yaml
+> 声明了Package的名称、版本、作者等的元数据文件
+> 2: lib 文件夹
+> 公开的(public)代码,最少应有一个dart文件
+3. Package分类
+> 1: Dart包,
+> 包含Flutter的特定功能，对Flutter框架具有依赖性，这种包仅用于Flutter
+> 2: 插件包,
+> 插件包括原生代码
+> 包含用Dart代码编写的API，以及针对Android（使用Java或Kotlin）和针对iOS（使用OC或Swift）平台的特定实现
+***Flutter的Dart和Dart VM(组件集合)是不同***
+- 开发
+1. 创建dart 包
+> 1: Android Studio：File>New>New Flutter Project 创建一个Package工程
+> 2: --template=package 来执行 flutter create 命令来创建
+> 两个方法都会生成
+> lib/hello.dart：Package的Dart代码
+> test/hello_test.dart：Package的单元测试代码。
+> (hello是包的的名称,会根据创建时的名称自动生成)
+2. 实现package
+> 1: 纯Dart包，只需在主lib/<package name>.dart文件内或lib目录中的文件中添加功能即可 。
+> 2: 要测试软件包，请在test目录中添加[unit tests](https://flutter.dev/docs/testing#unit-testing)
+3. 导入包
+`import 'package:utilities/utilities.dart';`
+4. 生成文档
+> 使用[https://github.com/dart-lang/dartdoc#dartdoc](),为包生成文档. 开发者需要做的就是遵守文档注释语法在代码中添加文档注释，最后使用dartdoc可以直接生成API文档（一个静态网站）
+> 文档注释是使用三斜线"
+5. 处理包的相互依赖
+> 需要将该依赖包添加到pubspec.yaml文件的dependencies部分
+```
+dependencies:
+  url_launcher: ^0.4.2
+```
+> 使用
+`import 'package:url_launcher/url_launcher.dart'`
+> android
+`android/build.gradle`
+```
+android {
+    // lines skipped
+    dependencies {
+        provided rootProject.findProject(":url_launcher")
+    }
+}
+```
+> 在android/src中使用
+`import io.flutter.plugins.urllauncher.UrlLauncherPlugin`
+> iOS
+`ios/hello.podspec`
+```
+Pod::Spec.new do |s|
+  # lines skipped
+  s.dependency 'url_launcher'
+```
+> 在ios/Classes中使用
+`#import "UrlLauncherPlugin.h"`
+6. 冲突
+> 假设我们想在我们的hello包中使用some_package和other_package
+> 并且这两个包都依赖url_launcher，但是依赖的是url_launcher的不同的版本
+> 避免这种情况的最好方法是在指定依赖关系时，程序包作者使用版本范围 (opens new window)而不是特定版本
+7. 发布Package
+> 发布之前，检查pubspec.yaml、README.md以及CHANGELOG.md文件，以确保其内容的完整性和正确性
+> 查看是否准备ok
+`flutter packages pub publish --dry-run`
+> 发布
+`flutter packages pub publish`
+**代理**
+`export all_proxy=socks5://127.0.0.1:1080`
