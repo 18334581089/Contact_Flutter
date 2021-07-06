@@ -2044,3 +2044,13 @@ print(defaultTargetPlatform);
 > 接下来，我们调用通道上的方法，指定通过字符串标识符调用方法getBatteryLevel。 
 > 该调用可能失败(平台不支持平台API，例如在模拟器中运行时)，
 > 我们将invokeMethod调用包装在try-catch语句中。
+
+#### 7/6
+- 看动开发flutter插件
+1. 创建flutter应用
+2. 创建Flutter平台客户端
+> MethodChannel
+> _getBatteryLevel
+> RaisedButton
+3. Android端API实现
+复制官方代码无法启动项目

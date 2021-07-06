@@ -231,6 +231,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   //  7/5,尝试开发flutter插件
   static const platform = const MethodChannel('samples.flutter.io/battery');
+  // Get battery level. // 7/6,尝试开发插件
+  String _batteryLevel = 'Unknown battery level.';
+
+  Future<Null> _getBatteryLevel() async {
+    String batteryLevel;
+    try {
+      final int result = await platform.invokeMethod('getBatteryLevel');
+      batteryLevel = 'Battery level at $result % .';
+      // batteryLevel = 'Battery level at 123 % .';
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
+  }
 
   int _counter = 0;
 
@@ -739,6 +756,11 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text("open DartModel"),
             ),
+            new ElevatedButton(
+              child: new Text('Get Battery Level'),
+              onPressed: _getBatteryLevel,
+            ),
+            new Text(_batteryLevel),
           ],
         ),
       ),
