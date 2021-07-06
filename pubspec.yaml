@@ -24,6 +24,7 @@ dependencies:
   json_annotation: ^2.0.0
   web_socket_channel: ^1.1.0
   dio: ^4.0.0 # 引入flutter dio(http 插件)
+  camera: ^0.5.2+2 # 7/6 尝试使用camera实例
   flutter:
     sdk: flutter
 

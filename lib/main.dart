@@ -88,7 +88,10 @@ import 'package:flutter_app_vscode/service/DartModel.dart';
 // Material UI 是flutter默认提供的一套Material ui组件
 
 // 2
-void main() => runApp(MyApp());
+void main async () {
+  cameras = await availableCameras();
+  runApp(MyApp())
+};
 // main函数是应用程序入口(用来启动flutter应用), 和java类似
 // runApp 函数 接受一个Widget参数(Widget 树: 可以暂时理解位dom树)(Widget: 部件)
 // MyApp 函数 是flutter应用的根组件
