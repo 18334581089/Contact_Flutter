@@ -86,6 +86,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter_app_vscode/package/camera.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'internation/DemoLocalizationsDelegate.dart';
+import 'internation/Localizations.dart';
+
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
 // Material UI 是flutter默认提供的一套Material ui组件
@@ -214,6 +217,7 @@ class MyApp extends StatelessWidget {
         // 本地化的代理类
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        DemoLocalizationsDelegate()
       ],
       supportedLocales: [
         const Locale('en', 'US'), // 美国英语
@@ -283,7 +287,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       //Scaffold: Material 页面脚手架(1 提供默认的导航栏,标题,主屏幕组件的body属性.2 创建路由.)
       appBar: AppBar(
-        title: Text(widget.title),
+        // title: Text(widget.title),
+        title: Text(DemoLocalizations.of(context).title), // 尝试切换语言时自动更换标题
       ),
       body: SingleChildScrollView(
         child: Column(

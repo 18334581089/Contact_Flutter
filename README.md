@@ -2055,32 +2055,32 @@ print(defaultTargetPlatform);
 3. Android端API实现
 复制官方代码无法启动项目
 
-- 原生和Flutter之间如何共享图像的方法Texture和PlatformView
+- 原生和Flutter之间如何共享图像的方法`Texture`和`PlatformView`
 1. 以及如何在Flutter中嵌套原生组件
 2. flutter局限
 > 他的平台通道，消息传送不能覆盖所有的应用场景
 > 摄像头拍照录视频（如果把图像每一帧都传递到flutter应用，代价非常大：内存和CPU的巨大消耗）
-> Flutter提供了一种基于Texture的图片数据共享机制。
-3. Texture 是一个gpu内存将要绘制的图像数据对象
-> Flutter engine会将Texture的数据在内存中直接进行映射（而无需在原生和Flutter之间再进行数据传递）
-> Flutter会给每一个Texture分配一个id，同时Flutter中提供了一个Texture组件
-> Texture 组件正是通过textureId与Texture数据关联起来
+> Flutter提供了一种基于`Texture`的图片数据共享机制。
+3. `Texture` 是一个gpu内存将要绘制的图像数据对象
+> Flutter engine会将`Texture`的数据在内存中直接进行映射（而无需在原生和Flutter之间再进行数据传递）
+> Flutter会给每一个`Texture`分配一个id，同时Flutter中提供了一个`Texture`组件
+> `Texture` 组件正是通过textureId与`Texture`数据关联起来
 > 整个流程
 > 1: 图像数据先在原生部分缓存
 > 2: Flutter部分再通过textureId和缓存关联
 > 3: 绘制由Flutter完成
 4. 如果我们开发插件
-> textureId完全可以通过MethodChannel来传递。
+> textureId完全可以通过`MethodChannel`来传递。
 5. 注意
-> 原生摄像头捕获的图像发生变化时，Texture 组件会自动重绘，这不需要我们写任何Dart 代码去控制。
+> 原生摄像头捕获的图像发生变化时，`Texture` 组件会自动重绘，这不需要我们写任何Dart 代码去控制。
 - Texture用法
-1. Flutter官方提供的相机（camera）插件和视频播放（video_player）插件都是使用Texture来实现的，它们本身就是Texture非常好的示例
-2. camera包自带的一个示例
+1. Flutter官方提供的相机`camera`插件和视频播放`video_player`插件都是使用Texture来实现的，它们本身就是Texture非常好的示例
+2. `camera`包自带的一个示例
 > 1: 可以拍照，也可以拍视频，拍摄完成后可以保存；排号的视频可以播放预览。
 > 2: 可以切换摄像头（前置摄像头、后置摄像头、其它）
 > 3: 可以显示已经拍摄内容的预览图。
-3. 看一下camera具体代码
-> 1: 依赖camera插件的最新版
+3. 看一下`camera`具体代码
+> 1: 依赖`camera`插件的最新版
 ```
 pubspec.yaml 
   camera: ^0.5.2+2
@@ -2095,14 +2095,15 @@ void main() async {
 ```
 > 3: 构建UI
 > 4： 完整代码(camera.dart)
-- PlatformView (平台组件)
+- `PlatformView` (平台组件)
 > 1: 开发过程中需要使用一个原生组件
 例如： webview
 > 2: 将需要使用原生组件的页面全部用原生实现，在flutter中需要打开该页面时通过消息通道打开这个原生的页面
-> 3: Flutter SDK中新增了AndroidView和UIKitView 两个组件，这两个组件的主要功能就是将原生的Android组件和iOS组件嵌入到Flutter的组件树中,能让Flutter共享原生组件
-> 4: 由于AndroidView和UIKitView 是和具体平台相关的，所以称它们为PlatformView
+> 3: Flutter SDK中新增了AndroidView和UIKitView 两个组件，
+> 这两个组件的主要功能就是将原生的Android组件和iOS组件嵌入到Flutter的组件树中,能让Flutter共享原生组件
+> 4: 由于AndroidView和UIKitView 是和具体平台相关的，所以称它们为`PlatformView`
 > 5: 使用Platform View
-> 以Flutter官方提供的webview_flutter插件 (opens new window)为例
+> 以Flutter官方提供的`webview_flutter`插件为例
 > 1: 原生代码中注册要被Flutter嵌入的组件工厂
 ```
 public static void registerWith(Registrar registrar) {
@@ -2124,16 +2125,16 @@ class PlatformViewRoute extends StatelessWidget {
 }
 ```
 > 注意
-> 用PlatformView的开销是非常大的，因此，如果一个原生组件用Flutter实现的难度不大时，我们应该首选Flutter实现。
+> 用`PlatformView`的开销是非常大的，因此，如果一个原生组件用Flutter实现的难度不大时，我们应该首选Flutter实现。
 - 多语言
 1. Flutter SDK已经提供了一些组件和类来帮助我们实现国际化，下面我们来介绍一下Flutter中实现国际化的步骤
-> 1: 下面举例MaterialApp类为入口的应用来说明如何支持国际化
-> 2: 大多数应用程序都是通过MaterialApp为入口,MaterialApp实际上也是WidgetsApp的一个包装
+> 1: 下面举例`MaterialApp`类为入口的应用来说明如何支持国际化
+> 2: 大多数应用程序都是通过`MaterialApp`为入口,`MaterialApp`实际上也是WidgetsApp的一个包装
 > 3: 本地化的值和资源指我们针对不同语言准备的不同资源,资源一般是指文案（字符串）
 > 4: 默认情况,仅提供美国英语本地化资源
-> 要添加对其他语言的支持，应用程序须添加一个名为“flutter_localizations”的包依赖
-> 还需要在MaterialApp中进行一些配置
-2. 使用flutter_localizations包
+> 要添加对其他语言的支持，应用程序须添加一个名为`flutter_localizations`的包依赖
+> 还需要在`MaterialApp`中进行一些配置
+2. 使用`flutter_localizations`包
 > 1: 添加依赖
 ```
 dependencies:
@@ -2142,8 +2143,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 ```
-> 2: 下载flutter_localizations
-> 3: 然后指定MaterialApp的localizationsDelegates和supportedLocales,
+> 2: 下载`flutter_localizations`
+> 3: 然后指定MaterialApp的`localizationsDelegates`和`supportedLocales`,
 ```
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -2161,10 +2162,10 @@ new MaterialApp(
   // ...
 )
 ```
-> 1: localizationsDelegates列表中的元素是生成本地化值集合的工厂。
-> 2: GlobalMaterialLocalizations.delegate 为Material 组件库提供的本地化的字符串和其他值，它可以使Material 组件支持多语言。 
-> 3: GlobalWidgetsLocalizations.delegate定义组件默认的文本方向，从左到右或从右到左，这是因为有些语言的阅读习惯并不是从左到右，比如如阿拉伯语就是从右向左的。
-> 4: supportedLocales也接收一个Locale数组，表示我们的应用支持的语言列表，在本例中我们的应用只支持美国英语和中文简体两种语言
+> 1: `localizationsDelegates` 列表中的元素是生成本地化值集合的工厂。
+> 2: `GlobalMaterialLocalizations.delegate` 为Material 组件库提供的本地化的字符串和其他值，它可以使Material 组件支持多语言。 
+> 3: `GlobalWidgetsLocalizations.delegate` 定义组件默认的文本方向，从左到右或从右到左，这是因为有些语言的阅读习惯并不是从左到右，比如如阿拉伯语就是从右向左的。
+> 4: `supportedLocales` 也接收一个Locale数组，表示我们的应用支持的语言列表，在本例中我们的应用只支持美国英语和中文简体两种语言
 3. 获取当前区域Locale
 > Locale用来标识用户的语言环境的，它包括语言和国家两个标志如
 
@@ -2174,21 +2175,22 @@ new MaterialApp(
 `Locale myLocale = Localizations.localeOf(context);`
 4. 监听系统语言切换
 > 切换语言这个过程是隐式完成的
-> 可以通过localeResolutionCallback或localeListResolutionCallback回调来监听locale改变的事件，我们先看看localeResolutionCallback的回调函数签名：
+> 可以通过`localeResolutionCallback`或`localeListResolutionCallback`回调来监听locale改变的事件
+> `localeResolutionCallback`的回调函数签名：
 
 `Locale Function(Locale locale, Iterable<Locale> supportedLocales)`
 > 1: 参数locale的值为当前的当前的系统语言设置
-> 2: supportedLocales 为当前应用支持的locale列表，是开发者在MaterialApp中通过supportedLocales属性注册的。
+> 2: `supportedLocales` 为当前应用支持的locale列表，是开发者在MaterialApp中通过`supportedLocales`属性注册的。
 > 3: 返回值是一个Locale，此Locale为Flutter APP最终使用的Locale。通常在不支持的语言区域时返回一个默认的Locale。
 
-> 使用localeListResolutionCallback方法
+> 使用`localeListResolutionCallback`方法
 > 前者接收的是一个Locale列表，而后者接收的是单个Locale
 
 `Locale Function(List<Locale> locales, Iterable<Locale> supportedLocales)`
 
 5. Localization 组件
-> 1:前面提到的Localizations组件用于加载和查找应用当前语言下的本地化值或资源 
-> 2: 通过Localizations.of(context,type) (opens new window)来引用这些对象
+> 1: 前面提到的Localizations组件用于加载和查找应用当前语言下的本地化值或资源 
+> 2: 通过`Localizations.of(context,type)` (opens new window)来引用这些对象
 > 3: 如果设备的Locale区域设置发生更改，则Localizations 组件会自动加载新区域的Locale值，然后重新build使用（依赖）了它们的组件，
 > 4: 大型应用程序中，不同模块或Package可能会与自己的本地化值捆绑在一起
 > 5: Localizations.of()表达式会经常使用，所以MaterialLocalizations类提供了一个便捷方法
@@ -2201,8 +2203,7 @@ static MaterialLocalizations of(BuildContext context) {
 // 可以直接调用便捷方法
 tooltip: MaterialLocalizations.of(context).backButtonTooltip,
 ```
-> 6. flutter软件包中仅提供美国英语值的MaterialLocalizations和WidgetsLocalizations接口的实现
-> 7. 上述的GlobalMaterialLocalizations和GlobalWidgetsLocalizations只是Material组件库的本地化实现，如果要让自己的布局支持多语言，那么就需要实现在即的Localizations
+> 6. flutter软件包中仅提供美国英语值的`MaterialLocalizations`和`WidgetsLocalizations`接口的实现
 
 #### 7/7
 1. 昨天的camera报错,
@@ -2216,7 +2217,7 @@ void main() async {
 }
 ```
 > 重新添加依赖和 把mian文件修改成上面的代码没有报错了
-> 具体可以参考[cameras博客](https://blog.csdn.net/qq_39816031/article/details/104486122)
+> 参考的[cameras博客](https://blog.csdn.net/qq_39816031/article/details/104486122)
 
 ***camera有报错***
 > pubspec 引入
@@ -2230,7 +2231,48 @@ path_provider: ^1.6.9
 > 尝试手机打开
 > 没有设备
 > 注释了首页的
-  // cameras = await availableCameras();
+`  // cameras = await availableCameras();`
 > 可以打开
 2. 尝试国际化
 > 没有想到使用的实际场景
+
+- 实现Localizations
+1. `GlobalMaterialLocalizations` 和 `GlobalWidgetsLocalizations` 只是Material组件库的本地化实现，
+> 想要让自己的布局支持多语言，那么就需要实现在即的Localizations
+2. 开始
+> 1: 实现 `Localizations` 类
+> `Localizations`类 实现提供了本地化值
+> 示例 Localizations
+> 2: 实现 `Delegate` 类
+> `Delegate`类 在Locale改变时加载新的Locale资源
+> `Delegate`类需要继承自LocalizationsDelegate类
+> 它有一个load方法
+> 示例 Delegate
+> shouldReload 方法返回值决定,build时,是否调用load方法重新加载Locale资源
+> 一版返回false就好
+> 而且,每当Locale改变时Flutter都会再调用load方法加载新的Locale
+> 3: 添加多语言支持
+> 先注册DemoLocalizationsDelegate类
+> 在MaterialApp或WidgetsApp的localizationsDelegates列表中添加
+> Delegate实例即可完成注册
+> 再通过DemoLocalizations.of(context)来动态获取当前Locale文本
+> 接下来我们可以在Widget中使用Locale值
+> 示例 (在main文件中添加)
+```
+return Scaffold(
+  appBar: AppBar(
+    //使用Locale title  
+    title: Text(DemoLocalizations.of(context).title),
+  ),
+  ... //省略无关代码
+)
+```
+> 当在美国英语和中文简体之间切换系统语言时，APP的标题会自动切换
+3. 问题
+> 1: 如果我们要支持的语言不是两种而是8种甚至20几种时
+> 如果为每个文本属性都要分别去判断到底是哪种Locale从而获取相应语言的文本
+> 将会是一件非常复杂的事
+> 2: 通常情况下翻译人员并不是开发人员
+> 能否可以将翻译单独保存为一个arb文件交由翻译人员去翻译
+> 翻译好之后开发人员再通过工具将arb文件转为代码
+4. 可以通过Dart intl包来实现这些
