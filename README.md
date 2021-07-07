@@ -2046,7 +2046,7 @@ print(defaultTargetPlatform);
 > 我们将invokeMethod调用包装在try-catch语句中。
 
 #### 7/6
-- 看动开发flutter插件
+- 看懂开发flutter插件
 1. 创建flutter应用
 2. 创建Flutter平台客户端
 > MethodChannel
@@ -2055,9 +2055,9 @@ print(defaultTargetPlatform);
 3. Android端API实现
 复制官方代码无法启动项目
 
-- Texture和PlatformView
-1. 本节主要介绍原生和Flutter之间如何共享图像，以及如何在Flutter中嵌套原生组件
-2. flutter是一个ui系统，但有他的局限
+- 原生和Flutter之间如何共享图像的方法Texture和PlatformView
+1. 以及如何在Flutter中嵌套原生组件
+2. flutter局限
 > 他的平台通道，消息传送不能覆盖所有的应用场景
 > 摄像头拍照录视频（如果把图像每一帧都传递到flutter应用，代价非常大：内存和CPU的巨大消耗）
 > Flutter提供了一种基于Texture的图片数据共享机制。
@@ -2187,11 +2187,11 @@ new MaterialApp(
 `Locale Function(List<Locale> locales, Iterable<Locale> supportedLocales)`
 
 5. Localization 组件
-> 前面提到的Localizations组件用于加载和查找应用当前语言下的本地化值或资源 
-> 通过Localizations.of(context,type) (opens new window)来引用这些对象
-> 如果设备的Locale区域设置发生更改，则Localizations 组件会自动加载新区域的Locale值，然后重新build使用（依赖）了它们的组件，
-> 大型应用程序中，不同模块或Package可能会与自己的本地化值捆绑在一起
-> Localizations.of()表达式会经常使用，所以MaterialLocalizations类提供了一个便捷方法
+> 1:前面提到的Localizations组件用于加载和查找应用当前语言下的本地化值或资源 
+> 2: 通过Localizations.of(context,type) (opens new window)来引用这些对象
+> 3: 如果设备的Locale区域设置发生更改，则Localizations 组件会自动加载新区域的Locale值，然后重新build使用（依赖）了它们的组件，
+> 4: 大型应用程序中，不同模块或Package可能会与自己的本地化值捆绑在一起
+> 5: Localizations.of()表达式会经常使用，所以MaterialLocalizations类提供了一个便捷方法
 
 ```
 static MaterialLocalizations of(BuildContext context) {
@@ -2201,5 +2201,36 @@ static MaterialLocalizations of(BuildContext context) {
 // 可以直接调用便捷方法
 tooltip: MaterialLocalizations.of(context).backButtonTooltip,
 ```
-6. flutter软件包中仅提供美国英语值的MaterialLocalizations和WidgetsLocalizations接口的实现
-7. 上述的GlobalMaterialLocalizations和GlobalWidgetsLocalizations只是Material组件库的本地化实现，如果要让自己的布局支持多语言，那么就需要实现在即的Localizations
+> 6. flutter软件包中仅提供美国英语值的MaterialLocalizations和WidgetsLocalizations接口的实现
+> 7. 上述的GlobalMaterialLocalizations和GlobalWidgetsLocalizations只是Material组件库的本地化实现，如果要让自己的布局支持多语言，那么就需要实现在即的Localizations
+
+#### 7/7
+1. 昨天的camera报错,
+```
+import 'package:camera/camera.dart';
+List<CameraDescription> cameras;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+  runApp(MyApp());
+}
+```
+> 重新添加依赖和 把mian文件修改成上面的代码没有报错了
+> 具体可以参考[cameras博客](https://blog.csdn.net/qq_39816031/article/details/104486122)
+
+***camera有报错***
+> pubspec 引入
+```
+video_player: ^0.10.11+1
+path_provider: ^1.6.9
+```
+> 接下来尝试打开
+> 电脑打开失败
+***MissingPluginException (MissingPluginException(No implementation found for method availableCameras on channel plugins.flutter.io/camera))***
+> 尝试手机打开
+> 没有设备
+> 注释了首页的
+  // cameras = await availableCameras();
+> 可以打开
+2. 尝试国际化
+> 没有想到使用的实际场景

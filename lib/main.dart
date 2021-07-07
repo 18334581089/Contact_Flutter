@@ -82,16 +82,20 @@ import 'package:flutter_app_vscode/service/FutureBuilderRoute.dart';
 import 'package:flutter_app_vscode/service/WebSocketRoute.dart';
 import 'package:flutter_app_vscode/service/HttpTestRoute2.dart';
 import 'package:flutter_app_vscode/service/DartModel.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter_app_vscode/package/camera.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 // 引入包Material UI
 // Material是标准的移动端和web端的视觉设计语言
 // Material UI 是flutter默认提供的一套Material ui组件
-
+List<CameraDescription> cameras;
 // 2
-void main async () {
-  cameras = await availableCameras();
-  runApp(MyApp())
-};
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // cameras = await availableCameras();
+  runApp(MyApp());
+}
 // main函数是应用程序入口(用来启动flutter应用), 和java类似
 // runApp 函数 接受一个Widget参数(Widget 树: 可以暂时理解位dom树)(Widget: 部件)
 // MyApp 函数 是flutter应用的根组件
@@ -101,110 +105,123 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: 'Flutter Demo',
-        theme: new ThemeData(
-          primarySwatch: Colors.indigo,
-        ),
-        home: new MyHomePage(
-          title: ('Flutter Demo Home Page'),
-        ),
-        routes: {
-          "DartModel": (context) => DartModel(),
-          "HttpTestRoute2": (context) => HttpTestRoute2(),
-          "WebSocketRoute": (context) => WebSocketRoute(),
-          "FutureBuilderRoute": (context) => FutureBuilderRoute(),
-          "DioRoute": (context) => DioRoute(),
-          "GradientCircularProgressRoute": (context) =>
-              GradientCircularProgressRoute(),
-          "HttpTestRoute": (context) => HttpTestRoute(),
-          "CustomPaintRoute": (context) => CustomPaintRoute(),
-          "MyRichTextRoute": (context) => MyRichTextRoute(),
-          "TurnBoxRoute": (context) => TurnBoxRoute(),
-          "GradientButton": (context) => GradientButton(),
-          "AnimatedWidgetsTest": (context) => AnimatedWidgetsTest(),
-          "AnimatedDecoratedBox1": (context) => TestBox(),
-          "AnimatedSwitcherCounterRoute": (context) =>
-              AnimatedSwitcherCounterRoute(),
-          "MySlideTransition2": (context) => MySlideTransition2(),
-          "StaggerRoute": (context) => StaggerRoute(),
-          "heroRouteA": (context) => HeroAnimationRoute(),
-          "heroRouteB": (context) => HeroAnimationRouteB(),
-          "ScaleAnimationRoute2": (context) => ScaleAnimationRoute2(),
-          "ScaleAnimationRoute1": (context) => ScaleAnimationRoute1(),
-          "ScaleAnimationRoute": (context) => ScaleAnimationRoute(),
-          "NotificationRoute": (context) => NotificationRoute(),
-          "ScrollTest": (context) => ScrollTest(),
-          "LoginWidget2": (context) => LoginWidget2(),
-          "LoginWidget": (context) => LoginWidget(),
-          "BothDirectionTestRoute": (context) => BothDirectionTestRoute(),
-          "GestureRecognizerTestRoute": (context) =>
-              GestureRecognizerTestRoute(),
-          "ScaleTestRoute": (context) => ScaleTestRoute(),
-          "_Drag": (context) => Drag1(),
-          "GestureDetector": (context) => GestureDetectorTestRoute(),
-          "Listener": (context) => Listener1(),
-          "DialogState6": (context) => DialogRoute6(),
-          "DialogState5": (context) => DialogRoute5(),
-          "DialogRoute4": (context) => DialogRoute4(),
-          "DialogRoute3": (context) => DialogRoute3(),
-          "DialogRoute2": (context) => DialogRoute2(),
-          "DialogRoute": (context) => DialogRoute1(),
-          "ShowCustomDialog": (context) => ShowCustomDialog(),
-          "Dialog2": (context) => MySimple2(),
-          "SimPle": (context) => MySimple(),
-          "MyDialog": (context) => MyDialog(),
-          "MyStream": (context) => MyStream(),
-          "MyFuture": (context) => MyFuture(),
-          "Theme": (context) => ThemeTestRoute(),
-          "MyColor": (context) => MyColor(),
-          "ProviderRoute": (context) => ProviderRoute(),
-          "HomePage": (context) => HomePage(),
-          "InheritedWidgetTestRoute": (context) => InheritedWidgetTestRoute(),
-          "ScrollNotificationTestRoute": (context) =>
-              ScrollNotificationTestRoute(),
-          "WillPopScopeTestRoute": (context) => WillPopScopeTestRoute(),
-          "ScrollControllerTestRoute": (context) => ScrollControllerTestRoute(),
-          "CustomScrollViewTestRoute": (context) => CustomScrollViewTestRoute(),
-          "BaseScroll6": (context) => BaseScroll6(),
-          "BaseScroll5": (context) => BaseScroll5(),
-          "BaseScroll4": (context) => BaseScroll4(),
-          "BaseScroll3": (context) => BaseScroll3(),
-          "BaseScroll2": (context) => BaseScroll2(),
-          "BaseScroll1": (context) => BaseScroll1(),
-          "BaseClip": (context) => BaseClip(),
-          "baseMaterial1": (context) => BaseMaterial1(),
-          "BaseTransform": (context) => BaseTransform(),
-          "BaseConstrained": (context) => BaseConstrained(),
-          "BasePadding": (context) => BasePadding(),
-          "BaseLayout5": (context) => BaseLayout5(),
-          "BaseLayout4": (context) => BaseLayout4(),
-          "BaseLayout3": (context) => BaseLayout3(),
-          "BaseLayout1": (context) => BaseLayout1(),
-          "BaseLayout2": (context) => BaseLayout2(),
-          "BaseProgressBar": (context) => BaseProgressBar(),
-          "BaseForm": (context) => BaseForm(),
-          "baseWidgetForm": (context) => TestRoute(),
-          "baseWidgetIcon": (context) => baseWidgetIcon(),
-          "baseWidgetImg": (context) => baseWidgetImg(),
-          "BaseWidgetButton": (context) => BaseWidgetButton(),
-          "BaseWidget": (context) => BaseWidget(),
-          "StatusMain": (context) => StatusMain(),
-          "counter_widget": (context) => CounterWidget(), // 普通路由注册
-          "new_page2": (context) {
-            return TipRoute(text: ModalRoute.of(context).settings.arguments);
-          },
-          "BaseMaterial1": (context) {
-            return TipRoute(text: ModalRoute.of(context).settings.arguments);
-          },
-          "": (context) => MyHomePage(title: 'flutter Demo Home Page')
+      title: 'Flutter Demo',
+      theme: new ThemeData(
+        primarySwatch: Colors.indigo,
+      ),
+      home: new MyHomePage(
+        title: ('Flutter Demo Home Page'),
+      ),
+      routes: {
+        "CameraExampleHome": (context) => CameraExampleHome(),
+        "DartModel": (context) => DartModel(),
+        "HttpTestRoute2": (context) => HttpTestRoute2(),
+        "WebSocketRoute": (context) => WebSocketRoute(),
+        "FutureBuilderRoute": (context) => FutureBuilderRoute(),
+        "DioRoute": (context) => DioRoute(),
+        "GradientCircularProgressRoute": (context) =>
+            GradientCircularProgressRoute(),
+        "HttpTestRoute": (context) => HttpTestRoute(),
+        "CustomPaintRoute": (context) => CustomPaintRoute(),
+        "MyRichTextRoute": (context) => MyRichTextRoute(),
+        "TurnBoxRoute": (context) => TurnBoxRoute(),
+        "GradientButton": (context) => GradientButton(),
+        "AnimatedWidgetsTest": (context) => AnimatedWidgetsTest(),
+        "AnimatedDecoratedBox1": (context) => TestBox(),
+        "AnimatedSwitcherCounterRoute": (context) =>
+            AnimatedSwitcherCounterRoute(),
+        "MySlideTransition2": (context) => MySlideTransition2(),
+        "StaggerRoute": (context) => StaggerRoute(),
+        "heroRouteA": (context) => HeroAnimationRoute(),
+        "heroRouteB": (context) => HeroAnimationRouteB(),
+        "ScaleAnimationRoute2": (context) => ScaleAnimationRoute2(),
+        "ScaleAnimationRoute1": (context) => ScaleAnimationRoute1(),
+        "ScaleAnimationRoute": (context) => ScaleAnimationRoute(),
+        "NotificationRoute": (context) => NotificationRoute(),
+        "ScrollTest": (context) => ScrollTest(),
+        "LoginWidget2": (context) => LoginWidget2(),
+        "LoginWidget": (context) => LoginWidget(),
+        "BothDirectionTestRoute": (context) => BothDirectionTestRoute(),
+        "GestureRecognizerTestRoute": (context) => GestureRecognizerTestRoute(),
+        "ScaleTestRoute": (context) => ScaleTestRoute(),
+        "_Drag": (context) => Drag1(),
+        "GestureDetector": (context) => GestureDetectorTestRoute(),
+        "Listener": (context) => Listener1(),
+        "DialogState6": (context) => DialogRoute6(),
+        "DialogState5": (context) => DialogRoute5(),
+        "DialogRoute4": (context) => DialogRoute4(),
+        "DialogRoute3": (context) => DialogRoute3(),
+        "DialogRoute2": (context) => DialogRoute2(),
+        "DialogRoute": (context) => DialogRoute1(),
+        "ShowCustomDialog": (context) => ShowCustomDialog(),
+        "Dialog2": (context) => MySimple2(),
+        "SimPle": (context) => MySimple(),
+        "MyDialog": (context) => MyDialog(),
+        "MyStream": (context) => MyStream(),
+        "MyFuture": (context) => MyFuture(),
+        "Theme": (context) => ThemeTestRoute(),
+        "MyColor": (context) => MyColor(),
+        "ProviderRoute": (context) => ProviderRoute(),
+        "HomePage": (context) => HomePage(),
+        "InheritedWidgetTestRoute": (context) => InheritedWidgetTestRoute(),
+        "ScrollNotificationTestRoute": (context) =>
+            ScrollNotificationTestRoute(),
+        "WillPopScopeTestRoute": (context) => WillPopScopeTestRoute(),
+        "ScrollControllerTestRoute": (context) => ScrollControllerTestRoute(),
+        "CustomScrollViewTestRoute": (context) => CustomScrollViewTestRoute(),
+        "BaseScroll6": (context) => BaseScroll6(),
+        "BaseScroll5": (context) => BaseScroll5(),
+        "BaseScroll4": (context) => BaseScroll4(),
+        "BaseScroll3": (context) => BaseScroll3(),
+        "BaseScroll2": (context) => BaseScroll2(),
+        "BaseScroll1": (context) => BaseScroll1(),
+        "BaseClip": (context) => BaseClip(),
+        "baseMaterial1": (context) => BaseMaterial1(),
+        "BaseTransform": (context) => BaseTransform(),
+        "BaseConstrained": (context) => BaseConstrained(),
+        "BasePadding": (context) => BasePadding(),
+        "BaseLayout5": (context) => BaseLayout5(),
+        "BaseLayout4": (context) => BaseLayout4(),
+        "BaseLayout3": (context) => BaseLayout3(),
+        "BaseLayout1": (context) => BaseLayout1(),
+        "BaseLayout2": (context) => BaseLayout2(),
+        "BaseProgressBar": (context) => BaseProgressBar(),
+        "BaseForm": (context) => BaseForm(),
+        "baseWidgetForm": (context) => TestRoute(),
+        "baseWidgetIcon": (context) => baseWidgetIcon(),
+        "baseWidgetImg": (context) => baseWidgetImg(),
+        "BaseWidgetButton": (context) => BaseWidgetButton(),
+        "BaseWidget": (context) => BaseWidget(),
+        "StatusMain": (context) => StatusMain(),
+        "counter_widget": (context) => CounterWidget(), // 普通路由注册
+        "new_page2": (context) {
+          return TipRoute(text: ModalRoute.of(context).settings.arguments);
         },
-        onGenerateRoute: (RouteSettings settings) {
-          return MaterialPageRoute(builder: (context) {
-            String routeName = settings.name;
-            print("出发了钩子函数, $routeName");
-            return MyHomePage(title: 'flutter Demo Home Page');
-          });
+        "BaseMaterial1": (context) {
+          return TipRoute(text: ModalRoute.of(context).settings.arguments);
+        },
+        "": (context) => MyHomePage(title: 'flutter Demo Home Page')
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(builder: (context) {
+          String routeName = settings.name;
+          print("出发了钩子函数, $routeName");
+          return MyHomePage(title: 'flutter Demo Home Page');
         });
+      },
+      // 尝试切换语言(国际化)
+      localizationsDelegates: [
+        // 本地化的代理类
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', 'US'), // 美国英语
+        const Locale('zh', 'CN'), // 中文简体
+        //其它Locales
+      ],
+      // 尝试切换语言(国际化)
+    );
   }
 }
 // MyApp 代表了flutter应用
@@ -764,6 +781,12 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: _getBatteryLevel,
             ),
             new Text(_batteryLevel),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "CameraExampleHome");
+              },
+              child: Text("open CameraExampleHome"),
+            ),
           ],
         ),
       ),
