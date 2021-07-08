@@ -2276,3 +2276,139 @@ return Scaffold(
 > 能否可以将翻译单独保存为一个arb文件交由翻译人员去翻译
 > 翻译好之后开发人员再通过工具将arb文件转为代码
 4. 可以通过Dart intl包来实现这些
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Intl 的总结
+1. 第二步和第一步只在第一次需要，开发的主要工作在第三步
+2. 最后两步命令，可以放在shell脚本里面（完成第三步或者完成arb文件翻译后执行）
+> 创建intl.sh 文件
+> 执行`chmod +x intl.sh`(chmod +x xxx.sh: 表示为xxx文件增加可执行权限)
+> 然后就可以执行`./intl.sh`了
+
+- 国际化的常见问题
+1. 默认的Locale不是中文简体：
+> 非大陆行货渠道买的一些Android和iOS设备，会出现的情况
+> 为了防止设备获取的Locale与实际的地区不一致
+> app都必须提供一个手动选择语言的入口
+2. 对应用标题进行国际化
+> MaterialApp有一个title属性来指定APP的标题
+> 问题在于： 无法在构建MaterialApp时通过Localizations.of来获取本地化资源
+```
+MaterialApp(
+  title: DemoLocalizations.of(context).title, //不能正常工作！
+  localizationsDelegates: [
+    // 本地化的代理类
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    DemoLocalizationsDelegate() // 设置Delegate
+  ],
+);
+```
+> 1: Localizations.of会从当前的context沿着widget树向顶部查找DemoLocalizations
+> 2: 但是实际上DemoLocalizations是在当前context的子树中的
+> DemoLocalizations.of(context)会返回null
+> 3: 解决办法
+> 设置一个onGenerateTitle回调
+```
+MaterialApp(
+  onGenerateTitle: (context){
+    // 此时context在Localizations的子树中
+    return DemoLocalizations.of(context).title;
+  },
+  localizationsDelegates: [
+    DemoLocalizationsDelegate(),
+    ...
+  ],
+);
+```
+> 为英语系的国家指定同一个locale
+> 1: 提供一种英语（如美国英语）供所有英语系国家使用
+> 可以在前面介绍的localeListResolutionCallback中来做兼容：
+```
+localeListResolutionCallback:
+    (List<Locale> locales, Iterable<Locale> supportedLocales) {
+  // 判断当前locale是否为英语系国家，如果是直接返回Locale('en', 'US')     
+}
+```
+
+- 触碰到核心
+1. UI系统的含义
+> 1: 基于一个平台(操作系统)
+> 2: 在该平台实现GUI的一个系统
+2. 注意
+> 1: 各个平台**UI系统的原理**是相通的
+> 2: 无论是Android还是iOS，他们将一个用户界面展示到屏幕的流程是相似的
+
+3: UI系统的原理
+> 1: ***屏幕显示图像的基本原理***
+> **显示器**
+> 显示器由一个个物理显示单元(物理像素点)组成
+> 显示器成相原理: 在不同的物理像素点上显示不同的颜色构成完整的图像
+> **位色**
+> 位色： 是显示器的一个重要指标
+> 位色指： 一个像素点能发出的所有颜色总数是2的几次方
+> 例如：1600万即2的24次方，称为24位色
+> **刷新频率**
+> 显示画面 就是： 以固定的频率刷新
+> 刷新需要从GPU获取数据
+> 每次刷新： 显示器会发出一个垂直同步信号，用来同步CPU、GPU和显示器的
+> CPU、GPU和显示器的协作方式: CPU将计算好的显示内容提交给 GPU,GPU渲染后放入帧缓冲区,视频控制器按照同步信号从帧缓冲区取帧数据,并且传递给显示器显示
+> (CPU主要用于基本数学和逻辑计算,GPU的主要作用就是确定最终输送给显示器的各个像素点的色值)
+> 例如： 一部手机屏幕的刷新频率是 60Hz，就是屏幕就会一秒内发出 60次这样的信号
+2: ***操作系统绘制API***
+> a： 图形计算和绘制是由相应的硬件来完成
+> b： 直接操作硬件的指令通常都会有操作系统屏蔽
+> c： 操作系统提供一些封装后的API,供操作系统之上的应用调用
+> d:  操作系统提供的API往往比较基础,直接调用比较复杂和低效的,需要了解API的很多细节
+> e:  几乎所有关于开发GUI程序的编程语言都会在操作系统之上再封装一层（操作系统原生API封装在一个编程框架和模型中，然后定义一种简单的开发规则来开发GUI应用程序）
+> f: **我们所说的“UI”系统,就是指这个**
+> g: 
+
+| ui系统 | 被封装的系统 |
+|  ----  |  ----  | 
+| Android SDK(中：UI描述文件XML+Java操作DOM) |	Android操作系统 |
+| UIKit  |	ios操作系统 |
+> 3: ***Flutter UI系统***
+> Flutter的原理
+> a: 使用同一种编程语言开发
+> b: 不同操作系统API抽象一个的中间层(Dart API)
+> c: 在打包编译时再使用相应的中间层代码
+> d: 底层使用OpenGL这种跨平台的绘制库（OpenGL只是操作系统API的一个封装库，相当于直接调用操作系统API）
+> 4: ***组合和响应式***
+> Flutter UI系统对应用开发者定义的开发标准就是： 组合和响应式
+> 理解： Flutter中，一切都是Widget，一个UI界面通过组合其它Widget来实现
+> 理解： UI要发生变化时，不去直接修改DOM，而是通过更新状态，让Flutter UI系统来根据新的状态来重新构建UI
