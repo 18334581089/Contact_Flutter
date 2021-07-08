@@ -2257,7 +2257,8 @@ path_provider: ^1.6.9
 > Delegate实例即可完成注册
 > 再通过DemoLocalizations.of(context)来动态获取当前Locale文本
 > 接下来我们可以在Widget中使用Locale值
-> 示例 (在main文件中添加)
+> 示例 (在main文件中添加
+)
 ```
 return Scaffold(
   appBar: AppBar(
@@ -2276,3 +2277,74 @@ return Scaffold(
 > 能否可以将翻译单独保存为一个arb文件交由翻译人员去翻译
 > 翻译好之后开发人员再通过工具将arb文件转为代码
 4. 可以通过Dart intl包来实现这些
+
+#### 7/8
+- Intl 包 
+1. 干嘛的
+> 实现国际化 ,把字符串分离成单独的文件(方便开发和翻译人员)
+> 1: 从代码中提取要国际化的字符串到单独的arb文件
+> 2: 根据arb文件生成对应语言的dart代码
+2. 依赖
+```
+dependencies:
+  intl: ^0.15.7 
+dev_dependencies:
+  intl_translation: ^0.17.2  
+```
+> intl包主要是引用和加载`intl_translation`生成后的dart代码
+3. 使用
+> 1: 根目录创建一个l10n-arb目录(用来保存`intl_translation`命令生成的 arb文件)
+> arb文件内容示例
+```
+{
+  "@@last_modified": "2018-12-10T15:46:20.897228",
+  "@@locale":"zh_CH",
+  "title": "Flutter应用",
+  "@title": {
+    "description": "Title for the Demo application",
+    "type": "text",
+    "placeholders": {}
+  }
+}
+```
+> 示例中`@@locale`的值表示为中文
+> 示例中`title`对应中文简体翻译
+> 示例中`@title`对title的一些描述信息
+> 2: 根目录创建l10n目录(保存从arb文件生成的dart代码文件)
+> 3: 实现Localizations和Delegate类
+> 示例 localization_intl.dart
+> 4: 添加需要国际化的属性
+> DemoLocalizations类中添加需要国际化的属性或方法
+> 这时我们就要用到Intl库提供的一些方法
+> 示例
+> 一个电子邮件列表页，我们需要在顶部显示未读邮件的数量
+> 在未读数量不同事，我们展示的文本不同
+
+| 未读邮件数 | 提示语 |
+|  ----  |  ----  | 
+| 0 | There are no emails left |
+| 1 | There is 1 email left |
+| n(n>1) | There are n emails left |
+
+> 实现方法: Intl.plural(...) // Intl 包还有一些其他的方法,这里只是示例
+```
+remainingEmailsMessage(int howMany) => Intl.plural(
+  howMany,
+  zero: 'There are no emails left',
+  one: 'There is $howMany email left',
+  other: 'There are $howMany emails left',
+  name: "remainingEmailsMessage",
+  args: [howMany],
+  desc: "How many emails remain after archiving.",
+  examples: const {'howMany': 42, 'userName': 'Fred'},
+);
+```
+> 5: 生成arb文件
+> 可以通intl_translation包的工具来提取代码中的字符串到一个arb文件
+> 执行命令
+`flutter pub pub run intl_translation:extract_to_arb --output-dir=l10n-arb \ lib/l10n/localization_intl.dart
+`
+>报错:  ***The pubspec.yaml file has changed since the pubspec.lock file was generated, please run "pub get" again.***
+> a: 执行 'flutter pub get'
+> 报错 ***Because flutter_app_vscode depends on flutter_localizations any from sdk which depends on intl 0.17.0, intl 0.17.0 is required.
+So, because flutter_app_vscode depends on intl ^0.15.7, version solving failed.***
