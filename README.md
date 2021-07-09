@@ -2449,3 +2449,20 @@ localeListResolutionCallback:
 > Flutter UI系统对应用开发者定义的开发标准就是： 组合和响应式
 > 理解： Flutter中，一切都是Widget，一个UI界面通过组合其它Widget来实现
 > 理解： UI要发生变化时，不去直接修改DOM，而是通过更新状态，让Flutter UI系统来根据新的状态来重新构建UI
+
+
+#### 7/9
+- Element与BuildContext
+1. 基础知识
+> 最终的UI树其实是由一个个独立的Element节点构成
+> 组件最终的Layout、渲染都是通过RenderObject来完成的
+2. 流程
+> 1: 根据Widget生成Element
+> 2: 创建相应的RenderObject
+> 3: 关联到Element.renderObject属性上
+> 4: 通过RenderObject来完成布局排列和绘制
+3. 功能
+> Widget 树: 咱们写的组件
+> Element 树: 页面上的一个个节点
+> RenderObject 树: 每个节点对应的渲染对象
+4. Element的生命周期如
