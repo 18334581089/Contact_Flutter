@@ -2348,6 +2348,14 @@ remainingEmailsMessage(int howMany) => Intl.plural(
 > a: 执行 'flutter pub get'
 > 报错 ***Because flutter_app_vscode depends on flutter_localizations any from sdk which depends on intl 0.17.0, intl 0.17.0 is required.
 So, because flutter_app_vscode depends on intl ^0.15.7, version solving failed.***
+> 修改pubspec文件的intl版本为17以上,
+> 重新执行
+> ***还是提示pub get ***
+> ***Because intl_translation >=0.17.7 depends on intl >=0.15.3 <0.17.0 and intl_translation >=0.17.0 <0.17.7 depends on intl ^0.15.3, intl_translation >=0.17.0 requires intl >=0.15.3 <0.17.0.***
+> 解决问题失败,回到之前**intl ^0.15.7,**问题
+> 参考 [博客](https://stackoverflow.com/questions/65369313/package-incompatible-version-after-upgrading-flutter)
+> 使用 dependency_overrides暂时解决
+> 接下来继续
 
 - Intl 的总结
 1. 第二步和第一步只在第一次需要，开发的主要工作在第三步
@@ -2397,7 +2405,7 @@ MaterialApp(
 > 可以在前面介绍的localeListResolutionCallback中来做兼容：
 ```
 localeListResolutionCallback:
-    (List<Locale> locales, Iterable<Locale> supportedLocales) {
+  (List<Locale> locales, Iterable<Locale> supportedLocales) {
   // 判断当前locale是否为英语系国家，如果是直接返回Locale('en', 'US')     
 }
 ```
