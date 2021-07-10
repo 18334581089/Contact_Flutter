@@ -2257,8 +2257,7 @@ path_provider: ^1.6.9
 > Delegate实例即可完成注册
 > 再通过DemoLocalizations.of(context)来动态获取当前Locale文本
 > 接下来我们可以在Widget中使用Locale值
-> 示例 (在main文件中添加
-)
+> 示例 (在main文件中添加)
 ```
 return Scaffold(
   appBar: AppBar(
@@ -2350,12 +2349,26 @@ remainingEmailsMessage(int howMany) => Intl.plural(
 So, because flutter_app_vscode depends on intl ^0.15.7, version solving failed.***
 > 修改pubspec文件的intl版本为17以上,
 > 重新执行
-> ***还是提示pub get ***
-> ***Because intl_translation >=0.17.7 depends on intl >=0.15.3 <0.17.0 and intl_translation >=0.17.0 <0.17.7 depends on intl ^0.15.3, intl_translation >=0.17.0 requires intl >=0.15.3 <0.17.0.***
+> ***还是提示pub get 报错***
+
+***Because intl_translation >=0.17.7 depends on intl >=0.15.3 <0.17.0 and intl_translation >=0.17.0 <0.17.7 depends on intl ^0.15.3, intl_translation >=0.17.0 requires intl >=0.15.3 <0.17.0.***
 > 解决问题失败,回到之前**intl ^0.15.7,**问题
 > 参考 [博客](https://stackoverflow.com/questions/65369313/package-incompatible-version-after-upgrading-flutter)
 > 使用 dependency_overrides暂时解决
 > 接下来继续
+(上面文字部分是在7/9日早上写的)
+> 7/10早上继续
+> 执行pub get 警告
+
+***you are using these overrideden dependencies***
+> 博客说不用太在意
+> 执行
+
+`flutter pub pub run intl_translation:extract_to_arb --output-dir=l10n-arb \ lib/l10n/localization_intl.dart`
+> 报错
+***The getter 'elements2' isn't defined for the class 'ListLiteral'***
+> 博客上没答案,应该是版本问题
+> 结束
 
 - Intl 的总结
 1. 第二步和第一步只在第一次需要，开发的主要工作在第三步
@@ -2473,4 +2486,43 @@ localeListResolutionCallback:
 > Widget 树: 咱们写的组件
 > Element 树: 页面上的一个个节点
 > RenderObject 树: 每个节点对应的渲染对象
-4. Element的生命周期如
+4. Element的生命周期
+> 1: **创建**, Framework会调用Widget.createElement 创建一个Element实例
+> 2: **active状态**, Framework会调用element.mount方法会创建RenderObject对象,并且添加到渲染树后的状态
+> 3: **复用**, 在更新前会调用对应Widget的canUpdate方法,判断是否复用(可以通过指定不同的Key来避免复用)
+> 4: **inactive状态**, 移除element 时,Element就会调用deactivateChild 方法来移除它,element.renderObject也会被从渲染树中移除,然后Framework会调用element.deactivate方法,状态变成inactive,不会再显示到屏幕
+> 5: **defunct状态**, inactive的element在动画执行结束后它还未能重新变成active状态,Framework就会调用其unmount方法将其彻底移除,变成defunct,不会再被插入到树中.
+5. BuildContext
+> 1: context 的初步使用
+
+| 功能 | 代码 |
+| ---- | ---- |
+| 获取主题 | Theme.of(context) |
+| 获取主题 | Theme.of(context) |
+| 入栈新路由 | Navigator.push(context, route) |
+> 2: 介绍
+> BuildContext是一个**抽象接口类**
+
+`abstract class BuildContext {}`
+> 抽象类必须要有实现才能用
+> 接下来看context的实现类
+
+```
+class StatelessElement extends ComponentElement {
+  ...
+  @override
+  Widget build() => widget.build(this);
+  ...
+}
+```
+> 源码1: this 就是 StatelessElement
+> 源码2: StatelessElement 继承 Element 类
+
+```
+class Element extends DiagnosticableTree implements BuildContext {
+  ...
+}
+```
+> 源码3: Element 有BuildContext 接口
+
+> ***结论: BuildContext就是widget对应的Element***
