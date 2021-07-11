@@ -2526,3 +2526,69 @@ class Element extends DiagnosticableTree implements BuildContext {
 > 源码3: Element 有BuildContext 接口
 
 > ***结论: BuildContext就是widget对应的Element***
+
+
+#### 7l/11
+- buildContext 进阶
+1. BuildContext 就是 Element对象,
+2. 大多数时候开发者只需要关注widget层，在build时传入Element对象, 就是为了在需要时候直接操作
+3. 考验理解力的两个问题
+> 1. 通过Element来搭建一个UI框架?(示例: HomeView )
+> 如果在Flutter框架中所有组件都像示例的HomeView一样以Element形式提供，那么就可以用纯Element来构建UI了HomeView的build方法返回值类型就可以是Element了。
+> 2. flutter能不能做响应式?
+
+- RenderObject 和 RenderBox
+1. 每个Element都对应一个RenderObject,RenderObject职责是Layout和绘制
+2. 简单理解
+> RenderObject就是渲染树中的一个对象，
+> 它拥有一个parent和一个parentData 插槽（slot）(有点不理解)
+3. 布局过程
+> 1: RenderBox 的layout是通过传递 BoxConstraints 对象实现的
+> BoxConstraints可以限制子节点的最大和最小宽高
+> 布局时: 父节点会调用子节点的layout()方法
+```
+void layout(Constraints constraints, { bool parentUsesSize = false }) {
+   ...
+   RenderObject relayoutBoundary; 
+    if (!parentUsesSize || sizedByParent || constraints.isTight 
+    	|| parent is! RenderObject) {
+      relayoutBoundary = this;
+    } else {
+      final RenderObject parent = this.parent;
+      relayoutBoundary = parent._relayoutBoundary;
+    }
+    ...
+    if (sizedByParent) {
+        performResize();
+    }
+    performLayout();
+    ...
+}
+```
+> 1: constraints 是对子节点大小的限制
+> 2: parentUsesSize(布尔值,表示子节点布局变化是否影响父节点) 
+> parentUsesSize 同时用于确定 relayoutBoundary
+> 3: relayoutBoundary
+> 想知道relayoutBoundary,得先知道markNeedsLayout
+> **markNeedsLayout(1)** 前面的只是中,当Element标记为 dirty 时便会重新build 
+> **markNeedsLayout(2)** 调用 markNeedsBuild() 可以标记Element为dirty
+> **markNeedsLayout(3)** 类似的, RenderObject中markNeedsLayout()方法也可以标记为dirty
+> **markNeedsLayout(4)** 部分源码
+```
+void markNeedsLayout() {
+  ...
+  assert(_relayoutBoundary != null);
+  if (_relayoutBoundary != this) {
+    markParentNeedsLayout();
+  } else {
+    _needsLayout = true;
+    if (owner != null) {
+      ...
+      owner._nodesNeedingLayout.add(this);
+      owner.requestVisualUpdate();
+    }
+  }
+}
+```
+> **markNeedsLayout(5)** 源码可知: markNeedsLayout会向上查找到是 relayoutBoundary 的 RenderObject为止，然后再将其标记为 dirty 
+> **markNeedsLayout(6)** 也就是说:如果一个 RenderObject 是 relayoutBoundary，就表示它的大小变化不会再影响到 parent 的大小了，于是 parent 也就不用重新布局了
