@@ -2537,7 +2537,7 @@ class Element extends DiagnosticableTree implements BuildContext {
 > 如果在Flutter框架中所有组件都像示例的HomeView一样以Element形式提供，那么就可以用纯Element来构建UI了HomeView的build方法返回值类型就可以是Element了。
 > 2. flutter能不能做响应式?
 
-- RenderObject 和 RenderBox
+- 布局过程: 1 RenderObject 和 RenderBox
 1. 每个Element都对应一个RenderObject,RenderObject职责是Layout和绘制
 2. 简单理解
 > RenderObject就是渲染树中的一个对象，
@@ -2592,3 +2592,87 @@ void markNeedsLayout() {
 ```
 > **markNeedsLayout(5)** 源码可知: markNeedsLayout会向上查找到是 relayoutBoundary 的 RenderObject为止，然后再将其标记为 dirty 
 > **markNeedsLayout(6)** 也就是说:如果一个 RenderObject 是 relayoutBoundary，就表示它的大小变化不会再影响到 parent 的大小了，于是 parent 也就不用重新布局了
+
+#### 7/12
+- 布局过程: 2 performResize 和 performLayout
+1. performLayout 每次布局都会被调用
+2. performResize sizedByParent 为 true 时调用
+3. sizedByParent 该节点的大小(属性)和其子节点是否无关
+4. performLayout() 方法中除了完成自身布局，也必须完成子节点的布局，这是因为只有父子节点全部完成后布局流程才算真正完成。
+5. 所以最终的调用栈将会变成：layout() > performResize()/performLayout() > child.layout() > ... ，如此递归完成整个UI的布局。
+
+- 布局过程: 3 ParentData
+1. layout结束后, 节点的位置就确定了, RenderObject就可以进行绘制
+2. 那么,节点的位置信息怎么保存(假如多个子组件,给每一个子组件设置一个位置)
+3. RenderObject的parentData属性来保存
+> parentData属性默认是一个BoxParentData对象
+> 该属性只能通过父节点的setupParentData()方法来设置
+```
+abstract class RenderBox extends RenderObject {
+  @override
+  void setupParentData(covariant RenderObject child) {
+    if (child.parentData is! BoxParentData)
+      child.parentData = BoxParentData();
+  }
+  ...
+}
+```
+4. ParentData并不仅仅可以用来存储偏移信息，通常所有和子节点特定的数据都可以存储到子节点的ParentData中
+
+- 绘制过程: 1
+1. 通过paint()方法来完成具体绘制逻辑
+> 签名
+
+`void paint(PaintingContext context, Offset offset) { }`
+> context.canvas可以取到Canvas对象,
+> 接下来调用Canvas API来实现具体的绘制逻辑
+2. 当有子节点的情况，除了完成自身绘制逻辑之外，还要调用子节点的绘制方法
+> 部分源码
+
+```
+  // 如果子元素未超出当前边界，则绘制子元素  
+  if (_overflow <= 0.0) {
+    defaultPaint(context, offset);
+    return;
+  }
+
+  // 如果size为空，则无需绘制
+  if (size.isEmpty)
+    return;
+
+  // 剪裁掉溢出边界的部分
+  context.pushClipRect(needsCompositing, offset, Offset.zero & size, defaultPaint);
+    assert(() {
+    final String debugOverflowHints = '...'; //溢出提示内容，省略
+    // 绘制溢出部分的错误提示样式
+    Rect overflowChildRect;
+    switch (_direction) {
+      case Axis.horizontal:
+        overflowChildRect = Rect.fromLTWH(0.0, 0.0, size.width + _overflow, 0.0);
+        break;
+      case Axis.vertical:
+        overflowChildRect = Rect.fromLTWH(0.0, 0.0, 0.0, size.height + _overflow);
+        break;
+    }  
+    paintOverflowIndicator(context, offset, Offset.zero & size,
+                           overflowChildRect, overflowHints: debugOverflowHints);
+    return true;
+  }());
+```
+
+> 根据有无溢出，调用defaultPaint(context, offset)来完成绘制
+> 当需要绘制的内容大小溢出当前空间时，将会执行paintOverflowIndicator() 来绘制溢出部分提示，这个就是我们经常看到的溢出提示
+> defaultPaint 部分代码
+
+```
+void defaultPaint(PaintingContext context, Offset offset) {
+  ChildType child = firstChild;
+  while (child != null) {
+    final ParentDataType childParentData = child.parentData;
+    //绘制子节点， 
+    context.paintChild(child, childParentData.offset + offset);
+    child = childParentData.nextSibling;
+  }
+}
+```
+> defaultPaint中会调用paintChild()来绘制子节点
