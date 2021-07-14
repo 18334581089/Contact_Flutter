@@ -2676,3 +2676,128 @@ void defaultPaint(PaintingContext context, Offset offset) {
 }
 ```
 > defaultPaint中会调用paintChild()来绘制子节点
+
+#### 7/14
+- 绘制过程 2 RepaintBoundary
+1. RepaintBoundary 和 RelayoutBoundary 相似
+2. 用于在确定重绘边界, 另外绘制边界需要由开发者通过RepaintBoundary 组件自己指定
+> 例如: 
+```
+CustomPaint(
+  size: Size(300, 300), //指定画布大小
+  painter: MyPainter(),
+  child: RepaintBoundary(
+    child: Container(...),
+  ),
+),
+```
+3. RepaintBoundary的原理
+```
+void paintChild(RenderObject child, Offset offset) {
+  ...
+  if (child.isRepaintBoundary) {
+    stopRecordingIfNeeded();
+    _compositeChild(child, offset);
+  } else {
+    child._paintWithContext(this, offset);
+  }
+  ...
+}
+```
+> isRepaintBoundary该属性决定这个RenderObject重绘时是否独立于其父元素
+> _compositeChild源码
+```
+void _compositeChild(RenderObject child, Offset offset) {
+  // 给子节点创建一个layer ，然后再上面绘制子节点 
+  if (child._needsPaint) {
+    repaintCompositedChild(child, debugAlsoPaintedParent: true);
+  } else {
+    ...
+  }
+  assert(child._layer != null);
+  child._layer.offset = offset;
+  appendLayer(child._layer);
+}
+```
+> 通过在不同的layer（层）上绘制的(正确使用isRepaintBoundary属性可以提高绘制效率，避免不必要的重绘)
+> RenderObject也提供了一个markNeedsPaint()方法
+
+```
+void markNeedsPaint() {
+ ...
+  //如果RenderObject.isRepaintBoundary 为true,则该RenderObject拥有layer，直接绘制  
+  if (isRepaintBoundary) {
+    ...
+    if (owner != null) {
+      //找到最近的layer，绘制  
+      owner._nodesNeedingPaint.add(this);
+      owner.requestVisualUpdate();
+    }
+  } else if (parent is RenderObject) {
+    // 没有自己的layer, 会和一个祖先节点共用一个layer  
+    assert(_layer == null);
+    final RenderObject parent = this.parent;
+    // 向父级递归查找  
+    parent.markNeedsPaint();
+    assert(parent == this.parent);
+  } else {
+    // 如果直到根节点也没找到一个Layer，那么便需要绘制自身，因为没有其它节点可以绘制根节点。  
+    if (owner != null)
+      owner.requestVisualUpdate();
+  }
+}
+```
+> 调用 markNeedsPaint()
+> 从当前 RenderObject 开始一直向父节点查找
+> 直到找到 一个isRepaintBoundary 为 true的RenderObject 时，才会触发重绘
+> 可以实现局部重绘
+> 开发中通过RepaintBoundary Widget来指定isRepaintBoundary 为 true,绘制时仅会重绘自身而无需重绘它的 parent，如此便可提高性能。
+> 如果使用了RepaintBoundary，其对应的RenderRepaintBoundary会自动将isRepaintBoundary设为true的(如下)
+```
+class RenderRepaintBoundary extends RenderProxyBox {
+  /// Creates a repaint boundary around [child].
+  RenderRepaintBoundary({ RenderBox child }) : super(child);
+
+  @override
+  bool get isRepaintBoundary => true;
+}
+```
+
+- 命中测试
+1. 一个对象是否可以响应事件，取决于其对命中测试的返回
+> 当发生用户事件时，会从根节点（RenderView）开始进行命中测试
+> RenderView默认的hitTest()如下
+```
+bool hitTest(HitTestResult result, { Offset position }) {
+  if (child != null)
+    child.hitTest(result, position: position); //递归子RenderBox进行命中测试
+  result.add(HitTestEntry(this)); //将测试结果添加到result中
+  return true;
+}
+```
+> RenderBox默认的hitTest()如下
+```
+bool hitTest(HitTestResult result, { @required Offset position }) {
+  ...  
+  if (_size.contains(position)) {
+    if (hitTestChildren(result, position: position) || hitTestSelf(position)) {
+      result.add(BoxHitTestEntry(this, position));
+      return true;
+    }
+  }
+  return false;
+}
+```
+
+2. hitTest
+> 用来判断该RenderObject 是否在被点击的范围内
+> 同时负责将被点击的 RenderBox 添加到 HitTestResult 列表中
+> 参数 position 为事件触发的坐标
+> 回 true 则表示有RenderBox 通过了命中测试
+> 可以直接重写hitTest()方法
+
+- 总结
+> 从头到尾实现一个RenderObject是比较麻烦的，我们必须去实现layout、绘制和命中测试逻辑
+
+- 运行机制
+1. 启动
