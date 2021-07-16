@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../l10n-arb/messages_all.dart';
+// import '../l10n-arb/messages_all.dart'; // 先注释,为了防止报错无法启动项目
 // messages_all.dart"文件是通过intl_translation工具从arb文件生成的代码
 // 第一次运行生成命令之前，此文件不存在
 
 class DemoLocalizations {
+  static initializeMessages(String localeName) {} // 为了防止报错无法启动项目写的,没有任何作用
+
   static Future<DemoLocalizations> load(Locale locale) {
     final String name =
         locale.countryCode.isEmpty ? locale.languageCode : locale.toString();

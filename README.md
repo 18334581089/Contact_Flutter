@@ -2797,7 +2797,425 @@ bool hitTest(HitTestResult result, { @required Offset position }) {
 > 可以直接重写hitTest()方法
 
 - 总结
-> 从头到尾实现一个RenderObject是比较麻烦的，我们必须去实现layout、绘制和命中测试逻辑
+> 从头到尾实现一个RenderObject是比较麻烦的，我们必须去实现layout、绘制和命中测试逻辑Front-End
 
 - 运行机制
 1. 启动
+> 入口: 在"lib/main.dart"的main()函数中,Dart应用程序的起点
+> main()函数
+
+`void main(){runApp(MyApp())}`
+> runApp()方法
+```
+void runApp(Widget app) {
+  WidgetsFlutterBinding.ensureInitialized()
+    ..attachRootWidget(app)
+    ..scheduleWarmUpFrame();
+}
+```
+> 1: app是一个widget，它是Flutter应用启动后要展示的第一个Widget
+> 2: WidgetsFlutterBinding是绑定widget 框架和Flutter engine的桥梁
+> WidgetsFlutterBinding
+```
+class WidgetsFlutterBinding extends BindingBase with GestureBinding, ServicesBinding, SchedulerBinding, PaintingBinding, SemanticsBinding, RendererBinding, WidgetsBinding {
+  static WidgetsBinding ensureInitialized() {
+    if (WidgetsBinding.instance == null)
+      WidgetsFlutterBinding();
+    return WidgetsBinding.instance;
+  }
+}
+```
+> 1: Binding
+> 了解Binding之前先了解一下 Window 
+> Window 
+```
+class Window {
+    
+  // 当前设备的DPI，即一个逻辑像素显示多少物理像素，数字越大，显示效果就越精细保真。
+  // DPI是设备屏幕的固件属性，如Nexus 6的屏幕DPI为3.5 
+  double get devicePixelRatio => _devicePixelRatio;
+  
+  // Flutter UI绘制区域的大小
+  Size get physicalSize => _physicalSize;
+
+  // 当前系统默认的语言Locale
+  Locale get locale;
+    
+  // 当前系统字体缩放比例。  
+  double get textScaleFactor => _textScaleFactor;  
+    
+  // 当绘制区域大小改变回调
+  VoidCallback get onMetricsChanged => _onMetricsChanged;  
+  // Locale发生变化回调
+  VoidCallback get onLocaleChanged => _onLocaleChanged;
+  // 系统字体缩放变化回调
+  VoidCallback get onTextScaleFactorChanged => _onTextScaleFactorChanged;
+  // 绘制前回调，一般会受显示器的垂直同步信号VSync驱动，当屏幕刷新时就会被调用
+  FrameCallback get onBeginFrame => _onBeginFrame;
+  // 绘制回调  
+  VoidCallback get onDrawFrame => _onDrawFrame;
+  // 点击或指针事件回调
+  PointerDataPacketCallback get onPointerDataPacket => _onPointerDataPacket;
+  // 调度Frame，该方法执行后，onBeginFrame和onDrawFrame将紧接着会在合适时机被调用，
+  // 此方法会直接调用Flutter engine的Window_scheduleFrame方法
+  void scheduleFrame() native 'Window_scheduleFrame';
+  // 更新应用在GPU上的渲染,此方法会直接调用Flutter engine的Window_render方法
+  void render(Scene scene) native 'Window_render';
+
+  // 发送平台消息
+  void sendPlatformMessage(String name,
+                           ByteData data,
+                           PlatformMessageResponseCallback callback) ;
+  // 平台通道消息处理回调  
+  PlatformMessageCallback get onPlatformMessage => _onPlatformMessage;
+}
+```
+
+> 是 Flutter Framework连接宿主操作系统的接口
+> 包含了当前设备和系统的一些信息以及Flutter Engine的一些回调
+
+> 再回来看看 WidgetsFlutterBinding 混入的各种 Binding
+> 这些binding 基本都是监听并处理Window对象的一些事件
+> 再理解 WidgetsFlutterBinding, 它正是粘连Flutter engine与上层Framework的“胶水”
+
+> 2: ensureInitialized: 负责初始化一个WidgetsBinding的全局单例
+> 3: attachRootWidget: 负责将根Widget添加到RenderView上
+
+```
+void attachRootWidget(Widget rootWidget) {
+  _renderViewElement = RenderObjectToWidgetAdapter<RenderBox>(
+    container: renderView, 
+    debugShortDescription: '[root]',
+    child: rootWidget
+  ).attachToRenderTree(buildOwner, renderViewElement);
+}
+```
+> renderView: 是一个RenderObject，它是渲染树的根
+> renderViewElement: 是renderView对应的Element对象
+> attachToRenderTree
+```
+RenderObjectToWidgetElement<T> attachToRenderTree(BuildOwner owner, [RenderObjectToWidgetElement<T> element]) {
+  if (element == null) {
+    owner.lockState(() {
+      element = createElement();
+      assert(element != null);
+      element.assignOwner(owner);
+    });
+    owner.buildScope(element, () {
+      element.mount(null, null);
+    });
+  } else {
+    element._newWidget = this;
+    element.markNeedsBuild();
+  }
+  return element;
+}
+```
+> attachToRenderTree(RenderObjectToWidgetElement)负责创建根element,
+> 并且将element与widget 进行关联(创建出 widget树对应的element树)
+
+2. 渲染
+> attachRootWidget后
+
+> WidgetsFlutterBinding.scheduleWarmUpFrame()方法
+> 它被调用后会立即进行一次绘制
+> 在本次绘制结束完成之前Flutter将不会响应各种事件(绘制结束前，该方法会锁定事件分发)
+> 保证在绘制过程中不会再触发新的重绘
+
+> scheduleWarmUpFrame()方法
+```
+void scheduleWarmUpFrame() {
+  ...
+  Timer.run(() {
+    handleBeginFrame(null); 
+  });
+  Timer.run(() {
+    handleDrawFrame();  
+    resetEpoch();
+  });
+  // 锁定事件
+  lockEvents(() async {
+    await endOfFrame;
+    Timeline.finishSync();
+  });
+ ...
+}
+```
+> handleBeginFrame() 和 handleDrawFrame() 
+> 了解上面两个方法,先了解Frame 和 FrameCallback 的概念
+> Frame: 一次绘制过程，我们称其为一帧。Flutter engine受显示器垂直同步信号"VSync"的驱使不断的触发绘制。我们之前说的Flutter可以实现60fps（Frame Per-Second），就是指一秒钟可以触发60次重绘，FPS值越大，界面就越流畅。
+> FrameCallback：SchedulerBinding 类中有三个FrameCallback回调队列， 在一次绘制过程中，这三个回调队列会放在不同时机被执行：
+> **FrameCallback回调队列**: transientCallbacks：用于存放一些临时回调，一般存放动画回调。可以通过SchedulerBinding.instance.scheduleFrameCallback 添加回调。
+> **FrameCallback回调队列**: persistentCallbacks：用于存放一些持久的回调，不能在此类回调中再请求新的绘制帧，持久回调一经注册则不能移除。SchedulerBinding.instance.addPersitentFrameCallback()，这个回调中处理了布局与绘制工作。
+> **FrameCallback回调队列**: postFrameCallbacks：在Frame结束时只会被调用一次，调用后会被系统移除，可由 SchedulerBinding.instance.addPostFrameCallback() 注册，注意，不要在此类回调中再触发新的Frame，这可以会导致循环刷新。
+
+> 再来看handleBeginFrame() 和 handleDrawFrame() 
+> 前者主要是执行了transientCallbacks队列，而后者执行了 persistentCallbacks 和 postFrameCallbacks 队列
+
+3. 绘制
+> 渲染和绘制逻辑在RendererBinding中实现
+> RendererBinding中的initInstances()方法
+```
+void initInstances() {
+  ... //省略无关代码
+      
+  //监听Window对象的事件  
+  ui.window
+    ..onMetricsChanged = handleMetricsChanged
+    ..onTextScaleFactorChanged = handleTextScaleFactorChanged
+    ..onSemanticsEnabledChanged = _handleSemanticsEnabledChanged
+    ..onSemanticsAction = _handleSemanticsAction;
+   
+  //添加PersistentFrameCallback    
+  addPersistentFrameCallback(_handlePersistentFrameCallback);
+}
+```
+```
+void _handlePersistentFrameCallback(Duration timeStamp) {
+  drawFrame();
+}
+```
+
+> addPersistentFrameCallback 向persistentCallbacks队列添加回调 _handlePersistentFrameCallback
+> _handlePersistentFrameCallback方法直接调用了RendererBinding的drawFrame()
+```
+void drawFrame() {
+  assert(renderView != null);
+  pipelineOwner.flushLayout(); //布局
+  pipelineOwner.flushCompositingBits(); //重绘之前的预处理操作，检查RenderObject是否需要重绘
+  pipelineOwner.flushPaint(); // 重绘
+  renderView.compositeFrame(); // 将需要绘制的比特数据发给GPU
+  pipelineOwner.flushSemantics(); // this also sends the semantics to the OS.
+}
+```
+> flushLayout: 更新了所有被标记为“dirty”的RenderObject的布局信息
+> flushCompositingBits: 检查RenderObject是否需要重绘，然后更新RenderObject.needsCompositing属性
+> flushPaint: 该方法进行了最终的绘制,只重绘了需要重绘的 RenderObject
+> compositeFrame: 将Canvas画好的Scene传给window.render()方法
+> window.render(): 会直接将scene信息发送给Flutter engine，最终由engine将图像画在设备屏幕上
+
+- 图片加载原理与缓存
+1. ImageProvider
+> Image 组件的image 参数是一个必选参数，它是ImageProvider类型
+> 是一个抽象类
+> 定义了图片数据获取和加载的相关接口
+> 提供图片数据源, 和缓存图片
+```
+abstract class ImageProvider<T> {
+
+  ImageStream resolve(ImageConfiguration configuration) {
+    // 实现代码省略
+  }
+  Future<bool> evict({ ImageCache cache,
+    ImageConfiguration configuration = ImageConfiguration.empty }) async {
+    // 实现代码省略
+  }
+
+  Future<T> obtainKey(ImageConfiguration configuration); 
+  @protected
+  ImageStreamCompleter load(T key); // 需子类实现
+}
+```
+> load(T key)方法: 加载图片数据源的接口
+> 以NetworkImage为例，看看其load方法的实现
+```
+
+@override
+ImageStreamCompleter load(image_provider.NetworkImage key) {
+
+  final StreamController<ImageChunkEvent> chunkEvents = StreamController<ImageChunkEvent>();
+  
+  return MultiFrameImageStreamCompleter(
+    codec: _loadAsync(key, chunkEvents), //调用
+    chunkEvents: chunkEvents.stream,
+    scale: key.scale,
+    ... //省略无关代码
+  );
+}
+```
+> **MultiFrameImageStreamCompleter** 是ImageStreamCompleter子类
+> 其中ImageStreamCompleter 是一个抽象类，定义了管理图片加载过程的一些接口,通过它来监听图片加载状态的
+> **MultiFrameImageStreamCompleter** 需要一个codec参数，类型为: Future<ui.Codec>
+> Codec 是处理图片编解码的类的一个handler,它只是一个flutter engine API 的包装类
+> 也就是说图片的编解码逻辑不是在Dart 代码部分实现，而是在flutter engine中实现的
+> Codec代码
+```
+@pragma('vm:entry-point')
+class Codec extends NativeFieldWrapperClass2 {
+  // 此类由flutter engine创建，不应该手动实例化此类或直接继承此类。
+  @pragma('vm:entry-point')
+  Codec._();
+
+  /// 图片中的帧数(动态图会有多帧)
+  int get frameCount native 'Codec_frameCount';
+
+  /// 动画重复的次数
+  /// * 0 表示只执行一次
+  /// * -1 表示循环执行
+  int get repetitionCount native 'Codec_repetitionCount';
+
+  /// 获取下一个动画帧
+  Future<FrameInfo> getNextFrame() {
+    return _futurize(_getNextFrame);
+  }
+
+  String _getNextFrame(_Callback<FrameInfo> callback) native 'Codec_getNextFrame';
+```
+> Codec最终的结果是一个或多个（动图）帧
+
+> **MultiFrameImageStreamCompleter** 的 codec参数值为_loadAsync方法的返回值
+> _loadAsync方法
+```
+
+ Future<ui.Codec> _loadAsync(
+    NetworkImage key,
+    StreamController<ImageChunkEvent> chunkEvents,
+  ) async {
+    try {
+      //下载图片
+      final Uri resolved = Uri.base.resolve(key.url);
+      final HttpClientRequest request = await _httpClient.getUrl(resolved);
+      headers?.forEach((String name, String value) {
+        request.headers.add(name, value);
+      });
+      final HttpClientResponse response = await request.close();
+      if (response.statusCode != HttpStatus.ok)
+        throw Exception(...);
+      // 接收图片数据 
+      final Uint8List bytes = await consolidateHttpClientResponseBytes(
+        response,
+        onBytesReceived: (int cumulative, int total) {
+          chunkEvents.add(ImageChunkEvent(
+            cumulativeBytesLoaded: cumulative,
+            expectedTotalBytes: total,
+          ));
+        },
+      );
+      if (bytes.lengthInBytes == 0)
+        throw Exception('NetworkImage is an empty file: $resolved');
+      // 对图片数据进行解码
+      return PaintingBinding.instance.instantiateImageCodec(bytes);
+    } finally {
+      chunkEvents.close();
+    }
+  }
+```
+> _loadAsync:下载图片。并且对下载的图片数据进行解码。
+> 下载逻辑比较简单：通过HttpClient从网上下载图片，另外下载请求会设置一些自定义的header，开发者可以通过NetworkImage的headers命名参数来传递。
+> 下载完成后调用了PaintingBinding.instance.instantiateImageCodec(bytes)对图片进行解码
+
+> ImageProvider 中 obtainKey: 配合实现图片缓存
+> ImageProvider 中 resolve: ImageProvider的暴露的给Image的主入口方法(接受ImageConfiguration 包含图片和设备的相关信息,返回: ImageStream 图片数据流)
+> 上面代码A处就是处理缓存的主要代码，这里的PaintingBinding.instance.imageCache 是 ImageCache的一个实例，它是PaintingBinding的一个属性，
+> ImageCache 
+> ImageProvider 中 ImageCache
+ImageCache类定义
+```
+const int _kDefaultSize = 1000;
+const int _kDefaultSizeBytes = 100 << 20; // 100 MiB
+
+class ImageCache {
+  // 正在加载中的图片队列
+  final Map<Object, _PendingImage> _pendingImages = <Object, _PendingImage>{};
+  // 缓存队列
+  final Map<Object, _CachedImage> _cache = <Object, _CachedImage>{};
+
+  // 缓存数量上限(1000)
+  int _maximumSize = _kDefaultSize;
+  // 缓存容量上限 (100 MB)
+  int _maximumSizeBytes = _kDefaultSizeBytes;
+  
+  // 缓存上限设置的setter
+  set maximumSize(int value) {...}
+  set maximumSizeBytes(int value) {...}
+ 
+  ... // 省略部分定义
+
+  // 清除所有缓存
+  void clear() {
+    // ...省略具体实现代码
+  }
+
+  // 清除指定key对应的图片缓存
+  bool evict(Object key) {
+   // ...省略具体实现代码
+  }
+
+ 
+  ImageStreamCompleter putIfAbsent(Object key, ImageStreamCompleter loader(), { ImageErrorListener onError }) {
+    assert(key != null);
+    assert(loader != null);
+    ImageStreamCompleter result = _pendingImages[key]?.completer;
+    // 图片还未加载成功，直接返回
+    if (result != null)
+      return result;
+ 
+    // 有缓存，继续往下走
+    // 先移除缓存，后再添加，可以让最新使用过的缓存在_map中的位置更近一些，清理时会LRU来清除
+    final _CachedImage image = _cache.remove(key);
+    if (image != null) {
+      _cache[key] = image;
+      return image.completer;
+    }
+    try {
+      result = loader();
+    } catch (error, stackTrace) {
+      if (onError != null) {
+        onError(error, stackTrace);
+        return null;
+      } else {
+        rethrow;
+      }
+    }
+    void listener(ImageInfo info, bool syncCall) {
+      final int imageSize = info?.image == null ? 0 : info.image.height * info.image.width * 4;
+      final _CachedImage image = _CachedImage(result, imageSize);
+      // 下面是缓存处理的逻辑
+      if (maximumSizeBytes > 0 && imageSize > maximumSizeBytes) {
+        _maximumSizeBytes = imageSize + 1000;
+      }
+      _currentSizeBytes += imageSize;
+      final _PendingImage pendingImage = _pendingImages.remove(key);
+      if (pendingImage != null) {
+        pendingImage.removeListener();
+      }
+
+      _cache[key] = image;
+      _checkCacheSize();
+    }
+    if (maximumSize > 0 && maximumSizeBytes > 0) {
+      final ImageStreamListener streamListener = ImageStreamListener(listener);
+      _pendingImages[key] = _PendingImage(result, streamListener);
+      // Listener is removed in [_PendingImage.removeListener].
+      result.addListener(streamListener);
+    }
+    return result;
+  }
+
+  // 当缓存数量超过最大值或缓存的大小超过最大缓存容量，会调用此方法清理到缓存上限以内
+  void _checkCacheSize() {
+   while (_currentSizeBytes > _maximumSizeBytes || _cache.length > _maximumSize) {
+      final Object key = _cache.keys.first;
+      final _CachedImage image = _cache[key];
+      _currentSizeBytes -= image.sizeBytes;
+      _cache.remove(key);
+    }
+    ... //省略无关代码
+  }
+}
+```
+> 缓存则使用缓存，没有缓存则调用load方法加载图片
+> 加载成功后, 断图片数据有没有缓存，如果有，则直接返回ImageStream
+> 没有缓存，则调用load(T key)方法从数据源加载图片数据，加载成功后先缓存，然后返回ImageStream
+> setter: 有设置缓存上限的setter(所以，如果我们可以自定义缓存上限)
+```
+ PaintingBinding.instance.imageCache.maximumSize=2000; //最多2000张
+ PaintingBinding.instance.imageCache.maximumSizeBytes = 200 << 20; //最大200M
+```
+> 其他:  对于网络图片来说，会将其“url+缩放比例”作为缓存的key。也就是说如果两张图片的url或scale只要有一个不同，便会重新下载并分别缓存。
+> 总结: ImageProvider
+> 加载图片数据并进行缓存、解码
+
+2. Image组件原理
+> 研究一下Image是如何和ImageProvider配合: 获取最终解码后的数据，然后又如何将图片绘制到屏幕上的
+> MyImage(简易版Image)

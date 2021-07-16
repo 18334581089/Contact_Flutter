@@ -83,6 +83,7 @@ import 'package:flutter_app_vscode/service/WebSocketRoute.dart';
 import 'package:flutter_app_vscode/service/HttpTestRoute2.dart';
 import 'package:flutter_app_vscode/service/DartModel.dart';
 import 'package:flutter_app_vscode/HomeView.dart';
+import 'package:flutter_app_vscode/MyImage.dart';
 
 import 'package:camera/camera.dart';
 import 'package:flutter_app_vscode/package/camera.dart';
@@ -118,6 +119,7 @@ class MyApp extends StatelessWidget {
         title: ('Flutter Demo Home Page'),
       ),
       routes: {
+        "ImageInternalTestRoute": (context) => ImageInternalTestRoute(),
         "homeview": (context) => CustomHome(),
         "CameraExampleHome": (context) => CameraExampleHome(),
         "DartModel": (context) => DartModel(),
@@ -800,6 +802,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "homeview");
               },
               child: Text("open homeview"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "ImageInternalTestRoute");
+              },
+              child: Text("open ImageInternalTestRoute"),
             ),
           ],
         ),
