@@ -4,7 +4,7 @@ import 'package:path/path.dart' as path;
 
 const TAG = "\$";
 const SRC = "./json"; //JSON 目录
-const DIST = "lib/models/"; //输出model目录
+const DIST = "./models/"; //输出model目录
 
 void walk() {
   //遍历JSON目录生成模板
@@ -46,6 +46,7 @@ void walk() {
       _import += _import.isEmpty ? "" : ";";
       dist = dist.replaceFirst("%t", _import);
       //将生成的模板输出
+      print("$DIST$name.dart");
       new File("$DIST$name.dart").writeAsStringSync(dist);
     }
   });
